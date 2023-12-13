@@ -1,9 +1,10 @@
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>AWSHOP</title>
-
+    
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
@@ -12,9 +13,11 @@
     <link rel="stylesheet" href="../public/css/icheck-bootstrap.min.css"/>
 
     <link rel="stylesheet" href="../public/css/adminlte.min.css" />
+
+    <link rel="stylesheet" href="../../dist/css/adminlte.min.css?v=3.2.0" />
     
     <style>
-      body {
+        body {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -22,14 +25,14 @@
         margin: 0;
       }
 
-      .login-box {
+      .register-box {
         width: 400px; /* Adjust the width as needed */
         margin: auto;
       }
     </style>
     
     <script
-      nonce="655304b8-3cfc-43b0-af62-50962d53846f"
+      nonce="970e44fa-a146-466b-83d3-643b0c26d10c"
     >(function(w,d){!function(dg,dh,di,dj){dg[di]=dg[di]||{};dg[di].executed=[];dg.zaraz={deferred:[],listeners:[]};dg.zaraz.q=[];dg.zaraz._f=function(dk){return
       async function(){var
       dl=Array.prototype.slice.call(arguments);dg.zaraz.q.push({m:dk,a:dl})}};for(const
@@ -39,18 +42,24 @@
       Date).getTimezoneOffset();if(dg.dataLayer)for(const du of
       Object.entries(Object.entries(dataLayer).reduce(((dv,dw)=>({...dv[1],...dw[1]})),{})))zaraz.set(du[0],du[1],{scope:"page"});dg[di].q=[];for(;dg.zaraz.q.length;){const
       dx=dg.zaraz.q.shift();dg[di].q.push(dx)}dp.defer=!0;for(const dy
-      of[localStorage,sessionStorage])Object.keys(dy||{}).filter((dA=>dA.startsWith("_zaraz_"))).forEach((dz=>{try{dg[di]["z_"+dz.slice(7)]=JSON.parse(dy.getItem(dz))}catch{dg[di]["z_"+dz.slice(7)]=dy.getItem(dz)}}));dp.referrerPolicy="origin";dp.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(dg[di])));dn.parentNode.insertBefore(dp,dn)};["complete","interactive"].includes(dh.readyState)?zaraz.init():dg.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,"zarazData","script");})(window,document);</script>
-  </head>
-  <body class="hold-transition login-page center">
-    <div class="login-box">
-      <div class="login-logo">
+      of[localStorage,sessionStorage])Object.keys(dy||{}).filter((dA=>dA.startsWith("_zaraz_"))).forEach((dz=>{try{dg[di]["z_"+dz.slice(7)]=JSON.parse(dy.getItem(dz))}catch{dg[di]["z_"+dz.slice(7)]=dy.getItem(dz)}}));dp.referrerPolicy="origin";dp.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(dg[di])));dn.parentNode.insertBefore(dp,dn)};["complete","interactive"].includes(dh.readyState)?zaraz.init():dg.addEventListener("DOMContentLoaded",zaraz.init)}(w,d,"zarazData","script");})(window,document);</script></head>
+  <body class="hold-transition register-page">
+    <div class="register-box">
+      <div class="register-logo">
         <a href="/"><b>AWSHOP</a>
       </div>
-
       <div class="card">
-        <div class="card-body login-card-body">
-          <p class="login-box-msg">Đăng nhập</p>
-          <form action="/admin" method="post">
+        <div class="card-body register-card-body">
+          <p class="login-box-msg">Đăng kí</p>
+          <form action="/register" method="post">
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" placeholder="Full name" />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
+            </div>
             <div class="input-group mb-3">
               <input type="email" class="form-control" placeholder="Email" />
               <div class="input-group-append">
@@ -71,42 +80,54 @@
                 </div>
               </div>
             </div>
+            <div class="input-group mb-3">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Retype password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
             <div class="row">
               <div class="col-8">
                 <div class="icheck-primary">
-                  <input type="checkbox" id="remember" />
-                  <label for="remember">
-                    Lưu thông tin
+                  <input
+                    type="checkbox"
+                    id="agreeTerms"
+                    name="terms"
+                    value="agree"
+                  />
+                  <label for="agreeTerms">
+                    Tôi đồng ý các điều khoản
                   </label>
                 </div>
               </div>
 
               <div class="col-4">
-                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block"
+                >Đăng kí</button>
               </div>
 
             </div>
           </form>
-          {{!-- <div class="social-auth-links text-center mb-3">
+          {{!-- <div class="social-auth-links text-center">
             <p>- OR -</p>
             <a href="#" class="btn btn-block btn-primary">
               <i class="fab fa-facebook mr-2"></i>
-              Sign in using Facebook
+              Sign up using Facebook
             </a>
             <a href="#" class="btn btn-block btn-danger">
               <i class="fab fa-google-plus mr-2"></i>
-              Sign in using Google+
+              Sign up using Google+
             </a>
           </div> --}}
-
-          <p class="mb-1">
-            <a href="/forgot">Quên mật khẩu</a>
-          </p>
-          <p class="mb-0">
-            <a href="/register" class="text-center">
-              Đăng kí
-            </a>
-          </p>
+          <a href="/login" class="text-center">Tôi đã đăng kí</a>
         </div>
 
       </div>

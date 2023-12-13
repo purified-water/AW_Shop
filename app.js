@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
 const loginRoute = require('./routes/login.r');
 app.use('/login', loginRoute);
 
-// const signupRoute = require('./routes/signup.r');
-// app.use('/signup', signupRoute);
+const registerpRoute = require('./routes/register.r');
+app.use('/register', registerpRoute);
 
 // const signoutRoute = require('./routes/signout.r');
 // app.use('/signout', signoutRoute);
