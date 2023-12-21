@@ -42,7 +42,6 @@ const loginRoute = require('./routes/login.r');
 app.use('/login', isNotAuthenticated, loginRoute);
 
 const registerpRoute = require('./routes/register.r');
-const cookieParser = require('cookie-parser');
 app.use('/register', isNotAuthenticated, registerpRoute);
 app.delete('/logout', (req,res) => {
     req.logOut(function(err) {
