@@ -6,9 +6,7 @@ const {users } = require('../controllers/register.c')
 
 console.log(users);
 
-initialize(passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id))
+initialize(passport);
 
 
 const mainControllers = require('../controllers/login.c');
