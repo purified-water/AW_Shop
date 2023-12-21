@@ -59,8 +59,6 @@ CREATE TABLE users (
     firstname VARCHAR(255) NOT NULL,
     lastname VARCHAR(255) NOT NULL,
     phone VARCHAR(20) NOT NULL,
-    geolocation_lat VARCHAR(20),
-    geolocation_long VARCHAR(20),
     city VARCHAR(255) NOT NULL,
     street VARCHAR(255) NOT NULL,
     zipcode VARCHAR(20) NOT NULL
