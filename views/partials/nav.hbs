@@ -1,47 +1,52 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <!-- Phần bên trái -->
-  <div class="navbar-brand">
-    <a class="navbar-brand" href="/">AW_SHOP</a>
-  </div>
+  {{#if user}}
+<div class="wrapper">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Phần bên trái -->
+    <div class="navbar-brand">
+      <a class="navbar-brand" href="/">AW_SHOP</a>
+    </div>
 
-  <!-- Nút "Toggle navigation" cho màn hình nhỏ -->
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbarNavDropdown"
-    aria-controls="navbarNavDropdown"
-    aria-expanded="false"
-    aria-label="Toggle navigation"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
+    <!-- Nút "Toggle navigation" cho màn hình nhỏ -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-  <!-- Phần bên phải -->
-  <div class="collapse navbar-collapse" id="navbarNavDropdown">
-    <ul class="navbar-nav ml-auto">
-      <!-- Lớp "ml-auto" căn phải các phần tử trong ul -->
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="navbarDropdownMenuLink"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {{user.firstname}}
-          {{user.lastname}}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="/profile">Action</a>
-          <form method="POST" action="/logout">
-            <button type="submit" class="dropdown-item border-0">
-                <a>Logout</a>
-            </button>
-          </form>
-        </div>
-      </li>
-    </ul>
-  </div>
-</nav>
+    <!-- Phần bên phải -->
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <!-- Lớp "ml-auto" căn phải các phần tử trong ul -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdownMenuLink"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            {{user.firstname}}
+            {{user.lastname}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/profile">Action</a>
+            <form method="POST" action="/logout">
+              <button type="submit" class="dropdown-item border-0">
+                  <a>Logout</a>
+              </button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+  {{/if}}
