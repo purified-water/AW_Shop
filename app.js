@@ -57,8 +57,8 @@ app.delete('/logout', (req,res) => {
 })
 
 app.get('/', isAuthenticated, (req, res) => {
-    console.log('req.user', req);  
-    res.render("home");
+    console.log('req.user', req.user);  
+    res.render("home", {user: req.user[0] });
 });
 
 
