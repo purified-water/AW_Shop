@@ -8,6 +8,8 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css" integrity="sha512-d0olNN35C6VLiulAobxYHZiXJmq+vl+BGIgAxQtD5+kqudro/xNMvv2yIHAciGHpExsIbKX3iLg+0B6d0k4+ZA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
+
   <link rel="stylesheet" href="../public/css/icheck-bootstrap.min.css" />
 
   <link rel="stylesheet" href="../public/css/adminlte.min.css" />
@@ -67,7 +69,7 @@
           <div class="alert alert-danger">{{ messages.error }}</div>
           {{/if}}
           <div class="input-group mb-3">
-            <input type="email" name="email" class="form-control" placeholder="Email" />
+            <input type="text" name="username" class="form-control" placeholder="Username" />
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -97,7 +99,16 @@
             </div>
 
           </div>
+
+          
         </form>
+
+        <div class="input-group my-3">
+            <!-- Inside your login form -->
+            <a href="/auth/google" class="btn btn-danger btn-block">
+                Login with Google <i class="fa-brands fa-google"></i>
+            </a>
+          </div>
         {{!-- <div class="social-auth-links text-center mb-3">
           <p>- OR -</p>
           <a href="#" class="btn btn-block btn-primary">

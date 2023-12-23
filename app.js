@@ -9,11 +9,13 @@ const flash = require('express-flash')
 const {isAuthenticated, isNotAuthenticated} = require('./middlewares/auth.middleware')
 app.use(flash());
 
+const maxAge = 60*60*1000;
 app.use(methodOverride('_method'));
 app.use(session({
     secret: 'mySecrectKey',
     resave: true,
     saveUninitialized: true,
+    cookie: { maxAge: maxAge }
 }))
 
 
@@ -35,8 +37,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-//test locals
-const users = []
+
+
+const authRoute = require('./routes/auth.r');
+app.use('/auth', authRoute);
 
 const loginRoute = require('./routes/login.r');
 app.use('/login', isNotAuthenticated, loginRoute);
@@ -53,6 +57,7 @@ app.delete('/logout', (req,res) => {
 })
 
 app.get('/', isAuthenticated, (req, res) => {
+    console.log('req.user', req);  
     res.render("home");
 });
 
