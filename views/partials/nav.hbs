@@ -1,52 +1,34 @@
-  {{#if user}}
+{{#if user}}
 <div class="wrapper">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- Phần bên trái -->
-    <div class="navbar-brand">
-      <a class="navbar-brand" href="/">AW_SHOP</a>
-    </div>
-
-    <!-- Nút "Toggle navigation" cho màn hình nhỏ -->
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-toggle="collapse"
-      data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <!-- Phần bên phải -->
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav ml-auto">
-        <!-- Lớp "ml-auto" căn phải các phần tử trong ul -->
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            id="navbarDropdownMenuLink"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            {{user.firstname}}
-            {{user.lastname}}
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="/profile">Action</a>
-            <form method="POST" action="/logout">
-              <button type="submit" class="dropdown-item border-0">
-                  <a>Logout</a>
-              </button>
-            </form>
-          </div>
-        </li>
-      </ul>
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link me-5" aria-current="page" href="#">Trang chủ</a>
+          </li>
+          <li class="nav-item me-5">
+            <a class="nav-link" href="#">Sản phẩm</a>
+          </li>
+          <li class="nav-item me-5">
+            <a class="nav-link" href="#">Về chúng tôi</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{user.firstname}} {{user.lastname}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Thông tin</a></li>
+              <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </nav>
 </div>
-
-  {{/if}}
+{{/if}}
