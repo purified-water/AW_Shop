@@ -34,7 +34,11 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               <li><a class="dropdown-item" href="#">Thông tin</a></li>
-              <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+              <li>
+                <form action="/logout?_method=DELETE" method="post">
+                  <button class="dropdown-item" type="submit">Đăng xuất</button>
+                </form>
+              </li>
             </ul>
           </li>
         </ul>

@@ -9,13 +9,11 @@ passport.use(new GoogleStrategy({
     callbackURL: "http://localhost:3000/auth/google/callback",
     passReqToCallback   : true
   },
-  async function(request, accessToken, refreshToken, profile, done) {
+  async function(request, accessToken, refreshToken, profile, cb) {
     const users = await Users.getUserByEmail(profile.email);
     let user = users[0];
     //Already signed up
-    if (user) {
-        return done (null,user);
-    } else { //Not used before
+    if (!user) { //Not used before
         user = {    
             role: 'client',
             email: profile.email,
@@ -29,8 +27,10 @@ passport.use(new GoogleStrategy({
             zipcode: 'req.body.zipcode',
         }
         const data = await Users.insert(user);
-        return done(null, user);
     }
+    console.log(user);
+    return cb(null, user);
+
   }
 ));
 
