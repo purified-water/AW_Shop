@@ -64,6 +64,7 @@ app.get('/', isAuthenticated, (req, res) => {
     res.render("home", {user: req.user[0] });
 });
 
+
 const databaseRoute = require('./routes/db.r');
 app.use('/getAll', databaseRoute);
 
@@ -72,6 +73,21 @@ app.use('/getAll', databaseRoute);
 
 //     res.render("home");
 // });
+
+
+const cateRoute = require('./routes/cate.r');
+app.use('/cate', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, cateRoute);
+
+const prodRoute = require('./routes/prod.r');
+app.use('/product', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, prodRoute);
 
 
 
