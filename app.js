@@ -61,6 +61,19 @@ app.get('/', isAuthenticated, (req, res) => {
     res.render("home", {user: req.user[0] });
 });
 
+const cateRoute = require('./routes/cate.r');
+app.use('/cate', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, cateRoute);
+
+const prodRoute = require('./routes/prod.r');
+app.use('/product', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, prodRoute);
 
 
 // const signoutRoute = require('./routes/signout.r');
