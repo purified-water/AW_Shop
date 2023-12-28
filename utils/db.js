@@ -16,7 +16,67 @@ const cn = {
 // Sau khi chọn xong thuộc tính trong cn, hãy connect database
 const db = pgp(cn);
 
+// Column in products table
+const productColumn = [
+    'id',
+    'brand',
+    'name',
+    'price',
+    'price_sign',
+    'currency', 
+    'image_link',
+    'description',
+    'rating', 
+    'category',
+    'product_type', 
+    'created_at', 
+    'updated_at'
+];
+
+
 module.exports = {
+    getProductCount: async function () {
+        try {
+            const query = await db.one(
+                `SELECT COUNT(*) FROM public.products`
+            );
+            const count = parseInt(query.count, 10);
+            return count;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    importData: async function (jsonData) {
+        try {
+            // get the count of existing products
+            const newId = await this.getProductCount() + 1;
+            await db.none(`
+                INSERT INTO products (
+                id, brand, name, price, price_sign, currency, image_link, description,
+                rating, category, product_type, tag_list, created_at, updated_at
+            )
+            VALUES (
+                $1, $2, $3, $4::numeric, $5, $6, $7, $8,
+                $9::numeric, $10, $11, $12, $13::timestamp, $14::timestamp
+            )
+
+            `, [
+                newId, jsonData.brand, jsonData.name, jsonData.price, jsonData.price_sign,
+                jsonData.currency, jsonData.image_link, jsonData.description,
+                jsonData.rating, jsonData.category, jsonData.product_type,
+                jsonData.tag_list, jsonData.created_at, jsonData.updated_at
+            ]);
+            // return data
+        }
+        catch (error) {
+            throw error;
+        }
+        // finally {
+        //     if (dbcn != null) {
+        //         dbcn.done();
+        //     }
+        // }
+    },
     getAll: async (tbName) => {
         let dbcn = null;
         try {
@@ -97,7 +157,7 @@ module.exports = {
             if (dbcn != null) {
                 dbcn.done();
             }
-        }      
+        }
 
     },
     update: async (tbName, entity, tbColumn, value) => {
@@ -116,6 +176,6 @@ module.exports = {
             if (dbcn != null) {
                 dbcn.done();
             }
-        }  
+        }
     },
 };
