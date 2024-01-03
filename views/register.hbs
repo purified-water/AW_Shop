@@ -1,204 +1,62 @@
-<html lang="en">
+<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <div class="title"><a href="">CREATE AN ACCOUNT</a> </div>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AWSHOP</title>
 
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback" />
+                     <div class="form">
+                            {{#if hasErrors}}
+                                <div class="alert alert-danger">
+                                    {{# each messages}}
+                                        <p>{{this}}</p>
+                                    {{/each}}
+                                </div>
+                            {{/if}}
 
-  <link rel="stylesheet" href="../public/css/icheck-bootstrap.min.css" />
 
-  <link rel="stylesheet" href="../public/css/adminlte.min.css" />
+                    <form action="/register" method="post">
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" name="firstname" placeholder="First name" >
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" name="lastname" placeholder="Last name" >
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="email" name="email" placeholder="Email">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" name="username" placeholder="Username">
+                        </div>
+                        <div class="input-group">
+                            <input class="input--style-3" type="password" name="password" placeholder="Password" >
+                         </div>
 
-  <link rel="stylesheet" href="../../dist/css/adminlte.min.css?v=3.2.0" />
-
-  <style>
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .register-box {
-      width: 400px;
-      /* Adjust the width as needed */
-      margin: auto;
-    }
-
-    .error {
-      margin-top: -10px;
-      margin-bottom: 10px;
-    }
-  </style>
-
-  <script nonce="970e44fa-a146-466b-83d3-643b0c26d10c">(function (w, d) {
-      !function (dg, dh, di, dj) {
-        dg[di] = dg[di] || {}; dg[di].executed = []; dg.zaraz = { deferred: [], listeners: [] }; dg.zaraz.q = []; dg.zaraz._f = function (dk) {
-          return
-          async function() {
-            var
-              dl = Array.prototype.slice.call(arguments); dg.zaraz.q.push({ m: dk, a: dl })
-          }
-        }; for (const
-          dm
-          of ["track", "set", "debug"]) dg.zaraz[dm] = dg.zaraz._f(dm); dg.zaraz.init = () => {
-            var
-              dn = dh.getElementsByTagName(dj)[0], dp = dh.createElement(dj), dq = dh.getElementsByTagName("title")[0]; dq && (dg[di].t = dh.getElementsByTagName("title")[0].text); dg[di].x = Math.random(); dg[di].w = dg.screen.width; dg[di].h = dg.screen.height; dg[di].j = dg.innerHeight; dg[di].e = dg.innerWidth; dg[di].l = dg.location.href; dg[di].r = dh.referrer; dg[di].k = dg.screen.colorDepth; dg[di].n = dh.characterSet; dg[di].o = (new
-                Date).getTimezoneOffset(); if (dg.dataLayer) for (const du of
-                  Object.entries(Object.entries(dataLayer).reduce(((dv, dw) => ({ ...dv[1], ...dw[1] })), {}))) zaraz.set(du[0], du[1], { scope: "page" }); dg[di].q = []; for (; dg.zaraz.q.length;) {
-                    const
-                      dx = dg.zaraz.q.shift(); dg[di].q.push(dx)
-                  } dp.defer = !0; for (const dy
-              of [localStorage, sessionStorage]) Object.keys(dy || {}).filter((dA => dA.startsWith("_zaraz_"))).forEach((dz => { try { dg[di]["z_" + dz.slice(7)] = JSON.parse(dy.getItem(dz)) } catch { dg[di]["z_" + dz.slice(7)] = dy.getItem(dz) } })); dp.referrerPolicy = "origin"; dp.src = "/cdn-cgi/zaraz/s.js?z=" + btoa(encodeURIComponent(JSON.stringify(dg[di]))); dn.parentNode.insertBefore(dp, dn)
-          };["complete", "interactive"].includes(dh.readyState) ? zaraz.init() : dg.addEventListener("DOMContentLoaded", zaraz.init)
-      }(w, d, "zarazData", "script");
-    })(window, document);</script>
-</head>
-
-<body class="hold-transition register-page">
-  <div class="register-box">
-    <div class="register-logo">
-      <a href="/"><b>AWSHOP</b></a>
+                        {{!-- <div class="input-group">
+                            <input class="input--style-3" type="text" name="phone" placeholder="Phone" >
+                        </div> --}}
+                          <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit">Submit</button>
+                        </div>
+                    </form>
+                      </div>
+                      <div>
+                        <h6 style="color: white">Have account? <a href="/login" style="color: white"> Click Here </a></h6>
+                      </div>
+                      </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card">
-      <div class="card-body register-card-body">
-        <p class="login-box-msg">Đăng kí</p>
-        <form id="register-form" action="/register" method="post">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" name="firstname" placeholder="First name" required />
-            <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
-            </div>
-          </div>
-          <div class="firstname-error error"></div>
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" name="lastname" placeholder="Last name" required />
-            <div class="input-group-append">
-              <div class="input-group-text">
-              </div>
-            </div>
-          </div>
-          <div class="lastname-error error"></div>
-
-          <div class="input-group mb-3">
-            <input type="email" class="form-control" name="email" placeholder="Email" required />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-envelope"></span>
-              </div>
-            </div>
-          </div>
-          <div class="email-error error"></div>
-
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" name="username" placeholder="Username" required />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div>
-          <div class="username-error error"></div>
-
-          <div class="input-group mb-3">
-            <input type="password" class="form-control" name="password" placeholder="Password" required />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div>
-          <div class="password-error error"></div>
-
-          <div class="row">
-            {{!-- <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree" />
-                <label for="agreeTerms">
-                  Tôi đồng ý các điều khoản
-                </label>
-              </div>
-            </div> --}}
-
-            <div class="col-4">
-              <button type="submit" class="btn btn-primary btn-block">Đăng kí</button>
-            </div>
-
-          </div>
-        </form>
-        {{!-- <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="#" class="btn btn-block btn-primary">
-            <i class="fab fa-facebook mr-2"></i>
-            Sign up using Facebook
-          </a>
-          <a href="#" class="btn btn-block btn-danger">
-            <i class="fab fa-google-plus mr-2"></i>
-            Sign up using Google+
-          </a>
-        </div> --}}
-        <a href="/login" class="text-center">Tôi đã đăng kí</a>
-      </div>
-
-    </div>
-  </div>
-  <script>
-    const form = document.querySelector('#register-form');
-
-    document.addEventListener('DOMContentLoaded', async function () {
-      console.log(form);
-
-      form.addEventListener('submit', async function (e) {
-        e.preventDefault();
-        let isValid = true
-        document.querySelector('.firstname-error').innerHTML = ''
-        document.querySelector('.lastname-error').innerHTML = ''
-        document.querySelector('.password-error').innerHTML = ''
-        document.querySelector('.username-error').innerHTML = ''
-        document.querySelector('.email-error').innerHTML = ''
-        const firstname = form.querySelector('input[name="firstname"]').value;
-        const lastname = form.querySelector('input[name="lastname"]').value;
-        const email = form.querySelector('input[name="email"]').value;
-        const password = form.querySelector('input[name="password"]').value;
-        const username = form.querySelector('input[name="username"]').value;
-
-        try {
-          const res = await fetch('/register', {
-            method: 'POST',
-            body: JSON.stringify({ firstname, lastname, email, password, username }),
-            headers: { 'Content-Type': 'application/json' }
-          })
-          const data = await res.json();
-          console.log('data', data);
-          if (!data.isValid) {
-            document.querySelector('.firstname-error').innerHTML = data.firstname.includes('!') ? data.firstname : '';
-            document.querySelector('.lastname-error').innerHTML = data.lastname.includes('!') ? data.lastname : '';
-            document.querySelector('.password-error').innerHTML = data.password.includes('!') ? data.password : '';
-            document.querySelector('.email-error').innerHTML = data.email.includes('!') ? data.email : '';
-            document.querySelector('.username-error').innerHTML = data.username.includes('!') ? data.username : '';
-          }
-          else {
-            location.assign('/login');
-          }
-        }
-        catch (e) {
-          throw e;
-        }
 
 
 
-        //Success
 
 
-      })
-    })
-  </script>
 
-</body>
 
-</html>
+
+
+
