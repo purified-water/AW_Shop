@@ -90,7 +90,7 @@ add constraint PK_userid primary key (id) with (fillfactor=80);
 -- drop table if exists cart;
 create table cart (
 	id SERIAL,
-    user_id INT NOT NULL,
+    user_id SERIAL NOT NULL,
     date TIMESTAMPTZ,
     products JSONB NOT NULL
 );
@@ -101,3 +101,29 @@ alter table cart add constraint FK_userid foreign key (user_id) references users
 
 
 
+-- Table Account
+-- drop table if exists account;
+create table account (
+    id SERIAL,
+    user_id SERIAL NOT NULL,
+    balance NUMERIC(10, 2) NOT NULL DEFAULT 0
+);
+
+-- Add PK
+alter table account add constraint PK_accountid primary key (id) with (fillfactor=80);
+-- Add FK
+alter table account add constraint FK_userid foreign key (user_id) references users(id);
+
+-- Table Order
+-- drop table if exists order;
+create table order (
+    id SERIAL,
+    cart_id SERIAL,
+    date TIMESTAMPTZ,
+    total NUMERIC(10, 2) NOT NULL
+);
+
+-- Add PK
+alter table order add constraint PK_orderid primary key (id) with (fillfactor=80);
+-- Add FK
+alter table order add constraint FK_cartid foreign key (cart_id) references cart(id);
