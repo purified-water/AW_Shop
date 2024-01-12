@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2" id="ftco-navbar">
 	    <div class="container">
-	      <a class="navbar-brand" href=""><bold>NGK</bold></a>
+	      <a class="navbar-brand" href="/"><bold>AW SHOP</bold></a>
 	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
 	        <span class="oi oi-menu"></span> Menu
 	      </button>
@@ -20,12 +20,12 @@
 	             <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User Management</a>
                      <div class="dropdown-menu" aria-labelledby="dropdown04">
-                           {{#if login}}
-                               <a class="dropdown-item" href="/user/profile">Profile</a>
-                                <a class="dropdown-item" href="/user/logout">Logout</a>
+                           {{#if user}}
+                               <a class="dropdown-item" href="/profile">Profile</a>
+                                <a class="dropdown-item" href="/logout">Logout</a>
                            {{else}}
-                              <a class="dropdown-item" href="/user/signup">Signup</a>
-                              <a class="dropdown-item" href="/user/signin">Signin</a>
+                              <a class="dropdown-item" href="/register">Signup</a>
+                              <a class="dropdown-item" href="/login">Signin</a>
                            {{/if}}
                        </div>
                 </li>

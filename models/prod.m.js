@@ -1,14 +1,10 @@
 const db = require('../utils/db');
 
 module.exports = {
-    getProductsWithCate: (cateID) => {
+    getProductsWithCate: (product_type) => {
         try {
-            const prodList = [
-                { id: 1, name: 'Product 1' },
-                { id: 2, name: 'Product 2' },
-                { id: 3, name: 'Product 3' },
-            ];
-            return prodList;
+            const query = db.getCondition('public.products', 'product_type', product_type);
+            return query;
         }
         catch(e) {
             console.log(e);
