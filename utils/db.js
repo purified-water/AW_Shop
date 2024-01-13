@@ -130,7 +130,7 @@ module.exports = {
             }
         }
     },
-    delete: async (tbName, tbColum, value) => {
+    deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {
             const query = `DELETE FROM ${tbName} WHERE ${tbColum}='${value}'`;
