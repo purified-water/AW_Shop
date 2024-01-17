@@ -104,7 +104,7 @@ alter table account add constraint FK_userid foreign key (user_id) references us
 -- drop table if exists cart;
 create table cart (
 	id SERIAL,
-    user_id INT NOT NULL,
+    user_id INT NOT NULL
 );
 -- Add PK
 alter table cart add constraint PK_cartid primary key (id) with (fillfactor=80);

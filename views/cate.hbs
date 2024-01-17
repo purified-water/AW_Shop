@@ -1,9 +1,24 @@
-
 <div class="container">
 	<h3>DANH MỤC CATEGORY</h3>
-
-
-  <section class="tiles">
+  <div class="site-section mt-5">
+    <div class="container">
+      <div class="row">
+        {{#each cateList}}
+          <div class="col-lg-4 mb-5 col-md-6">
+            <div class="wine_v_1 text-center pb-4">
+              <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
+                <img src="/images2/{{product_type}}.jpg" alt="{{this.product_type}}" class="img-fluid">
+              </a>
+              <div class="wine-actions">
+                <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  {{!-- <section class="tiles">
     {{#each cateList}}
       <div class="inner">
         <article class="style3">
@@ -31,6 +46,6 @@
 
       <a href="/delete/{{this.product_type}}">Delete</a>
     {{/each}}
-  </section>
+  </section> --}}
 
 </div>
