@@ -527,3 +527,25 @@ input {
     padding-bottom: 45px;
   }
 }
+
+/* ==========================================================================
+   #PRODUCT
+   ========================================================================== */
+/* Normal styles for the product */
+.product {
+  /* Your regular styles go here */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover styles for the product */
+.product:hover {
+  transform: scale(1.1); /* Scale the element on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effect */
+}
+
+/* Left-align text within the element with class "product-text" */
+.product-text {
+  margin-left: 7px;
+  text-align: left;
+}

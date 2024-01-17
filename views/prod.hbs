@@ -1,7 +1,27 @@
 <div class="container">
-  <h3>{{product_type}}</h3>
+  <h1>{{product_type}}</h1>
+    <div class="site-section mt-5">
+    <div class="container">
+      <div class="row">
+        {{#each prodList}}
+          <div class="col-lg-4 mb-5 col-md-6 product">
+            <div class="wine_v_1 text-center pb-4">
+              <a href="" id="show-detail" class="thumbnail d-block mb-4">
+                <img src="{{this.image_link}}" alt="{{this.name}}" class="img-fluid">
+              </a>
+              <div class="wine-actions">
+                <h3 class="heading-2 product-text" style="font-size:18px"><a href="">{{this.name}}</a></h3>
+                <h3 class="heading-2 product-text" style="font-size:15px">${{this.price}}</h3>
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
 
-  <section class="tiles">
+
+  {{!-- <section class="tiles">
     {{#each prodList}}
       <div class="inner">
         <article class="style3">
@@ -34,5 +54,5 @@
 
       <a href="/delete/{{this.id}}?product_type={{product_type}}">Delete</a>
     {{/each}}
-  </section>
+  </section> --}}
 </div>
