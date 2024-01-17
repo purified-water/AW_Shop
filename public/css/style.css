@@ -711,7 +711,7 @@ pre {
 
 @media (max-width: 991.98px){
   #timer{
-    width=90%;
+    width: 90%;
   }
 }
 #timer .time {

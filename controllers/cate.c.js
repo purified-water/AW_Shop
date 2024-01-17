@@ -10,4 +10,26 @@ module.exports = {
             next(error);
         }
     },
+  
+
+    editCate: async (req,res,next) => {
+        try {
+            const {oldCateName} = req.query.oldCateName;
+            const {newCateName} = req.body.newCateName;
+            await category.editCate(oldCateName, newCateName);
+            res.redirect('/cate');
+        } catch (error) {
+            next(error);
+        }
+    },
+
+    deleteCate: async (req,res,next) => {
+        try {
+            const {cateName} = req.params.cateName;
+            await category.deleteCate(cateName);
+            res.redirect('/cate');
+        } catch (error) {
+            next(error);
+        }
+    }
 }
