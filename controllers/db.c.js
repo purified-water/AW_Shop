@@ -26,6 +26,9 @@ module.exports = {
                     // console.log(product.name, 'has price of', price);
                     continue;
                 }
+                product.price = Math.round(product.price * 23000);
+                product.price_sign = 'đ';
+                product.currency = 'VND';
                 // // Bỏ các product không có ảnh
                 // const isImageLinkValid = await fetch(product.image_link)
                 //     .then(response => response.ok)

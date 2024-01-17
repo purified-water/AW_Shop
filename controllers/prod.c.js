@@ -13,6 +13,15 @@ module.exports = {
             next(error);
         }
     },
+    getProductDetail: async (req, res, next) => {
+        try {
+            const productID = req.params.productID;
+            const productDetail = await product.getProductDetail(productID);
+            res.render("detail", { productDetail: productDetail }); // TO DO: SỬA chỗ này theo Trí
+        } catch (error) {
+            next(error);
+        }
+    },
     addProduct: async (req, res, next) => {
         try {
             const { brand, name, price, imageLink, description, category, product_type, tag_list } = req.body;

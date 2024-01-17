@@ -44,7 +44,7 @@ CREATE TABLE products (
     id SERIAL,
     brand VARCHAR(255),
     name VARCHAR(255),
-    price NUMERIC(10, 2),
+    price NUMERIC(10, 0),
     price_sign VARCHAR(1),
     currency VARCHAR(5),
     image_link VARCHAR(500),
@@ -89,13 +89,12 @@ add constraint PK_userid primary key (id) with (fillfactor=80);
 -- Table Account
 -- drop table if exists account;
 create table account (
-    id SERIAL,
-    user_id INT NOT NULL,
-    balance NUMERIC(10, 2) NOT NULL DEFAULT 0
+    user_id INT,
+    balance NUMERIC(10, 0) NOT NULL DEFAULT 0
 );
 
 -- Add PK
-alter table account add constraint PK_accountid primary key (id) with (fillfactor=80);
+alter table account add constraint PK_accountid primary key (user_id) with (fillfactor=80);
 -- Add FK
 alter table account add constraint FK_userid foreign key (user_id) references users(id);
 
@@ -133,7 +132,7 @@ create table shop_order (
     id SERIAL,
     cart_id INT NOT NULL,
     date TIMESTAMPTZ,
-    total NUMERIC(10, 2) NOT NULL,
+    total NUMERIC(10, 0) NOT NULL,
     status VARCHAR(255) NOT NULL
 );
 

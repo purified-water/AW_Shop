@@ -1,5 +1,5 @@
 const cartModel = require('../models/cart.m');
-const userModel = require('../models/users.model');
+const userModel = require('../models/users.m');
 
 module.exports = {
     renderCart: async (req,res,next) => {
