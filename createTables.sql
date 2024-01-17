@@ -85,27 +85,12 @@ alter table users
 add constraint PK_userid primary key (id) with (fillfactor=80);
 
 
------
--- Create table cart
--- drop table if exists cart;
-create table cart (
-	id SERIAL,
-    user_id SERIAL NOT NULL,
-    date TIMESTAMPTZ,
-    products JSONB NOT NULL
-);
--- Add PK
-alter table cart add constraint PK_cartid primary key (id) with (fillfactor=80);
--- Add FK
-alter table cart add constraint FK_userid foreign key (user_id) references users(id);
-
-
 
 -- Table Account
 -- drop table if exists account;
 create table account (
     id SERIAL,
-    user_id SERIAL NOT NULL,
+    user_id INT NOT NULL,
     balance NUMERIC(10, 2) NOT NULL DEFAULT 0
 );
 
@@ -114,16 +99,45 @@ alter table account add constraint PK_accountid primary key (id) with (fillfacto
 -- Add FK
 alter table account add constraint FK_userid foreign key (user_id) references users(id);
 
--- Table Order
--- drop table if exists order;
-create table order (
+-----
+-- Create table cart
+-- drop table if exists cart;
+create table cart (
+	id SERIAL,
+    user_id INT NOT NULL,
+);
+-- Add PK
+alter table cart add constraint PK_cartid primary key (id) with (fillfactor=80);
+-- Add FK
+alter table cart add constraint FK_userid foreign key (user_id) references users(id);
+
+
+--- Bang cart_items
+create table cart_items (
     id SERIAL,
-    cart_id SERIAL,
-    date TIMESTAMPTZ,
-    total NUMERIC(10, 2) NOT NULL
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
 );
 
 -- Add PK
-alter table order add constraint PK_orderid primary key (id) with (fillfactor=80);
+alter table cart_items add constraint PK_cartitemid primary key (id) with (fillfactor=80);
 -- Add FK
-alter table order add constraint FK_cartid foreign key (cart_id) references cart(id);
+alter table cart_items add constraint FK_cartid foreign key (cart_id) references cart(id);
+alter table cart_items add constraint FK_productid foreign key (product_id) references products(id);
+
+
+-- Table Order
+-- drop table if exists shop_order;
+create table shop_order (
+    id SERIAL,
+    cart_id INT NOT NULL,
+    date TIMESTAMPTZ,
+    total NUMERIC(10, 2) NOT NULL,
+    status VARCHAR(255) NOT NULL
+);
+
+-- Add PK
+alter table shop_order add constraint PK_orderid primary key (id) with (fillfactor=80);
+-- Add FK
+alter table shop_order add constraint FK_cartid foreign key (cart_id) references cart(id);

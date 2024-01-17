@@ -89,7 +89,15 @@ app.use('/product', (req, res, next) => {
     next();
 }, prodRoute);
 
+const cartRoute = require('./routes/cart.r');
+app.use('/cart', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, cartRoute);
 
+const logOutRoute = require('./routes/logout.r');
+app.use('/logout', logOutRoute);
 
 // const signoutRoute = require('./routes/signout.r');
 // app.use('/signout', signoutRoute);

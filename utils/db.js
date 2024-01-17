@@ -46,6 +46,17 @@ module.exports = {
             console.log(error);
         }
     },
+
+    getCategories: async function () {
+        try {
+            const query = await db.any(
+                `SELECT DISTINCT product_type FROM public.products`
+            )
+            return query;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     importData: async function (jsonData) {
         try {
             // get the count of existing products
@@ -119,7 +130,7 @@ module.exports = {
             }
         }
     },
-    delete: async (tbName, tbColum, value) => {
+    deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {
             const query = `DELETE FROM ${tbName} WHERE ${tbColum}='${value}'`;
