@@ -6,7 +6,7 @@
         {{#each prodList}}
           <div class="col-lg-4 mb-5 col-md-6 product">
             <div class="wine_v_1 text-center pb-4">
-              <a href="/detail" id="show-detail" class="thumbnail d-block mb-4">
+              <a href="/product/detail" id="show-detail" class="thumbnail d-block mb-4">
                 <img src="{{this.image_link}}" alt="{{this.name}}" class="img-fluid">
               </a>
               <div class="wine-actions">
@@ -14,6 +14,17 @@
                 <h3 class="heading-2 product-text" style="font-size:15px">${{this.price}}</h3>
               </div>
             </div>
+            <style>
+              .edit-button i,
+              .delete-button i {
+                font-size: 20px; /* Điều chỉnh kích thước biểu tượng theo mong muốn */
+              }
+            </style>
+            <div class="text-center">
+              <a href="#my-dialog" class="mr-3 edit-button"><i class="icon ion-md-create"></i></a>
+              <a href="/delete/{{this.id}}?product_type={{product_type}}" class="ml-3 delete-button"><i class="icon ion-md-trash"></i></a>
+            </div>
+            
           </div>
         {{/each}}
       </div>
