@@ -1,28 +1,43 @@
 <div>
-    <div id="main">
-		<div class="image main">
-			<img src="../public/images/banner.jpg" alt="" class="img-fluid"/>
-		</div>
-	</div>
-	<h3>{{product_type}}</h3>
+  <div id="main">
+    <div class="image main">
+      <img src="../public/images/banner.jpg" alt="" class="img-fluid" />
+    </div>
+  </div>
+  <h3>{{product_type}}</h3>
 
-	<section class="tiles">
-        {{#each prodList}}
-		<div class="inner">
-			<article class="style3">
-				<span class="image">
-					<img src="" alt=""/>
-					<a href="javascript:void(0)"
-						id="show-detail"
-						data-url="/:brand/:id"
-					>
-						<h2>{{this.name}}</h2>
+  <section class="tiles">
+    {{#each prodList}}
+      <div class="inner">
+        <article class="style3">
+          <span class="image">
+            <img src="" alt="" />
+            <a
+              href="javascript:void(0)"
+              id="show-detail"
+              data-url="/:brand/:id"
+            >
+              <h2>{{this.name}}</h2>
 
-					</a>
-				</span>
-			</article>
-		</div>
-        {{/each}}
-	</section>
-</div>	
+            </a>
+          </span>
+        </article>
+      </div>
+      <a href="#my-dialog">Edit</a>
 
+      <div class="modal" id="my-dialog">
+        <div class="modal-dialog">
+          <form action="/edit/{{this.id}}">
+            <input type="hidden" name="product_type" value="{{product_type}}" />
+
+            <input type="submit" value="Edit" />
+          </form>
+          <h1>my dialog</h1>
+          <!-- Add your modal content here -->
+        </div>
+      </div>
+
+      <a href="/delete/{{this.id}}?product_type={{product_type}}">Delete</a>
+    {{/each}}
+  </section>
+</div>

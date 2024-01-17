@@ -117,7 +117,7 @@ create table cart_items (
     id SERIAL,
     cart_id INT NOT NULL,
     product_id INT NOT NULL,
-    quantity INT NOT NULL,
+    quantity INT NOT NULL
 );
 
 -- Add PK
