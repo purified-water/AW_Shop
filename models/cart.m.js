@@ -1,6 +1,14 @@
 const db = require('../utils/db');
 
 module.exports = {
+    getProductByID: async (product_id) => {
+        try {
+            const product = await db.getCondition('public.products', 'id', product_id);
+            return product;
+        } catch (error) {
+
+        }
+    },
     addItemToCartByID: async (user_id, product_id) => {
         try {
             // Lấy cart_id từ user_id

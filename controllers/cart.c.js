@@ -12,9 +12,17 @@ module.exports = {
 
             const cartItems = await cartModel.getItemInCart(parseInt(user_id));
             console.log('cartItems: ', cartItems);
+            let products = [];
+            for (let i = 0; i < cartItems.length; i++) {
+                let product = await cartModel.getProductByID(cartItems[i].product_id);
+                product[0].quantity = cartItems[i].quantity; // Add quantity attribute
+                products.push(product[0]);
+            }
+            console.log('products', products);
+
             // Có thì hiện sản phẩm
             // Không thì hiện là giỏ trống
-            res.render('cart', {cartItems: cartItems});
+            res.render('cart', {cartItems: products});
         } catch (error) {
             next(error);
         }

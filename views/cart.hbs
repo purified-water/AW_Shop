@@ -17,7 +17,7 @@
             <div class="col-7 section-title text-center mb-5">
             </div>
         </div>
-{{#if products}}
+{{#if cartItems}}
         <section class="ftco-section ftco-cart">
         <div class="row mb-5">
             <form class="col-md-12" method="post">
@@ -33,16 +33,16 @@
                         </tr>
                         </thead>
                         <tbody>
-    {{# each products}}
+    {{#each cartItems}}
 
                         <tr>
                             <td class="product-thumbnail">
-                                <img src="{{this.item.imagePath}}" alt="Image" class="img-fluid">
+                                <img src="{{this.image_link}}" alt="Image" class="img-fluid">
                             </td>
                             <td class="product-name">
-                                <h2 class="h5 cart-product-title text-black">{{this.item.title}}</h2>
+                                <h2 class="h5 cart-product-title text-black">{{this.name}}</h2>
                             </td>
-                            <td>Rs.{{this.item.price}}</td>
+                            <td>{{this.price}}</td>
 
 
 
@@ -51,7 +51,7 @@
                                     <div class="input-group-prepend" style="margin-right: 30px">
                                         <a href="/reduce/{{this.item._id}}" class="btn btn-primary height-auto btn-sm">-</a>
                                     </div>
-                                <div>{{this.qty}}</div>
+                                <div>{{this.quantity}}</div>
                                     <div class="input-group-append" style="margin-left: 20px">
                                         <a href="/add/{{this.item._id}}" class="btn btn-primary height-auto btn-sm">+</a>
                                     </div>
