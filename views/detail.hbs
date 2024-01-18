@@ -5,29 +5,33 @@
   </div>
 
   <div class="detail-section">
-    <div class="detail-info">
-      <img src="{{productDetail.image_link}}" alt="IMG" class="detail-img" />
-      <p class="detail-text">Brand: {{productDetail.brand}}</p>
-      <p class="detail-text">Price:
-        {{productDetail.price_sign}}{{productDetail.price}}</p>
-      <span class="detail-text">Tag: </span>
+    <div class="detail-info row">
+      <div class="detail-img col-md-3">
+        <img src="{{productDetail.image_link}}" alt="IMG" class="detail-img" />
+      </div>
+      <div class="col-md-6">
+        <p class="detail-text">Brand: {{productDetail.brand}}</p>
+        <p class="detail-text">Price:
+          {{productDetail.price_sign}}{{productDetail.price}}</p>
+        <span class="detail-text">Tag: </span>
+        {{#each productDetail.tag_list}}
+          <span class="detail-description">{{this}}</span>
+        {{/each}}
+        <br />
+        <form action="/cart/add?id={{productDetail.id}}" method="post">
+          <p class="detail-text">Quantity</p>
 
-      {{#each productDetail.tag_list}}
-        <span class="detail-description">{{this}}</span>
-      {{/each}}
-      <br />
-      <form action="/cart/add?id={{productDetail.id}}" method="post">
-        <p class="detail-text">Quantity</p>
+          <input
+            type="number"
+            class="input--style-3"
+            placeholder="1"
+            name="quantity"
+            value="1"
+          />
+          <button type="submit" class="detail-button">Add to cart</button>
+        </form>
+      </div>
 
-        <input
-          type="number"
-          class="input--style-3"
-          placeholder="1"
-          name="quantity"
-          value="1"
-        />
-        <button type="submit" class="detail-button">Add to cart</button>
-      </form>
     </div>
     <hr class="section-divider" />
   </div>
