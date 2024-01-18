@@ -3,7 +3,7 @@ const db = require('../utils/db');
 module.exports = {
     getProductByID: async (product_id) => {
         try {
-            const product = await db.getCondition('public.products', 'id', product_id);
+            const product = await db.getCondition('products', 'id', product_id);
             return product;
         } catch (error) {
             console.log(error);
@@ -12,23 +12,28 @@ module.exports = {
     addItemToCartByID: async (user_id, product_id, quantity) => {
         try {
             // Lấy cart_id từ user_id
-            const cartQuery = await db.getCondition('public.cart', 'user_id', user_id);
+            const cartQuery = await db.getCondition('cart', 'user_id', user_id);
             console.log('User cart', cartQuery);
             // Kiểm tra xem có cart nào hay chưa
             let cartID;
 
-            if (cartQuery.length === 0) {
-                // Nếu chưa có cart, tạo mới cart
-                const newCart = await db.insert('public.cart', {
-                    user_id: user_id
-                }, 'id');
-                cartID = newCart.id;
-            } else {
-                cartID = cartQuery[0].id;
+            if (cartQuery) {
+                if (cartQuery.length === 0) {
+                    // Nếu chưa có cart, tạo mới cart
+                    const newCart = await db.insert('cart', {
+                        user_id: user_id
+                    }, 'id');
+                    cartID = newCart.id;
+                }
+                if (cartQuery && cartQuery.length > 0) {
+                    cartID = cartQuery[0].id;
+                }
             }
-
+            let items;
             // Lấy items trong cart
-            const items = await db.getCondition('cart_items', 'cart_id', cartID);
+            if (cartID !== undefined) {
+                items = await db.getCondition('cart_items', 'cart_id', cartID);
+            }
             // console.log('items: ', items);
 
             // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
@@ -62,11 +67,11 @@ module.exports = {
     getItemInCart: async (user_id) => {
         try {
             // Lấy cart_id từ user_id
-            const cartQuery = await db.getCondition('public.cart', 'user_id', user_id);
+            const cartQuery = await db.getCondition('cart', 'user_id', user_id);
             const cartID = cartQuery[0].id;
 
             // Lấy items trong cart
-            const items = await db.getCondition('public.cart_items', 'cart_id', cartID);
+            const items = await db.getCondition('cart_items', 'cart_id', cartID);
             return items;
         } catch (error) {
             console.log(error);
@@ -79,7 +84,7 @@ module.exports = {
         try {
             // Chọn item nào thì sẽ lấy id của item đó rồi truyền vào đây xóa
             // Xóa items trong cart
-            const items = db.deleteCondition('public.cart_items', 'id', item_id);
+            const items = db.deleteCondition('cart_items', 'id', item_id);
             return items;
         } catch (error) {
             console.log(error);
@@ -90,11 +95,11 @@ module.exports = {
     removeAllCartItem: async (user_id) => {
         try {
             // Lấy cart_id từ user_id
-            const cartQuery = await db.getCondition('public.cart', 'user_id', user_id);
+            const cartQuery = await db.getCondition('cart', 'user_id', user_id);
             const cartID = cartQuery[0].id;
 
             // Xóa items trong cart
-            const items = db.deleteCondition('public.cart_items', 'cart_id', cartID);
+            const items = db.deleteCondition('cart_items', 'cart_id', cartID);
             return items;
         } catch (error) {
             console.log(error);

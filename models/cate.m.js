@@ -13,14 +13,14 @@ module.exports = {
     },
     editCate: async (oldCateName, newCateName) => {
         try {
-            await db.update('public.products', newCateName, 'product_type', oldCateName);
+            await db.update('products', newCateName, 'product_type', oldCateName);
         } catch (error) {
             console.log(error);
         }
     },
     deleteCate: async (cateName) => {
         try {
-            await db.deleteCondition('public.products', 'product_type', cateName);
+            await db.deleteCondition('products', 'product_type', cateName);
         } catch (error) {
             console.log(error);
         }

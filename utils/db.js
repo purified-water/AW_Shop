@@ -38,7 +38,7 @@ module.exports = {
     getProductCount: async function () {
         try {
             const query = await db.one(
-                `SELECT COUNT(*) FROM public.products`
+                `SELECT COUNT(*) FROM products`
             );
             const count = parseInt(query.count, 10);
             return count;
@@ -50,7 +50,7 @@ module.exports = {
     getCategories: async function () {
         try {
             const query = await db.any(
-                `SELECT DISTINCT product_type FROM public.products`
+                `SELECT DISTINCT product_type FROM products`
             )
             return query;
         } catch (error) {

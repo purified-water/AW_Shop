@@ -3,7 +3,7 @@ const db = require('../utils/db');
 module.exports = {
     getProductsWithCate: (product_type) => {
         try {
-            const query = db.getCondition('public.products', 'product_type', product_type);
+            const query = db.getCondition('products', 'product_type', product_type);
             return query;
         }
         catch(e) {
@@ -12,7 +12,7 @@ module.exports = {
     },
     getProductDetail: (productID) => {
         try {
-            const query = db.getCondition('public.products', 'id', productID);
+            const query = db.getCondition('products', 'id', productID);
             return query;
         }
         catch(e) {
@@ -35,7 +35,7 @@ module.exports = {
                 product_type: product_type,
                 tag_list: tag_list
             }
-            const query = db.insert('public.products', entity, 'id');
+            const query = db.insert('products', entity, 'id');
         } catch (error) {
             console.log(error);
         }
@@ -43,7 +43,7 @@ module.exports = {
 
     editProduct: async (productID, edittedProduct) => {
         try {
-            const query = await db.update('public.products', edittedProduct, 'id', productID);
+            const query = await db.update('products', edittedProduct, 'id', productID);
         }
         catch(e) {
             console.log(e);
@@ -52,7 +52,7 @@ module.exports = {
 
     deleteProduct: async (productID) => {
         try {
-            const query = await db.deleteCondition('public.products', 'id', productID);
+            const query = await db.deleteCondition('products', 'id', productID);
         } catch (error) {
             console.log(error);
         }
