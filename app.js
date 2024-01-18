@@ -96,6 +96,13 @@ app.use('/cart', (req, res, next) => {
     next();
 }, cartRoute);
 
+const analyzeRoute = require('./routes/analyze.r');
+app.use('/analyze', (req,res,next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, analyzeRoute);
+
 const logOutRoute = require('./routes/logout.r');
 app.use('/logout', logOutRoute);
 
