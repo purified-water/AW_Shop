@@ -51,5 +51,12 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+    loadDetail: (req, res, next) => {
+        try {
+            res.render("detail");
+        } catch (error){
+            next(error);
+        }
     }
 }

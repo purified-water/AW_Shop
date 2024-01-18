@@ -1,43 +1,93 @@
-<div>
-  <div id="main">
-    <div class="image main">
-      <img src="../public/images/banner.jpg" alt="" class="img-fluid" />
-    </div>
-  </div>
-  <h3>{{product_type}}</h3>
-
-  <section class="tiles">
-    {{#each prodList}}
-      <div class="inner">
-        <article class="style3">
-          <span class="image">
-            <img src="" alt="" />
-            <a
-              href="javascript:void(0)"
-              id="show-detail"
-              data-url="/:brand/:id"
-            >
-              <h2>{{this.name}}</h2>
-
+<div class="container">
+  <h1>{{product_type}}</h1>
+  <div class="site-section mt-5">
+    <div class="container">
+      <div class="row">
+        {{#each prodList}}
+        <div class="col-lg-4 mb-5 col-md-6 product">
+          <div class="wine_v_1 text-center pb-4">
+            <a href="/product/detail" id="show-detail"
+              class="thumbnail d-block mb-4">
+              <img src="{{this.image_link}}" alt="{{this.name}}"
+                class="img-fluid">
             </a>
-          </span>
-        </article>
-      </div>
-      <a href="#my-dialog">Edit</a>
-
-      <div class="modal" id="my-dialog">
-        <div class="modal-dialog">
-          <form action="/edit/{{this.id}}">
-            <input type="hidden" name="product_type" value="{{product_type}}" />
-
-            <input type="submit" value="Edit" />
-          </form>
-          <h1>my dialog</h1>
-          <!-- Add your modal content here -->
+            <div class="wine-actions">
+              <h3 class="heading-2 product-text" style="font-size:18px"><a
+                  href>{{this.name}}</a></h3>
+              <h3 class="heading-2 product-text"
+                style="font-size:15px">${{this.price}}</h3>
+            </div>
+          </div>
+          <style>
+              .edit-button i,
+              .delete-button i {
+                font-size: 20px; /* Điều chỉnh kích thước biểu tượng theo mong muốn */
+              }
+            </style>
+          <div class="text-center">
+            <a data-mdb-ripple-init data-mdb-modal-init 
+            href="#exampleModalToggle1" class="mr-3 edit-button"><i
+                class="icon ion-md-create" ></i></a>
+            <a href="/delete/{{this.id}}?product_type={{product_type}}"
+              class="ml-3 delete-button"><i class="icon ion-md-trash"></i></a>
+          </div>
+        </div>
+        {{/each}}
+        <a class="btn btn-primary" data-mdb-ripple-init data-mdb-modal-init
+          href="#exampleModalToggle1" role="button">Open first modal</a>
+        <div class="modal fade" id="exampleModalToggle1" aria-hidden="true"
+          aria-labelledby="exampleModalToggleLabel1" tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalToggleLabel1">Modal
+                  1</h5>
+                <button type="button" class="btn-close" data-mdb-ripple-init
+                  data-mdb-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Show a second modal and hide this one with the button below.
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
 
-      <a href="/delete/{{this.id}}?product_type={{product_type}}">Delete</a>
+  {{!-- <section class="tiles">
+    {{#each prodList}}
+    <div class="inner">
+      <article class="style3">
+        <span class="image">
+          <img src alt />
+          <a
+            href="javascript:void(0)"
+            id="show-detail"
+            data-url="/:brand/:id">
+            <h2>{{this.name}}</h2>
+
+          </a>
+        </span>
+      </article>
+    </div>
+    <a href="#my-dialog">Edit</a>
+
+    <div class="modal" id="my-dialog">
+      <div class="modal-dialog">
+        <form action="/edit/{{this.id}}">
+          <input type="hidden" name="product_type" value="{{product_type}}" />
+
+          <input type="submit" value="Edit" />
+        </form>
+        <h1>my dialog</h1>
+        <!-- Add your modal content here -->
+      </div>
+    </div>
+
+    <a href="/delete/{{this.id}}?product_type={{product_type}}">Delete</a>
     {{/each}}
-  </section>
+  </section> --}}
 </div>

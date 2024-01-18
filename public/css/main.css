@@ -527,3 +527,116 @@ input {
     padding-bottom: 45px;
   }
 }
+
+/* ==========================================================================
+   #CATEGORY
+   ========================================================================== */
+/* Normal styles for the product */
+.cate {
+  /* Your regular styles go here */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover styles for the product */
+.cate:hover {
+  transform: scale(1.1); /* Scale the element on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effect */
+}
+
+/* Left-align text within the element with class "product-text" */
+.product-text {
+  margin-left: 7px;
+  text-align: left;
+}
+
+/* ==========================================================================
+   #PRODUCT
+   ========================================================================== */
+/* Normal styles for the product */
+.product {
+  /* Your regular styles go here */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover styles for the product */
+.product:hover {
+  transform: scale(1.1); /* Scale the element on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a box shadow on hover */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition effect */
+}
+
+/* Left-align text within the element with class "product-text" */
+.product-text {
+  margin-left: 7px;
+  text-align: left;
+}
+
+/* ==========================================================================
+   #DETAIL PRODUCT
+   ========================================================================== */
+/* Normal styles for the product */
+.detail-section {
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.section-divider {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+}
+
+.detail-name {
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+}
+
+.detail-img {
+  max-width: 100%; /* Độ rộng tối đa là 100% của phần tử cha */
+  max-height: 300px; /* Chiều cao tối đa là 300px */
+  height: auto; /* Đảm bảo tỷ lệ khung hình được bảo toàn */
+}
+
+.detail-text {
+  text-align: left;
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+}
+
+.detail-description {
+  text-align: left;
+  font-size: 16px;
+}
+
+/* CSS cho phần tử với class "detail-button" */
+.detail-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d6795d;
+  /* border: 2px solid #ffcc89; */
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.detail-button:hover {
+  background-color: #7e3823;
+  /* border-color: #rgb(160, 59, 29) */
+}
+
+
+.back-link {
+  display: inline-block;
+  text-decoration: none;
+  font-size: 16px;
+  color: #9351a3;
+  font-weight: bold;
+}
