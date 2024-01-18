@@ -109,6 +109,12 @@ app.use('/analyze', (req,res,next) => {
 const logOutRoute = require('./routes/logout.r');
 app.use('/logout', logOutRoute);
 
+const usersRoute = require('./routes/users.r');
+app.use('/user',(req,res,next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, usersRoute)
 // const signoutRoute = require('./routes/signout.r');
 // app.use('/signout', signoutRoute);
 
