@@ -35,9 +35,11 @@ module.exports = {
             const user = await userModel.getUserByEmail(req.session.passport.user);
             const user_id = user[0].id
 
-            const product_id = parseInt(req.params.id);
-
-            const newItem = await cartModel.addProductToCartByID(user_id, product_id);
+            const product_id = parseInt(req.query.id);
+            const quantity = parseInt(req.body.quantity);
+            const newItem = await cartModel.addItemToCartByID(user_id, product_id, quantity);
+            console.log('New item added to cart', newItem);
+            res.redirect('back');
         } catch (error) {
             next(error);
         }

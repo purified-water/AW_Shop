@@ -15,9 +15,10 @@ module.exports = {
     },
     getProductDetail: async (req, res, next) => {
         try {
-            const productID = req.params.productID;
+            const productID = req.query.id;
             const productDetail = await product.getProductDetail(productID);
-            res.render("detail", { productDetail: productDetail }); // TO DO: SỬA chỗ này theo Trí
+            // console.log('productDetail: ', productDetail);
+            res.render("detail", { productDetail: productDetail[0] }); // TO DO: SỬA chỗ này theo Trí
         } catch (error) {
             next(error);
         }
@@ -52,11 +53,5 @@ module.exports = {
             next(error);
         }
     },
-    loadDetail: (req, res, next) => {
-        try {
-            res.render("detail");
-        } catch (error){
-            next(error);
-        }
-    }
+    
 }
