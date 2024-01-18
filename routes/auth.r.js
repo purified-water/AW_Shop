@@ -13,10 +13,10 @@ router.get('/google/callback', isNotAuthenticated, passport.authenticate('google
     failureFlash: true,
 }))
 
-router.get('/facebook',
-  passport.authenticate('facebook',{ scope: ['email']}));
+router.get('/facebook', isNotAuthenticated,
+  passport.authenticate('facebook',{ scope: 'email'}));
 
-router.get('/facebook/callback',
+router.get('/facebook/callback', isNotAuthenticated,
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.

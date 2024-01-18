@@ -12,7 +12,7 @@ passport.use(new FacebookStrategy({
   },
   async function(accessToken, refreshToken, profile, cb) {
     console.log(profile);
-    //Assign id to username
+    //Assign id to username 
     const email = profile.emails[0].value ? profile.emails[0].value : 'none';
     const users = await Users.getUserByEmail(email);
     let user = users[0];

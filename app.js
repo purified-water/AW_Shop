@@ -1,13 +1,22 @@
 const express = require('express');
 const handlebars = require("express-handlebars");
 const app = express();
-const port = 3000;
 const session = require('express-session');
 const passport =  require('passport');
 const methodOverride = require('method-override')
 const flash = require('express-flash')
 const {isAuthenticated, isNotAuthenticated} = require('./middlewares/auth.middleware')
 const axios = require('axios');
+const path = require('path');
+
+const https = require('https')
+const port = process.env.AUTH_PORT || 3000;
+const fs = require('fs');
+
+const myCredential = {
+    key: fs.readFileSync(path.join(__dirname, './cert/key.pem')),
+    cert: fs.readFileSync(path.join(__dirname, './cert/cert.pem'))
+}
 
 
 app.use(flash());
@@ -31,7 +40,6 @@ app.engine('hbs', handlebars.engine({
     partialsDir: 'views/partials/'
 }));
 
-const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
@@ -70,9 +78,9 @@ app.use('/getAll', databaseRoute);
 
 
 // app.get('/', (req, res) => {
-
-//     res.render("home");
-// });
+    
+    //     res.render("home");
+    // });
 
 
 const cateRoute = require('./routes/cate.r');
@@ -96,6 +104,13 @@ app.use('/cart', (req, res, next) => {
     next();
 }, cartRoute);
 
+const paymentRoute = require('./routes/vnpay.r')
+app.use('/payment', (req, res, next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    next();
+}, paymentRoute);
+
 const logOutRoute = require('./routes/logout.r');
 app.use('/logout', logOutRoute);
 
@@ -103,8 +118,12 @@ app.use('/logout', logOutRoute);
 // app.use('/signout', signoutRoute);
 
 
+// const server = https.createServer(myCredential, app);
 
+// server.listen(port, () => {
+//     console.log(`Auth Server is running on https://localhost:${port}`)
+// });
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
 });
-  
+
