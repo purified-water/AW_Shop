@@ -131,6 +131,38 @@ module.exports = {
             }
         }
     },
+
+    getMultiConditions: async (tbName, pairs) => {
+        let dbcn = null;
+        try {
+            // console.log('Conditions', pairs);
+            let query = `SELECT * FROM ${tbName} WHERE `;
+
+            for (let i = 0; i < pairs.length; i++) {
+                query += `${pairs[i].tbColumn}='${pairs[i].value}'`;
+                if (i < pairs.length - 1) {
+                    query += ' AND ';
+                }
+            }
+
+
+            // console.log(query);
+            dbcn = await db.connect();
+
+            const data = await dbcn.any(query);
+
+            // console.log(data);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
     deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {
@@ -178,7 +210,7 @@ module.exports = {
             const query = pgp.helpers.update(entity, null, tbName);
             // console.log(query);
             dbcn = await db.connect();
-            const data = await dbcn.oneOrNone(query + `WHERE ${tbColumn} = '${value}'`);
+            const data = await dbcn.oneOrNone(query + ` WHERE ${tbColumn} = '${value}'`);
             return data
         }
         catch (error) {
