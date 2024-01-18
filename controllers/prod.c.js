@@ -13,6 +13,16 @@ module.exports = {
             next(error);
         }
     },
+    getProductDetail: async (req, res, next) => {
+        try {
+            const productID = req.query.id;
+            const productDetail = await product.getProductDetail(productID);
+            // console.log('productDetail: ', productDetail);
+            res.render("detail", { productDetail: productDetail[0] }); // TO DO: SỬA chỗ này theo Trí
+        } catch (error) {
+            next(error);
+        }
+    },
     addProduct: async (req, res, next) => {
         try {
             const { brand, name, price, imageLink, description, category, product_type, tag_list } = req.body;
@@ -43,11 +53,5 @@ module.exports = {
             next(error);
         }
     },
-    loadDetail: (req, res, next) => {
-        try {
-            res.render("detail");
-        } catch (error){
-            next(error);
-        }
-    }
+    
 }

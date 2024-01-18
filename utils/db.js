@@ -59,6 +59,7 @@ module.exports = {
     },
     importData: async function (jsonData) {
         try {
+            const imageLink = jsonData.api_featured_image.startsWith("http:") ? jsonData.api_featured_image : "http:" + jsonData.api_featured_image;
             // get the count of existing products
             const newId = await this.getProductCount() + 1;
             await db.none(`
@@ -73,7 +74,7 @@ module.exports = {
 
             `, [
                 newId, jsonData.brand, jsonData.name, jsonData.price, jsonData.price_sign,
-                jsonData.currency, jsonData.image_link, jsonData.description,
+                jsonData.currency, imageLink, jsonData.description,
                 jsonData.rating, jsonData.category, jsonData.product_type,
                 jsonData.tag_list, jsonData.created_at, jsonData.updated_at
             ]);

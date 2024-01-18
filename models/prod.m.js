@@ -10,6 +10,16 @@ module.exports = {
             console.log(e);
         }
     },
+    getProductDetail: (productID) => {
+        try {
+            const query = db.getCondition('public.products', 'id', productID);
+            return query;
+        }
+        catch(e) {
+            console.log(e);
+        }
+    },
+
     addProduct: async (brand, name, price, imageLink, description, category, product_type, tag_list) => {
         try {
             const entity = {

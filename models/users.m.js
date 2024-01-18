@@ -1,5 +1,5 @@
 const dbcn = require('../utils/db')
-const tableName = 'users'
+const tableName = 'public.users'
 
 module.exports = {
     insert: async(user) => {
@@ -22,6 +22,27 @@ module.exports = {
             throw e
         }
     },
+
+    updateUser: async(id, username, password, firstname, lastname, phone, city, street, zipcode) => {
+        try {
+            const updatedUser = {
+                username: username,
+                password: password,
+                firstname: firstname,
+                lastname: lastname,
+                phone: phone,
+                city: city,
+                street: street,
+                zipcode: zipcode
+            }
+            const data = await dbcn.update(tableName, updatedUser, 'id', id);
+            return data;
+        }
+        catch (e) {
+            throw e
+        }
+    },
+
     getUserById: async(id) => {
         try {
             const data = await dbcn.getCondition(tableName, 'id', id);

@@ -1,6 +1,6 @@
 // const userModels = require('../models/user.m');
 // const bcrypt = require('bcrypt')
-const Users = require('../models/users.model');
+const Users = require('../models/users.m');
 const passport = require('passport');
 
 module.exports = {

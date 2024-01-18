@@ -1,11 +1,19 @@
 const db = require('../utils/db');
 
 module.exports = {
-    addItemToCartByID: async (user_id, product_id) => {
+    getProductByID: async (product_id) => {
+        try {
+            const product = await db.getCondition('public.products', 'id', product_id);
+            return product;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    addItemToCartByID: async (user_id, product_id, quantity) => {
         try {
             // Lấy cart_id từ user_id
             const cartQuery = await db.getCondition('public.cart', 'user_id', user_id);
-            
+            console.log('User cart', cartQuery);
             // Kiểm tra xem có cart nào hay chưa
             let cartID;
 
@@ -20,31 +28,33 @@ module.exports = {
             }
 
             // Lấy items trong cart
-            const items = await db.getCondition('public.cart_items', 'cart_id', cartID);
+            const items = await db.getCondition('cart_items', 'cart_id', cartID);
             // console.log('items: ', items);
 
             // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
             const item = items.find(item => item.product_id === product_id);
-            // console.log('item: ', item);
+            console.log('item: ', !item);
 
             // Nếu chưa có thì thêm vào
             if (!item) {
-                const newItem = await db.insert('public.cart_items', {
+                const newItem = await db.insert('cart_items', {
                     cart_id: cartID,
                     product_id: product_id,
-                    quantity: 1
-                });
+                    quantity: quantity
+                }, 'id');
+                console.log('Item add to cart is', newItem);
                 return newItem;
             }
             // Nếu có rồi thì tăng số lượng lên 1
             else {
                 const newQuantity = item.quantity + 1;
-                const newItem = await db.update('public.cart_items', 'id', item.id, {
+                const newItem = await db.update('cart_items', 'id', item.id, {
                     quantity: newQuantity
                 });
                 return newItem;
             }
         } catch (error) {
+            console.log(error);
 
         }
     },
@@ -59,6 +69,7 @@ module.exports = {
             const items = await db.getCondition('public.cart_items', 'cart_id', cartID);
             return items;
         } catch (error) {
+            console.log(error);
 
         }
     },
@@ -71,6 +82,7 @@ module.exports = {
             const items = db.deleteCondition('public.cart_items', 'id', item_id);
             return items;
         } catch (error) {
+            console.log(error);
 
         }
     },
@@ -85,6 +97,7 @@ module.exports = {
             const items = db.deleteCondition('public.cart_items', 'cart_id', cartID);
             return items;
         } catch (error) {
+            console.log(error);
 
         }
     }
