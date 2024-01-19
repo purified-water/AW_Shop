@@ -47,9 +47,9 @@ module.exports = {
         const offset = (page - 1) * itemsPerPage;
 
         try {
-            const result = await db.getCategoriesByPage(offset, itemsPerPage);
-
-            res.json(result);
+            const cates = await db.getCategoriesByPage(offset, itemsPerPage);
+            console.log(cates);
+            res.render("cate",{cateList: cates});
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');
@@ -61,7 +61,9 @@ module.exports = {
         try {
             const result = await db.getAllCategories()
             const totalItems = result.count;
+            console.log(result);
             res.json({ totalItems });
+            // res.render("cate",result);
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');

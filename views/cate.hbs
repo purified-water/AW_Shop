@@ -1,35 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Page Title</title>
-  <!-- Include jQuery library from CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-</head>
-
-<body>
-
-  <div class="container">
-    <h3>DANH MỤC CATEGORY</h3>
-    <div class="site-section mt-5">
-      <div class="container">
-        <div class="row" id="data-container">
-          <!-- Data will be dynamically loaded here -->
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div id="pagination-container">
-              <a href="#" id="prev-page">Previous</a>
-              <!-- Pagination links will be dynamically loaded here -->
-              <a href="#" id="next-page">Next</a>
+<div class="container">
+  <h3>DANH MỤC CATEGORY</h3>
+  <div class="site-section mt-5">
+    <div class="container">
+      <div class="row" id="data-container">
+        {{#each cateList}}
+        <div class="col-lg-4 mb-5 col-md-6 cate">
+          {{!-- <div id="pagination-container"> --}}
+            <div class="wine_v_1 text-center pb-4">
+            <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
+              <img src="/images2/{{product_type}}.jpg" alt="{{this.product_type}}" class="img-fluid">
+            </a>
+            <div class="wine-actions">
+              <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
             </div>
           </div>
-        </div>
+        {{!-- </div> --}}
+      </div>
+        {{/each}}
+
+      <div class="row">
+        <a href="#" id="prev-page">Previous</a>
+        <a href="#" id="next-page">Next</a>
       </div>
     </div>
   </div>
+</div>
 
   <!-- Assuming you have a Handlebars template in your HTML -->
   <script id="data-template" type="text/x-handlebars-template">
@@ -128,6 +123,3 @@
       updatePaginationButtons();
     });
   </script>
-</body>
-
-</html>
