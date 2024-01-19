@@ -5,21 +5,18 @@
                 <div class="card-body">
                     <div class="title"><a href="signup">LOGIN</a> </div>
                     <div class="form">
-                            {{#if hasErrors}}
+                            {{#if messages.error}}
                                 <div class="alert alert-danger">
-                                    {{# each messages}}
-                                        <p>{{this}}</p>
-                                    {{/each}}
+                                    {{messages.error}}
                                 </div>
-
                             {{/if}}
 
                         <form action="/login" method="post">
                         <div class="input-group">
-                            <input class="input--style-3" type="text" placeholder="Username" name="username">
+                            <input class="input--style-3" type="text" placeholder="Username" name="username" required>
                         </div>
                         <div class="input-group">
-                           <input class="input--style-3" type="password" placeholder="Password" name="password">
+                           <input class="input--style-3" type="password" placeholder="Password" name="password" required>
                         </div>
                          <input type="hidden" name="_csrf" value="{{csrfToken}}">
                         <div class="p-t-10">
