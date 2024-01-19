@@ -28,7 +28,7 @@ passport.use(new GoogleStrategy({
         }
         const data = await Users.insert(user);
     }
-    console.log('google', user);
+    console.log(user);
     return cb(null, user);
 
   }
