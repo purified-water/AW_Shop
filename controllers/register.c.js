@@ -15,32 +15,32 @@ module.exports = {
 
         let regex = /^[A-Z][a-zA-Z]*$/
         if (!firstname.match(regex)) {
-            firstname = 'Tên chỉ được chứa kí tự chữ và chữ cái đầu tiên phải được in hoa !'
+            firstname = 'The fist name must only contain letters and the first letter must be capitalized!'
             isValid = false
         }
         if (!lastname.match(regex)) {
-            lastname = 'Tên chỉ được chứa kí tự chữ và chữ cái đầu tiên phải được in hoa !'
+            lastname = 'The fist name must only contain letters and the first letter must be capitalized!'
             isValid = false
         }
         let users = await Users.getUserByEmail(email)
         console.log('users', users);
         if (users.length > 0) {
-            email = 'Tên email đã có người dùng !'
+            email = 'Email has been set before!'
             isValid = false
         }
         regex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{4,}$/
         if (!username.match(regex)) {
-            username = 'Tên người dùng có ít nhất 4 ký tự, có cả chữ và số !'
+            username = 'Username must be at least 4 characters, including letters and numbers!'
             isValid = false
         }
         users = await Users.getUserByUsername(username);
         if (users.length > 0) {
-            username = 'Tên người dùng đã có người đặt !'
+            username = 'Username has been set before!'
             isValid = false
         }
         regex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$/
         if (!password.match(regex)) {
-            password = 'Mật khẩu có ít nhất 6 ký tự, có cả chữ và số !'
+            password = 'Password must have at least 6 characters, including letters and numbers!'
             isValid = false
         }
         if (!isValid) {

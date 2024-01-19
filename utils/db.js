@@ -57,6 +57,28 @@ module.exports = {
             console.log(error);
         }
     },
+
+    getAllCategories: async function () {
+        try {
+            const query = await db.one('SELECT COUNT(*) FROM (SELECT DISTINCT product_type FROM public.products)');
+            return query
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getCategoriesByPage: async function(offset, itemsPerPage) {
+        try {
+            const query = await db.any(
+                `SELECT DISTINCT product_type FROM public.products OFFSET $1 LIMIT $2`,
+                [offset, itemsPerPage]
+            )
+            return query;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
     importData: async function (jsonData) {
         try {
             const imageLink = jsonData.api_featured_image.startsWith("http:") ? jsonData.api_featured_image : "http:" + jsonData.api_featured_image;
