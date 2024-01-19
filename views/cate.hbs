@@ -1,0 +1,27 @@
+<div>
+    <div id="main">
+		<div class="image main">
+			<img src="../public/images/banner.jpg" alt="" class="img-fluid"/>
+		</div>
+	</div>
+	<h3>DANH MỤC SẢN PHẨM</h3>
+
+	<section class="tiles">
+        {{#each cateList}}
+		<div class="inner">
+			<article class="style3">
+				<span class="image">
+					<img src="" alt=""/>
+					<a href="/product?cate={{this.product_type}}"
+						id="show-detail"
+					>
+						<h2>{{this.product_type}}</h2>
+
+					</a>
+				</span>
+			</article>
+		</div>
+        {{/each}}
+	</section>
+</div>	
+
