@@ -43,5 +43,18 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+    getTop5Categories: async () => {
+        try {
+            const query = `select ct.product_type, sum(price) as total, ct.image_link
+            from products pd JOIN categories ct on pd.product_type = ct.product_type
+            group by ct.product_type
+            order by sum(price) DESC
+            limit 5`
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

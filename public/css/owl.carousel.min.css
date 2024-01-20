@@ -236,7 +236,7 @@
 }
 
 .owl-carousel .item:hover img{
-    filter: brightness(70%);
+    filter: brightness(50%);
 }
 
 .overlay {
@@ -255,5 +255,5 @@
   }
 
   .item:hover .overlay {
-    opacity: 1;
+    opacity: 3;
   }

@@ -63,7 +63,41 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+
+    getTop5Products: async () => {
+        try {
+            const query = `
+            SELECT id, price, image_link, name
+            FROM products
+            ORDER BY price DESC
+            LIMIT 5
+
+            `
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getDeal: async () => {
+        try {
+            const query = `
+            SELECT *
+            FROM products
+            ORDER BY RANDOM()
+            LIMIT 1
+
+            `
+            const data = await db.getWithQuery(query);
+            console.log('Deal', data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    
 
 
 }

@@ -248,4 +248,40 @@ module.exports = {
             }
         }
     },
+    getTop: async (tbName, tbColumn, limit) => {
+        let dbcn = null;
+        try {
+            const query = `SELECT * FROM ${tbName} ORDER BY ${tbColumn} DESC LIMIT ${limit}`;
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+    getWithQuery: async (query) => {
+        let dbcn = null;
+        try {
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    }
+
 };

@@ -11,7 +11,7 @@ module.exports = {
 
 
             const cartItems = await cartModel.getItemInCart(parseInt(user_id));
-            // console.log('cartItems: ', cartItems);
+            console.log('cartItems: ', cartItems);
             let products = [];
             for (let i = 0; i < cartItems.length; i++) {
                 let product = await cartModel.getProductByID(cartItems[i].product_id);

@@ -62,11 +62,14 @@ app.delete('/logout', (req,res) => {
     })
 })
 
-app.get('/', isAuthenticated, (req, res) => {
-    console.log('Authenticated user', req.user);  
-    res.render("home", {user: req.user[0] });
-});
 
+// app.get('/', isAuthenticated, (req, res) => {
+//     console.log('Authenticated user', req.user);  
+//     res.render("home", {user: req.user[0] });
+// });
+
+const homeRoute = require('./routes/home.r');
+app.use('/', homeRoute);
 
 const databaseRoute = require('./routes/db.r');
 app.use('/getAll', databaseRoute);
