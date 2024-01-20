@@ -45,10 +45,10 @@ module.exports = {
     },
     deleteProduct: async (req, res, next) => {
         try {
-            const productID = req.params.productID;
+            const productID = req.query.id;
             const product_type = req.query.product_type;
             await product.deleteProduct(productID);
-            res.redirect('/prod?cate=' + product_type);
+            res.redirect('/product?cate=' + product_type);
         } catch (error) {
             next(error);
         }
