@@ -19,11 +19,12 @@ CREATE DATABASE dbawshop
 -- Không cần cái này
 -- -- Create table categories
 -- DROP TABLE IF EXISTS product_type;
--- create table categories (
--- 	product_type_name varchar(255) not null
--- );
--- -- Add PK
--- alter table product_type add constraint PK_type primary key (product_type_name) with (fillfactor = 80);
+create table categories (
+	product_type varchar(255) not null
+    image_link varchar(255),
+);
+-- Add PK
+alter table categories add constraint PK_type primary key (product_type) with (fillfactor = 80);
 -- -- Insert Data
 -- insert into product_type (product_type_name) values ('foundation');
 

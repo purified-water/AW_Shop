@@ -1,14 +1,17 @@
 const product = require('../models/prod.m')
+const categories = require('../models/cate.m')
 
 module.exports = {
     loadProductsWithCate: async (req, res, next) => {
         try {
+            // Lấy danh sách categories
+            const cates = await categories.getCates();
             // Lấy product type - cate từ query
             const product_type = req.query.cate;
             // console.log('product_type: ', product_type);
             const prodList = await product.getProductsWithCate(product_type);
             // console.log('Product list: ', prodList);
-            res.render("prod", { product_type: product_type, prodList: prodList });
+            res.render("prod", { product_type: product_type, prodList: prodList, cates: cates });
         } catch (error) {
             next(error);
         }
@@ -25,9 +28,9 @@ module.exports = {
     },
     addProduct: async (req, res, next) => {
         try {
-            const { brand, name, price, imageLink, description, category, product_type, tag_list } = req.body;
-            await product.addProduct(brand, name, price, imageLink, description, category, product_type, tag_list);
-            res.redirect('/prod?cate=' + product_type); //TO DO: 1 là redirect lại 2 là ẩn modal
+            const { brand, name, price, image_link, description, product_type } = req.body;
+            await product.addProduct(brand, name, price, image_link, description, product_type);
+            res.redirect('/product?cate=' + product_type);
         } catch (error) {
             console.log(error);
         }
@@ -35,10 +38,9 @@ module.exports = {
     editProduct: async (req, res, next) => {
         try {
             const productID = req.params.productID;
-            const product_type = req.body.product_type;
-            const newProduct = req.body;
-            await product.editProduct(productID, newProduct);
-            res.redirect('/prod?cate=' + product_type); //TO DO: 1 là redirect lại 2 là ẩn modal
+            const { brand, name, price, image_link, description, product_type} = req.body;
+            await product.editProduct(productID, brand, name, price, image_link, description);
+            res.redirect('/product?cate=' + product_type); //TO DO: 1 là redirect lại 2 là ẩn modal
         } catch (error) {
             next(error);
         }
