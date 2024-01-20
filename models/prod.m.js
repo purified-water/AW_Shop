@@ -90,7 +90,7 @@ module.exports = {
 
             `
             const data = await db.getWithQuery(query);
-            console.log('Deal', data);
+            // console.log('Deal', data);
             return data;
         } catch (error) {
             console.log(error);
