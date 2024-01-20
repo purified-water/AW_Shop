@@ -153,6 +153,28 @@ module.exports = {
             }
         }
     },
+
+    getConditionInTime: async (tbName, tbColum, value, time) => {
+        let dbcn = null;
+        try {
+            const query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
+            dbcn = await db.connect();
+
+            const data = await dbcn.any(query);
+
+            // console.log(data);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+
     deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {

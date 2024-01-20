@@ -28,8 +28,15 @@ app.engine('hbs', handlebars.engine({
     layoutsDir:`views/layouts/`,
     defaultLayout: 'index',
     extname: 'hbs',
-    partialsDir: 'views/partials/'
+    partialsDir: 'views/partials/',
+    helpers: {
+        json: function(context){
+            return JSON.stringify(context);
+        },
+    },
 }));
+
+
 
 
 

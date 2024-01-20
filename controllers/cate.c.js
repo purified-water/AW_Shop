@@ -48,7 +48,7 @@ module.exports = {
 
         try {
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            console.log(cates);
+            // console.log(cates);
             res.render("cate",{cateList: cates});
         } catch (err) {
             console.error(err);
