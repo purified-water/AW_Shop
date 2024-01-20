@@ -157,7 +157,12 @@ module.exports = {
     getConditionInTime: async (tbName, tbColum, value, time) => {
         let dbcn = null;
         try {
-            const query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
+            var query = "";
+            if (time === "month") {
+                query = `SELECT * FROM ${tbName} WHERE EXTRACT(MONTH FROM ${tbColum}::timestamp)=EXTRACT(MONTH FROM '${value}'::timestamp) AND EXTRACT(YEAR FROM ${tbColum}::timestamp)=EXTRACT(YEAR FROM '${value}'::timestamp)`;
+              } else {
+                query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
+              }
             dbcn = await db.connect();
 
             const data = await dbcn.any(query);

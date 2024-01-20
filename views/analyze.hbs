@@ -1,23 +1,49 @@
-<div class="container" data-order-list="{{json orderList}}">
-  <div class="revenue">
-    <div class="revenue-label">Revenue</div>
-    <canvas id="myChart"></canvas>
+<div class="container">
+  <div class="revenue pt-5 mb-10">
+    <div class="revenue-label text-center">Revenue in day: ${{this.totalDay}}</div>
+    <canvas id="myChartDay"></canvas>
+  </div>
+    <div class="revenue">
+    <div class="revenue-label text-center">Revenue in month: ${{this.totalMonth}}</div>
+    <canvas id="myChartMonth"></canvas>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-  const ctx = document.getElementById('myChart');
-  const orderList = JSON.parse(document.querySelector('.container').dataset.orderList);
-  
-  new Chart(ctx, {
+  var orderListDay = {{{orderListDay}}};
+  var orderListMonth = {{{orderListMonth}}};
+  console.log(orderListDay);
+  console.log(orderListMonth);
+  const ctx1 = document.getElementById('myChartDay');
+  new Chart(ctx1, {
     type: 'bar',
     data: {
-      labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      labels: orderListDay.map(item => item.date),
       datasets: [{
-        label: 'Revenue',
-        data: orderList,
+        label: 'Pending',
+        data: orderListDay.map(item => (item.status === 'Pending' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Completed',
+        data: orderListDay.map(item => (item.status === 'Completed' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Processing',
+        data: orderListDay.map(item => (item.status === 'Processing' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Shipped',
+        data: orderListDay.map(item => (item.status === 'Shipped' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1
       }]
     },
@@ -29,4 +55,47 @@
       }
     }
   });
+
+  const ctx2 = document.getElementById('myChartMonth');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: orderListMonth.map(item => item.date),
+      datasets: [{
+        label: 'Pending',
+        data: orderListMonth.map(item => (item.status === 'Pending' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Completed',
+        data: orderListMonth.map(item => (item.status === 'Completed' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Processing',
+        data: orderListMonth.map(item => (item.status === 'Processing' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+        borderColor: 'rgba(255, 206, 86, 1)',
+        borderWidth: 1
+      }, {
+        label: 'Shipped',
+        data: orderListMonth.map(item => (item.status === 'Shipped' ? parseInt(item.total, 10) : 0)),
+        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+        borderColor: 'rgba(54, 162, 235, 1)',
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+
+
+
 </script>
