@@ -6,13 +6,23 @@
 
   <div class="detail-section">
     <div class="detail-info row">
-      <div class="detail-img col-md-3">
+      <div class="detail-img col-md-4 ms-3">
         <img src="{{productDetail.image_link}}" alt="IMG" class="detail-img" />
       </div>
-      <div class="col-md-6">
-        <p class="detail-text">Brand: {{productDetail.brand}}</p>
-        <p class="detail-text">Price:
-          {{productDetail.price}}{{productDetail.price_sign}}</p>
+      <div class="col-md-6 ms-2">
+
+        <span class="detail-text">Category:</span>
+        <span class="detail-description">{{productDetail.product_type}}</span>
+        {{!-- <p class="detail-text">Category: {{productDetail.product_type}}</p> --}}
+        <br />
+        <span class="detail-text">Brand:</span>
+        <span class="detail-description">{{productDetail.brand}}</span>
+        <br />
+        <span class="detail-text">Price:</span>
+        <span
+          class="detail-description"
+        >{{productDetail.price}}{{productDetail.price_sign}}</span>
+        <br />
         <span class="detail-text">Tag: </span>
         {{#each productDetail.tag_list}}
           <span class="detail-description">{{this}}</span>
@@ -28,7 +38,7 @@
             name="quantity"
             value="1"
           />
-          <button type="submit" class="detail-button">Add to cart</button>
+          <button type="submit" class="detail-button mt-2 mb-3">Add to cart</button>
         </form>
       </div>
 
@@ -44,9 +54,5 @@
       {{productDetail.description}}
     </p>
     <hr class="section-divider" />
-  </div>
-
-  <div class="detail-section">
-    <a href="#" class="back-link">Back</a>
   </div>
 </div>

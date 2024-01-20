@@ -9,6 +9,8 @@ const flash = require('express-flash')
 const {isAuthenticated, isNotAuthenticated} = require('./middlewares/auth.middleware')
 const axios = require('axios');
 
+const db = require('./utils/db');
+
 
 app.use(flash());
 
@@ -31,9 +33,6 @@ app.engine('hbs', handlebars.engine({
     partialsDir: 'views/partials/'
 }));
 
-
-
-
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
@@ -43,6 +42,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// get data
+const databaseRoute = require('./routes/db.r');
+app.use('/getAll', databaseRoute);
 
 //Authentications
 const authRoute = require('./routes/auth.r');
@@ -70,16 +72,6 @@ app.delete('/logout', (req,res) => {
 
 const homeRoute = require('./routes/home.r');
 app.use('/', homeRoute);
-
-const databaseRoute = require('./routes/db.r');
-app.use('/getAll', databaseRoute);
-
-
-// app.get('/', (req, res) => {
-
-//     res.render("home");
-// });
-
 
 const cateRoute = require('./routes/cate.r');
 app.use('/cate', (req, res, next) => {
@@ -118,8 +110,6 @@ app.use('/user',(req,res,next) => {
     res.locals.user = req.user[0];
     next();
 }, usersRoute)
-// const signoutRoute = require('./routes/signout.r');
-// app.use('/signout', signoutRoute);
 
 
 

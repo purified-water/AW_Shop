@@ -5,13 +5,13 @@ module.exports = {
     loadProductsWithCate: async (req, res, next) => {
         try {
             // Lấy danh sách categories
-            const cates = await categories.getCates();
+            // const cates = await categories.getCates();
             // Lấy product type - cate từ query
             const product_type = req.query.cate;
             // console.log('product_type: ', product_type);
             const prodList = await product.getProductsWithCate(product_type);
             // console.log('Product list: ', prodList);
-            res.render("prod", { product_type: product_type, prodList: prodList, cates: cates });
+            res.render("prod", { product_type: product_type, prodList: prodList});
         } catch (error) {
             next(error);
         }

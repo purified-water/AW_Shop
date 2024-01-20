@@ -52,7 +52,7 @@ module.exports = {
             const query = await db.any(
                 `SELECT DISTINCT product_type FROM categories`
             )
-            console.log('Querying categories: ', query);
+            // console.log('Querying categories: ', query);
             return query;
         } catch (error) {
             console.log(error);

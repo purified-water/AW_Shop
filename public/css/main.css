@@ -594,7 +594,7 @@ input {
 
 .detail-img {
   max-width: 100%; /* Độ rộng tối đa là 100% của phần tử cha */
-  max-height: 300px; /* Chiều cao tối đa là 300px */
+  max-height: 400px; /* Chiều cao tối đa là 300px */
   height: auto; /* Đảm bảo tỷ lệ khung hình được bảo toàn */
 }
 
