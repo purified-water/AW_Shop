@@ -2,6 +2,26 @@
   <h1>{{product_type}}</h1>
   <div class="site-section mt-5">
     <div class="container">
+      <div class="row mb-5">
+        <div class="dropdown">
+          <button
+            class="dropdown-toggle"
+            type="button"
+            id="dropdownMenuButton"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Filter
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">A-Z</a>
+            <a class="dropdown-item" href="#">Z-A</a>
+            <a class="dropdown-item" href="#">Price low to high</a>
+            <a class="dropdown-item" href="#">Price high to low</a>
+          </div>
+        </div>
+      </div>
       <div class="row">
         {{#each prodList}}
           <div class="col-lg-4 mb-5 col-md-6 product">

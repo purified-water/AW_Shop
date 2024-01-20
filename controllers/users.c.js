@@ -18,5 +18,13 @@ module.exports = {
         catch (e) {
             throw e
         }
+    },
+    loadProfile: async(req,res,next) => {
+        try {
+            res.render('profile');
+        }
+        catch(e){
+            console.log(e);
+        }
     }
 }

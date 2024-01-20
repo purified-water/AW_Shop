@@ -1,51 +1,125 @@
 <div class="container">
-	<h3>DANH MỤC CATEGORY</h3>
+  <h3>DANH MỤC CATEGORY</h3>
   <div class="site-section mt-5">
     <div class="container">
-      <div class="row">
+      <div class="row" id="data-container">
         {{#each cateList}}
-          <div class="col-lg-4 mb-5 col-md-6 cate">
+        <div class="col-lg-4 mb-5 col-md-6 cate">
+          {{!-- <div id="pagination-container"> --}}
             <div class="wine_v_1 text-center pb-4">
-              <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
-                <img src="/images2/{{product_type}}.jpg" alt="{{this.product_type}}" class="img-fluid">
-              </a>
-              <div class="wine-actions">
-                <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
-              </div>
+            <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
+              <img src="/images2/{{product_type}}.jpg" alt="{{this.product_type}}" class="img-fluid">
+            </a>
+            <div class="wine-actions">
+              <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
             </div>
           </div>
+        {{!-- </div> --}}
+      </div>
         {{/each}}
+
+      <div class="row">
+        <a href="#" id="prev-page">Previous</a>
+        <a href="#" id="next-page">Next</a>
       </div>
     </div>
   </div>
-  {{!-- <section class="tiles">
-    {{#each cateList}}
-      <div class="inner">
-        <article class="style3">
-          <span class="image">
-            <img src="" alt="" />
-            <a href="/product?cate={{this.product_type}}" id="show-detail">
-              <h2>{{this.product_type}}</h2>
-
-            </a>
-          </span>
-        </article>
-      </div>
-      <a href="#my-dialog">Edit</a>
-
-      <div class="modal" id="my-dialog">
-        <div class="modal-dialog">
-          <form action="/edit?oldCateName={{this.product_type}}">
-			<input type="text" name="newCateName" id="newCate" placeholder="Change cateogory name">
-			<input type="submit" value="Edit">
-          </form>
-          <h1>my dialog</h1>
-          <!-- Add your modal content here -->
-        </div>
-      </div>
-
-      <a href="/delete/{{this.product_type}}">Delete</a>
-    {{/each}}
-  </section> --}}
-
 </div>
+
+  <!-- Assuming you have a Handlebars template in your HTML -->
+  <script id="data-template" type="text/x-handlebars-template">
+  {{#each data}}
+    <p>{{this.column_name}}</p>
+  {{/each}}
+</script>
+
+  <script>
+    $(document).ready(function () {
+      var currentPage = 1;
+      var totalPages = 1;
+
+      function loadData(page) {
+        $.ajax({
+          url: '/cate?page='+page,
+          type: 'GET',
+          data: { page: page },
+          success: function (data) {
+            // Assuming data is an array of objects
+            console.log(data)
+            renderData(data);
+          },
+          error: function (error) {
+            console.error('Error fetching data:', error);
+          }
+        });
+      }
+
+      function renderData(data) {
+        // Get the Handlebars template script
+        var source = $('#data-template').html();
+        // Compile the template 
+        var template = Handlebars.compile(source);
+        // Insert the rendered HTML into the container
+        $('#data-container').html(template({ data: data }));
+      }
+
+      function loadPagination() {
+        $.ajax({
+          url: '/cate',
+          type: 'GET',
+          success: function (result) {
+            const totalItems = result.totalItems;
+            totalPages = Math.ceil(totalItems / 5);
+
+            $('#pagination-container').empty();
+            $('#pagination-container').append('<a href="#" id="prev-page">Previous</a>');
+
+            for (let i = 1; i <= totalPages; i++) {
+              $('#pagination-container').append('<a href="#" data-page="' + i + '">' + i + '</a>');
+            }
+
+            $('#pagination-container').append('<a href="#" id="next-page">Next</a>');
+            updatePaginationButtons();
+          },
+          error: function (error) {
+            console.error('Error fetching pagination data:', error);
+          }
+        });
+      }
+
+      function updatePaginationButtons() {
+        $('#prev-page').prop('disabled', currentPage === 1);
+        $('#next-page').prop('disabled', currentPage === totalPages);
+      }
+
+      function navigateToPage(page) {
+        currentPage = page;
+        loadData(currentPage);
+        updatePaginationButtons();
+      }
+
+      $(document).on('click', '#pagination-container a[data-page]', function (e) {
+        e.preventDefault();
+        var page = parseInt($(this).data('page'));
+        navigateToPage(page);
+      });
+
+      $(document).on('click', '#prev-page', function (e) {
+        e.preventDefault();
+        if (currentPage > 1) {
+          navigateToPage(currentPage - 1);
+        }
+      });
+
+      $(document).on('click', '#next-page', function (e) {
+        e.preventDefault();
+        if (currentPage < totalPages) {
+          navigateToPage(currentPage + 1);
+        }
+      });
+
+      // Initial load
+      loadPagination();
+      updatePaginationButtons();
+    });
+  </script>
