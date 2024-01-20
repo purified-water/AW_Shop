@@ -11,6 +11,7 @@ module.exports = {
         let username = req.body.username
         let email = req.body.email
         let password = req.body.password
+        let phone = req.body.phone
         let isValid = true;
 
         let regex = /^[A-Z][a-zA-Z]*$/
@@ -45,7 +46,7 @@ module.exports = {
         }
         if (!isValid) {
             console.log('not valid');
-            return res.json({firstname, lastname, email, username, password, isValid})
+            return res.status(500).json({firstname, phone, lastname, email, username, password, isValid})
         }
         try {
             console.log(req.body);
@@ -64,7 +65,7 @@ module.exports = {
             }
             const data = await Users.insert(user);
             // res.json({firstname, lastname, email, username, password, isValid})
-            res.redirect('/login');
+            return res.status(200).json({firstname, phone, lastname, email, username, password, isValid});
         }
         catch (e) {
             console.log(e)

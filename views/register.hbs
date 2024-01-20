@@ -63,6 +63,7 @@
               />
             </div>
             
+            <div class="phone-error error" style="font-weight: 800;"></div>
             <div class="input-group">
               <input
                 class="input--style-3"
@@ -127,16 +128,18 @@
         const email = form.querySelector('input[name="email"]').value;
         const password = form.querySelector('input[name="password"]').value;
         const username = form.querySelector('input[name="username"]').value;
+        const phone = form.querySelector('input[name="phone"]').value;
 
         try {
           const res = await fetch('/register', {
             method: 'POST',
-            body: JSON.stringify({ firstname, lastname, email, password, username }),
+            body: JSON.stringify({ firstname, lastname, email, password, username, phone }),
             headers: { 'Content-Type': 'application/json' }
           })
           const data = await res.json();
           console.log('data', data);
           if (!data.isValid) {
+            console.log('hehe');
             document.querySelector('.firstname-error').innerHTML = data.firstname.includes('!') ? data.firstname : '';
             document.querySelector('.lastname-error').innerHTML = data.lastname.includes('!') ? data.lastname : '';
             document.querySelector('.password-error').innerHTML = data.password.includes('!') ? data.password : '';
@@ -144,6 +147,7 @@
             document.querySelector('.username-error').innerHTML = data.username.includes('!') ? data.username : '';
           }
           else {
+            console.log('hahaha');
             location.assign('/login');
           }
         }
