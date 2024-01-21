@@ -16,7 +16,7 @@ module.exports = {
             const query = db.getCondition('products', 'product_type', product_type);
             return query;
         }
-        catch(e) {
+        catch (e) {
             console.log(e);
         }
     },
@@ -25,12 +25,12 @@ module.exports = {
             const query = db.getCondition('products', 'id', productID);
             return query;
         }
-        catch(e) {
+        catch (e) {
             console.log(e);
         }
     },
 
-   
+
 
     addProduct: async (brand, name, price, imageLink, description, product_type) => {
         const newID = await getProductCount() + 1;
@@ -66,7 +66,7 @@ module.exports = {
             }
             const query = await db.update('products', entity, 'id', productID);
         }
-        catch(e) {
+        catch (e) {
             console.log(e);
         }
     },
@@ -109,9 +109,52 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+    filter: async (product_type, filter) => {
+        let query;
+        try {
+            switch (filter) {
+                case 'A_Z':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY name ASC
+                    `
+                    break;
+                case 'Z_A':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY name DESC
+                    `
+                    break;
+                case 'Price_low_to_high':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY price ASC
+                    `
+                    break;
+                case 'Price_high_to_low':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY price DESC
+                    `
+                    break;
+            }
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    
+
 
 
 }

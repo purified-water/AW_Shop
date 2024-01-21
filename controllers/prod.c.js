@@ -53,5 +53,16 @@ module.exports = {
             next(error);
         }
     },
+
+    filterProduct: async (req, res, next) => {
+        try {
+            const product_type = req.query.cate;
+            const filter = req.query.filter;
+            const prodList = await product.filter(product_type, filter);
+            res.render("prod", { product_type: product_type, prodList: prodList});
+        } catch (error) {
+            next(error);
+        }
+    }
     
 }
