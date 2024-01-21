@@ -323,8 +323,10 @@ input {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-  width: 100%;
-  font-size: 14px;
+  width: 70%;
+  height: 100%;
+  align-items: center;
+  font-size: 15px;
   font-family: inherit;
 }
 
@@ -344,8 +346,7 @@ input {
 
 .input-group {
   position: relative;
-  margin-bottom: 33px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  align-items: center;
 }
 
 .input--style-3 {

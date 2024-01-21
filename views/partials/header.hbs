@@ -1,9 +1,20 @@
 <nav
   class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light ftco-navbar-light-2"
-  id="ftco-navbar"
->
+  id="ftco-navbar">
   <div class="container">
     <a class="navbar-brand" href="/"><bold>AW SHOP</bold></a>
+    <div class="input-group rounded">
+      <input
+        type="search"
+        class="rounded"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+      />
+      <span class="input-group-text border-0 h-80" id="search-addon">
+        <i class="oi oi-magnifying-glass"></i>
+      </span>
+    </div>
     <button
       class="navbar-toggler"
       type="button"
@@ -11,8 +22,7 @@
       data-target="#ftco-nav"
       aria-controls="ftco-nav"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <span class="oi oi-menu"></span>
       Menu
     </button>
@@ -21,21 +31,16 @@
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"><a
             href="/cate"
-            class="nav-link"
-          >Categories</a></li>
+            class="nav-link">Categories</a></li>
 
         <li class="nav-item active"><a
-            href="/shop/about"
-            class="nav-link"
-          >About</a></li>
+            href="/about"
+            class="nav-link">About</a></li>
 
-          <li class="nav-item active"><a
+        <li class="nav-item active"><a
             href="/analyze"
-            class="nav-link"
-          >Analyze</a></li>
-        
+            class="nav-link">Analyze</a></li>
 
-        <li class="nav-item"><a href="/shop/contact" class="nav-link">Contact Us</a></li>
         <li class="nav-item dropdown">
           <a
             class="nav-link dropdown-toggle"
@@ -43,24 +48,21 @@
             id="dropdown04"
             data-toggle="dropdown"
             aria-haspopup="true"
-            aria-expanded="false"
-          >{{user.firstname}} {{user.lastname}}</a>
+            aria-expanded="false">{{user.firstname}} {{user.lastname}}</a>
           <div class="dropdown-menu" aria-labelledby="dropdown04">
             {{#if user}}
-              <a class="dropdown-item" href="/user/profile">Profile</a>
-              <a class="dropdown-item" href="/logout">Logout</a>
+            <a class="dropdown-item" href="/user/profile">Profile</a>
+            <a class="dropdown-item" href="/logout">Logout</a>
             {{else}}
-              <a class="dropdown-item" href="/register">Signup</a>
-              <a class="dropdown-item" href="/login">Signin</a>
+            <a class="dropdown-item" href="/register">Signup</a>
+            <a class="dropdown-item" href="/login">Signin</a>
             {{/if}}
           </div>
         </li>
         <li class="nav-item cta cta-colored"><a
             href="/cart"
-            class="nav-link"
-          ><span
-              class="icon-shopping_cart"
-            ></span>[{{this.session.cart.totalQty}}]</a></li>
+            class="nav-link"><span
+              class="icon-shopping_cart"></span>[{{this.session.cart.totalQty}}]</a></li>
 
       </ul>
     </div>

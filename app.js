@@ -116,6 +116,11 @@ app.use('/user',(req,res,next) => {
     next();
 }, usersRoute)
 
+app.get('/about',(req,res,next) => {
+    req.user = req.user || [];
+    res.locals.user = req.user[0];
+    res.render("about");
+})
 
 
 app.listen(port, () => {
