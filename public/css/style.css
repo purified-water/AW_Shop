@@ -1601,6 +1601,11 @@ pre {
   -o-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; }
+  
+  .form-control-small{
+    height: 70%;
+    font-size: 15px;
+  }
   @media screen and (prefers-reduced-motion: reduce) {
     .form-control {
       -webkit-transition: none;
