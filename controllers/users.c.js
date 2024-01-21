@@ -21,7 +21,7 @@ module.exports = {
     },
     loadProfile: async(req,res,next) => {
         try {
-            res.render('profile');
+            res.render('profile',{pageTitle: "Profile"});
         }
         catch(e){
             console.log(e);

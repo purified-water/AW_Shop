@@ -119,7 +119,7 @@ app.use('/user',(req,res,next) => {
 app.get('/about',(req,res,next) => {
     req.user = req.user || [];
     res.locals.user = req.user[0];
-    res.render("about");
+    res.render("about",{pageTitle: "About"});
 })
 
 

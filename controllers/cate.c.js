@@ -49,7 +49,7 @@ module.exports = {
         try {
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
             // console.log(cates);
-            res.render("cate",{cateList: cates});
+            res.render("cate",{cateList: cates, pageTitle: "Category List"});
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');

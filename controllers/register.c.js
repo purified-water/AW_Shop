@@ -74,6 +74,6 @@ module.exports = {
             
     },
     register_get: (req,res,next) => {
-        res.render("register");
+        res.render("register", {pageTitle: "Register"});
     }
 }

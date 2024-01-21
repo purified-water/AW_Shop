@@ -16,7 +16,8 @@ module.exports = {
             user: req.user[0], 
             top5Products: top5Products, 
             top5Categories: top5Categories,
-            deal: deal[0]
+            deal: deal[0],
+            pageTitle: "Homepage"
         });
 
     }

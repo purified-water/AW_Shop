@@ -11,7 +11,11 @@ module.exports = {
             // console.log('product_type: ', product_type);
             const prodList = await product.getProductsWithCate(product_type);
             // console.log('Product list: ', prodList);
-            res.render("prod", { product_type: product_type, prodList: prodList});
+            res.render("prod", { 
+                product_type: product_type, 
+                prodList: prodList,
+                pageTitle: "Product List",
+            });
         } catch (error) {
             next(error);
         }
@@ -21,7 +25,7 @@ module.exports = {
             const productID = req.query.id;
             const productDetail = await product.getProductDetail(productID);
             // console.log('productDetail: ', productDetail);
-            res.render("detail", { productDetail: productDetail[0] }); // TO DO: SỬA chỗ này theo Trí
+            res.render("detail", { productDetail: productDetail[0], pageTitle: "Detail Product" }); // TO DO: SỬA chỗ này theo Trí
         } catch (error) {
             next(error);
         }
