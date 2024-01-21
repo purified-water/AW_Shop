@@ -117,11 +117,6 @@
                   </div>
                   <label class="fw-bold" for="image_link">Image</label>
                     <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="image_link" required
-                    />
                     <div id="preview-edit-image">
                     </div>
                     <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
@@ -175,12 +170,15 @@
 <script>
  
   function getImageReview(event, action) {
-    const imageInput = document.getElementById(`image-${action}-input`);
-    const imageLink = document.getElementById(`image-${action}-link`);
+    const parentNode = event.target.parentNode;
+    console.log(parentNode)
+
+    const imageInput = parentNode.querySelector(`#image-${action}-input`);
+    const imageLink = parentNode.querySelector(`#image-${action}-link`);
     let fileName = event.target.files[0].name;
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
-    let imageDiv = document.getElementById(`preview-${action}-image`);
+    let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
     console.log('fileName',fileName)
     console.log('imageDiv',imageDiv);
     console.log('imageLink',imageLink);

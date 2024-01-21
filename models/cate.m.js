@@ -23,13 +23,13 @@ module.exports = {
             console.log(error);
         }
     },
-    editCate: async (oldCateName, newCateName) => {
+    editCate: async (oldCateName, newCateName, imageLink) => {
         try {
             const entity = {
                 product_type: newCateName
             }
             console.log('Entity to edit', entity);
-            await db.update('categories', {product_type: newCateName}, 'product_type', oldCateName);
+            await db.update('categories', {product_type: newCateName, image_link: imageLink}, 'product_type', oldCateName);
             await db.update('products', entity, 'product_type', oldCateName);
         } catch (error) {
             console.log(error);

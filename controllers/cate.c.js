@@ -89,8 +89,10 @@ module.exports = {
         try {
             const oldCateName = req.body.product_type;
             const newCateName = req.body.new_product_type;
+            const imageLink = req.body.image_link;
+            console.log(imageLink)
 
-            await category.editCate(oldCateName, newCateName);
+            await category.editCate(oldCateName, newCateName, imageLink);
             res.redirect('/cate');
         } catch (error) {
             next(error);
