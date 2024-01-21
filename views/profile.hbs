@@ -10,10 +10,110 @@
     </style>
     <div class="container mt-5 mb-3 d-flex flex-row p-0">
         <h3 class="me-3">Profile</h3>
-        <a href="/user/update/{{user.id}}" class="edit-button">
+        <a class="edit-button" 
+            data-mdb-ripple-init
+            data-mdb-modal-init
+            href="#editUser">
             <i class="icon ion-md-create"></i>
         </a>
+
     </div>
+     <div
+          class="modal fade"
+          id="editUser"
+          aria-hidden="true"
+          aria-labelledby="editUserLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editUserLabel">Edit your profile</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/user/update/{{user.id}}" method="post">
+                <label class="fw-bold" for="username">Username</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="username"
+                      value="{{user.username}}"
+                    />
+                  <div class="input-group">
+                    <label class="fw-bold" for="firstname">Firstname</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="firstname"
+                    value="{{user.firstname}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="lastname">Lastname</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="lastname"
+                      value="{{user.lastname}}"
+                    />
+                  </div>
+                    <div class="input-group">
+                    <label class="fw-bold" for="phone">Phone</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="phone"
+                      value="{{user.phone}}"
+                    />
+                  </div>
+                    <div class="input-group">
+                    <label class="fw-bold" for="city">City</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="city"
+                      value="{{user.city}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="street">Street</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="street"
+                      value="{{user.street}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="zipcode">Zipcode</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="zipcode"
+                      value="{{user.zipcode}}"
+                    />
+                  </div>
+                  
+
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+      </div>
     <div class="container">
         <div class="row">  
         <ul class="list-group" style="list-style-type: italic ">

@@ -49,7 +49,8 @@ module.exports = {
         try {
             const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            res.render("cate",{cateList: cates, page, total_cate});
+            res.render("cate",{cateList: cates, page, total_cate, pageTitle: "Category List"});
+
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');
