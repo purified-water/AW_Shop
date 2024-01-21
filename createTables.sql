@@ -64,12 +64,12 @@ CREATE TABLE users (
     email VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    firstname VARCHAR(255) NOT NULL,
-    lastname VARCHAR(255) NOT NULL,
-    phone VARCHAR(20) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    street VARCHAR(255) NOT NULL,
-    zipcode VARCHAR(20) NOT NULL
+    firstname VARCHAR(255),
+    lastname VARCHAR(255),
+    phone VARCHAR(20),
+    city VARCHAR(255),
+    street VARCHAR(255),
+    zipcode VARCHAR(20)
 );
 -- Add PK
 alter table users

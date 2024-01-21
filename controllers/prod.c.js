@@ -4,9 +4,7 @@ const categories = require('../models/cate.m')
 module.exports = {
     loadProductsWithCate: async (req, res, next) => {
         try {
-            // Lấy danh sách categories
-            // const cates = await categories.getCates();
-            // Lấy product type - cate từ query
+            
             const product_type = req.query.cate;
             // console.log('product_type: ', product_type);
             const prodList = await product.getProductsWithCate(product_type);

@@ -23,11 +23,10 @@ module.exports = {
         }
     },
 
-    updateUser: async(id, username, password, firstname, lastname, phone, city, street, zipcode) => {
+    updateUser: async(id, username, firstname, lastname, phone, city, street, zipcode) => {
         try {
             const updatedUser = {
                 username: username,
-                password: password,
                 firstname: firstname,
                 lastname: lastname,
                 phone: phone,

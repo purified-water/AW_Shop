@@ -24,10 +24,10 @@ passport.use(new FacebookStrategy({
             password: 'none',
             firstname: profile.name.givenName,
             lastname: profile.name.familyName,
-            phone: 'req.body.phone',
-            city: 'req.body.city',
-            street: 'req.body.street',
-            zipcode: 'req.body.zipcode',
+            phone: '0373893504',
+            city: 'HCM',
+            street: '127 Nguyen Van Cu',
+            zipcode: '460000',
         }
         const data = await Users.insert(user);
     }

@@ -21,10 +21,10 @@ passport.use(new GoogleStrategy({
             password: 'none',
             firstname: profile.given_name,
             lastname: profile.family_name,
-            phone: 'req.body.phone',
-            city: 'req.body.city',
-            street: 'req.body.street',
-            zipcode: 'req.body.zipcode',
+            phone: '0373893504',
+            city: 'HCM',
+            street: '127 Nguyen Van Cu',
+            zipcode: '460000',
         }
         const data = await Users.insert(user);
     }
