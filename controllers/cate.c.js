@@ -43,13 +43,14 @@ module.exports = {
     // },
     loadCates: async (req, res, next) => {
         const page = parseInt(req.query.page) || 1;
-        const itemsPerPage = 5;
+        const itemsPerPage = 6;
         const offset = (page - 1) * itemsPerPage;
 
         try {
+            const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            // console.log(cates);
-            res.render("cate",{cateList: cates, pageTitle: "Category List"});
+            res.render("cate",{cateList: cates, page, total_cate, pageTitle: "Category List"});
+
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');
@@ -73,8 +74,10 @@ module.exports = {
     addCate: async (req, res, next) => {
         try {
             const image_link = req.body.image_link;
+            console.log(image_link);
             const product_type = req.body.product_type;
-
+            console.log(image_link);
+            console.log(product_type);
             await category.addCate(product_type, image_link);
             res.redirect('/cate');
         } catch (error) {
@@ -87,8 +90,10 @@ module.exports = {
         try {
             const oldCateName = req.body.product_type;
             const newCateName = req.body.new_product_type;
+            const imageLink = req.body.image_link;
+            console.log(imageLink)
 
-            await category.editCate(oldCateName, newCateName);
+            await category.editCate(oldCateName, newCateName, imageLink);
             res.redirect('/cate');
         } catch (error) {
             next(error);

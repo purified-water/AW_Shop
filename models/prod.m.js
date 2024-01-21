@@ -11,6 +11,26 @@ async function getProductCount() {
 }
 
 module.exports = {
+    getProductsWithCatePerPage: async (product_type, offset, itemsPerpage) => {
+        try {
+            const data = await db.getTableWithConditionPerPage('products','product_type', product_type, offset, itemsPerpage);
+            // console.log('count', count);
+            return data;
+        }
+        catch(e) {
+            console.log(e);
+        }
+    },
+    countProductsWithTcate: async (product_type) => {
+        try {
+            const count = await db.countTableWithCondition('products','product_type', product_type);
+            // console.log('count', count);
+            return count;
+        }
+        catch(e) {
+            console.log(e);
+        }
+    },
     getProductsWithCate: (product_type) => {
         try {
             const query = db.getCondition('products', 'product_type', product_type);

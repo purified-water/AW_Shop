@@ -23,13 +23,13 @@ module.exports = {
             console.log(error);
         }
     },
-    editCate: async (oldCateName, newCateName) => {
+    editCate: async (oldCateName, newCateName, imageLink) => {
         try {
             const entity = {
                 product_type: newCateName
             }
             console.log('Entity to edit', entity);
-            await db.update('categories', {product_type: newCateName}, 'product_type', oldCateName);
+            await db.update('categories', {product_type: newCateName, image_link: imageLink}, 'product_type', oldCateName);
             await db.update('products', entity, 'product_type', oldCateName);
         } catch (error) {
             console.log(error);
@@ -53,6 +53,16 @@ module.exports = {
             limit 5`
             const data = await db.getWithQuery(query);
             return data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    countCate: async() => {
+        try {
+            const count = await db.countTable('categories');
+            // console.log(count);
+            return count;
         } catch (error) {
             console.log(error);
         }

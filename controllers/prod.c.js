@@ -6,14 +6,16 @@ module.exports = {
         try {
             
             const product_type = req.query.cate;
+            const page = req.query.page ? req.query.page: 1;
+            const offset = 9*(page-1);
+            const itemsPerPage = 9;
+            const total = await product.countProductsWithTcate(product_type);
+            // console.log(total);
             // console.log('product_type: ', product_type);
-            const prodList = await product.getProductsWithCate(product_type);
-            // console.log('Product list: ', prodList);
-            res.render("prod", { 
-                product_type: product_type, 
-                prodList: prodList,
-                pageTitle: "Product List",
-            });
+            // const prodList = await product.getProductsWithCate(product_type);
+            const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
+            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
+
         } catch (error) {
             next(error);
         }
