@@ -1,0 +1,49 @@
+<style>
+body {
+    height: 100vh;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+}
+
+.success-container {
+    text-align: center;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.tick-icon {
+    color: #28a745;
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+</style>
+<div class="container success-container animate__animated animate__fadeIn p-5 mt-5">
+    <div class="tick-icon">&#10004;</div>
+    <h2 class="mb-4">Thanh toán thành công</h2>
+    <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+    <form>
+        <!-- Include any additional form elements or customization as needed -->
+        <button type="button" class="btn btn-primary">Quay lại trang chủ</button>
+    </form>
+</div>
+
+<script src="https://unpkg.com/ionicons@5.6.3/dist/ionicons.js"></script>
+<script src="/js/jquery.magnific-popup.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+
+<script>
+    // Example: Initialize Magnific Popup for a button
+    $(document).ready(function() {
+        $('.btn-primary').magnificPopup({
+            type: 'block',
+            preloader: false,
+            focus: '#username',
+            modal: true
+        });
+    });
+</script>
+

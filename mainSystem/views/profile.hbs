@@ -1,0 +1,182 @@
+<div class="container">
+    <section
+        class="ftco-section img"
+        style="background-image: url(/images/bg_4.jpg);">
+    </section>
+    
+    <style>
+        .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
+        kích thước biểu tượng theo mong muốn */ }
+    </style>
+    <div class="container mt-5 mb-3 d-flex flex-row p-0">
+        <h3 class="me-3">Profile</h3>
+        <a class="edit-button" 
+            data-mdb-ripple-init
+            data-mdb-modal-init
+            href="#editUser">
+            <i class="icon ion-md-create"></i>
+        </a>
+
+    </div>
+     <div
+          class="modal fade"
+          id="editUser"
+          aria-hidden="true"
+          aria-labelledby="editUserLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editUserLabel">Edit your profile</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/user/update/{{user.id}}" method="post">
+                <label class="fw-bold" for="username">Username</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="username"
+                      value="{{user.username}}"
+                    />
+                  <div class="input-group">
+                    <label class="fw-bold" for="firstname">Firstname</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="firstname"
+                    value="{{user.firstname}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="lastname">Lastname</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="lastname"
+                      value="{{user.lastname}}"
+                    />
+                  </div>
+                    <div class="input-group">
+                    <label class="fw-bold" for="phone">Phone</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="phone"
+                      value="{{user.phone}}"
+                    />
+                  </div>
+                    <div class="input-group">
+                    <label class="fw-bold" for="city">City</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="city"
+                      value="{{user.city}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="street">Street</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="street"
+                      value="{{user.street}}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label class="fw-bold" for="zipcode">Zipcode</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="zipcode"
+                      value="{{user.zipcode}}"
+                    />
+                  </div>
+                  
+
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+      </div>
+    <div class="container">
+        <div class="row">  
+        <ul class="list-group" style="list-style-type: italic ">
+            <p style="font-size:18px">First Name: {{user.firstname}}</p>
+            <p style="font-size:18px">Last Name: {{user.lastname}}</p>
+            <p style="font-size:18px">Username: {{user.username}}</p>
+            <p style="font-size:18px">Address: {{user.city}}</p>
+            <p style="font-size:18px; padding-bottom: 10px">Phone:
+            {{user.phone}}</p>
+
+        </ul>
+        </div>
+    </div>
+
+    <h3 class="mt-3">Your Past Orders</h3>
+
+    {{#if orders}}
+        {{#each orders}}
+            <div class="row mb-5">
+                <form class="col-md-12" method="post">
+                    <div class="site-blocks-table">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Product</th>
+                                <th class="product-price">Price</th>
+                                <th class="product-quantity">Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {{#each this.items}}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="{{this.item.imagePath}}" alt="Image" width="200" height="200" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 cart-product-title text-black">{{this.item.title}}</h2>
+                                    </td>
+                                    <td>Price</td>
+                                    <td>qty</td>
+
+                                </tr>
+                                {{/each}}
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+    {{else}}
+        <div class="site-section  pb-0">
+            <div class="container">
+                <div class="row mb-5 justify-content-center">
+                    <div class="col-7 section-title text-center mb-5">
+                        <h2 class="d-block">No Orders Yet.</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{/if}}
+     
+    
+
+</div>
+

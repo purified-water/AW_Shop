@@ -1,0 +1,109 @@
+<section
+  class="ftco-section img"
+  style="background-image: url(/images/bg_4.jpg);"
+>
+  <div class="container">
+    <div class="row justify-content-lg-start">
+      <div class="col-md-6 heading-section deal-of-the-day">
+        <h2 class="subheading" style="color: grey">WELCOME TO</h2>
+        <h2 class="mb-4"><a href="/cate" style="color: black">AW SHOP</a></h2>
+        <h3><a href="/cate" style="color: grey">View our best products here</a></h3>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="ftco-section">
+  <div class="container">
+    <div class="carousel-label text-center mb-5"><h1>Top 5 Most Luxurious
+        Categories</h1></div>
+    <div class="owl-carousel">
+      {{#each top5Categories}}
+        <div class="item mb-3">
+          <img
+            src="{{this.image_link}}"
+            style="height: 500px; object-fit: cover"
+          />
+
+          <div class="overlay">
+            <a
+              href="/product?cate={{this.product_type}}"
+              class="thumbnail d-block mb-4"
+            >{{this.product_type}}</a>
+          </div>
+
+        </div>
+      {{/each}}
+
+    </div>
+  </div>
+  <div class="container">
+    <div class="carousel-label text-center mb-5">
+      <h1>Top 5 Most Luxurious Products</h1>
+    </div>
+
+    <div class="owl-carousel">
+      {{#each top5Products}}
+
+        <div class="item mb-3">
+          <img
+            src="{{this.image_link}}"
+            style="height: 500px; object-fit: cover"
+          />
+
+          <div class="overlay">
+            <a
+              href="/product/detail?id={{this.id}}"
+              class="thumbnail d-block mb-4"
+            >{{this.name}}</a>
+          </div>
+
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</section>
+
+<section class="mb-4">
+  <div class="container">
+    <div class="row justify-content-lg-start">
+      <div class="col-md-6 heading-section deal-of-the-day">
+        <h2 class="mb-4">Deal Of The Day</h2>
+        <span>
+          <img
+            src="{{deal.image_link}}"
+            style="height: 250px; object-fit: cover"
+            
+          />
+          <a href="/product/detail?id={{deal.id}}" style="color: black">
+          <h4>{{deal.name}}</h4>
+          </a>
+        </span>
+
+        <span class="price" style="color: black">
+          <a href="/product/detail?id={{deal.id}}" style="color: black">
+            <br />
+            <h2 style="color: red">now at
+              {{deal.price}}{{deal.price_sign}}
+              only</h2>
+          </a>
+        </span>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+{{! <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+  integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script> }}
+<script src="/js/owl.carousel.min.js"></script>
+
+<script type="text/javascript">
+  $('.owl-carousel').owlCarousel({ loop:true, margin:30, nav:true, responsive:{
+  0:{ items:1 }, 600:{ items:2 }, 1000:{ items:3 } } })
+</script>

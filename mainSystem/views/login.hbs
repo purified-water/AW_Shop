@@ -1,0 +1,44 @@
+<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w780">
+            <div class="card card-3">
+                <div class="card-heading"></div>
+                <div class="card-body">
+                    <div class="title"><a href="signup">LOGIN</a> </div>
+                    <div class="form">
+                            {{#if messages.error}}
+                                <div class="alert alert-danger">
+                                    {{messages.error}}
+                                </div>
+                            {{/if}}
+
+                        <form action="/login" method="post">
+                        <div class="input-group">
+                            <input class="input--style-3" type="text" placeholder="Username" name="username" required>
+                        </div>
+                        <div class="input-group">
+                           <input class="input--style-3" type="password" placeholder="Password" name="password" required>
+                        </div>
+                         <input type="hidden" name="_csrf" value="{{csrfToken}}">
+                        <div class="p-t-10">
+                            <button class="btn btn--pill btn--green" type="submit">Log in</button>
+                        </div>
+                      </form><br>
+                              <div class="input-group my-3">
+                      <!-- Inside your login form -->
+                        <a href="/auth/google" class="btn btn--pill btn--green">
+                            Sign in with  <i class="fa-brands fa-google mx-1"></i>
+                        </a>
+                      </div>
+                      <div class="input-group my-3">
+                        <!-- Inside your login form -->
+                        <a href="/auth/facebook" class="btn btn--pill btn--green">
+                            Sign in with  <i class="fa-brands fa-facebook mx-1"></i>
+                        </a>
+                    </div>
+                       <h6 style="color: white">Haven't registered? <a href="/register" style="color: white"> Click Here </a></h6>
+                      </div>
+
+            </div>
+
+        </div>
+    </div>

@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "start": "nodemon ./mainSystem/app.js"
   },
   "keywords": [],
   "author": "",
@@ -20,7 +20,9 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^7.1.2",
     "express-session": "^1.17.3",
+    "mdb-ui-kit": "^7.1.0",
     "method-override": "^3.0.0",
+    "multer": "^1.4.5-lts.1",
     "nodemon": "^3.0.2",
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",

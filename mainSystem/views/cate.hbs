@@ -1,0 +1,216 @@
+<div class="container">
+  <h1 class="mt-5">Categories</h1>
+  <div class="site-section mt-4">
+    <div class="container">
+      <div class="row">
+        <a
+          data-mdb-ripple-init
+          data-mdb-modal-init
+          href="#addCate"
+          class="mb-4 fs-40"
+        ><i class="icon ion-md-create">Add new cate</i></a>
+      </div>
+      <div
+          class="modal fade"
+          id="addCate"
+          aria-hidden="true"
+          aria-labelledby="addCateLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addCateLabel">Add new category</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/cate/add" enctype="multipart/form-data" method="post">
+                  <label class="fw-bold" for="image_link">Image</label>
+                  <input type="file" id="image-add-input" name="image" onchange="getImageReview(event,'add')" accept=".jpg, .png" id="" required>
+                  <div id="preview-add-image"></div>
+                  <input class="input--style-3" id="image-add-link" type="text" style="display: none;" name="image_link" placeholder="Image link"  required/>
+                  <div class="input-group">
+                    <label class="fw-bold" for="product_type">Category name</label>
+                    <input class="input--style-3" type="text" name="product_type" placeholder="Category name" required/>
+                  </div>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+      </div>
+      
+      <div class="row" id="data-container">
+        {{#each cateList}}
+        <div class="col-lg-4 mb-5 col-md-6 product">
+          {{!-- <div id="pagination-container"> --}}
+            <div class="wine_v_1 text-center pb-4">
+            <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
+              <img src="{{this.image_link}}" alt="{{this.product_type}}" class="img-fluid">
+            </a>
+            <div class="wine-actions">
+              <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
+            </div>
+          </div>
+
+          <style>
+              .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
+              kích thước biểu tượng theo mong muốn */ }
+            </style>
+            <div class="text-center">
+              <a
+                data-mdb-ripple-init
+                data-mdb-modal-init
+                href="#editCate{{this.product_type}}"
+                class="mr-3 edit-button"
+              ><i class="icon ion-md-create"></i></a>
+              <a
+                href="/cate/delete/{{this.product_type}}"
+                class="ml-3 delete-button"
+              ><i class="icon ion-md-trash"></i></a>
+            </div>
+      </div>
+
+      {{!-- <img src="/images2/1705828397269.png" alt="{{this.product_type}}" class="img-fluid"> --}}
+
+      <div
+          class="modal fade"
+          id="editCate{{this.product_type}}"
+          aria-hidden="true"
+          aria-labelledby="editCate{{this.product_type}}Label"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editCate{{this.product_type}}Label">Editing {{this.product_type}}</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/cate/edit" method="post">
+                {{!-- asdasds --}}
+                <div class="fw-bold mb-2" class="input-group">
+                    <input
+                      class="input--style-3"
+                      type="hidden"
+                      name="product_type"
+                      value="{{this.product_type}}"
+                    />
+                  </div>
+                  <label class="fw-bold" for="image_link">Image</label>
+                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
+                    <div id="preview-edit-image">
+                    </div>
+                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
+               
+                  <div class="input-group">
+                    <label class="fw-bold" for="new_product_type">Category name</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="new_product_type"
+                      value="{{this.product_type}}" required
+                    />
+                  </div>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+
+    
+
+    <nav aria-label="Page navigation example">
+      <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
+        <li class="page-item"><a class="page-link page-previous mx-1" href="">Previous</a></li>
+        {{!-- <li class="page-item"><a class="page-link" href="/cate?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="/cate?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="/cate?page=3">3</a></li> --}}
+        <li class="page-item"><a class="page-link page-next mx-1" href="">Next</a></li>
+      </ul>
+    </nav>
+    
+</div>
+
+<style>
+  .preview-image {
+    width: 100%;
+  }
+</style>
+
+  <!-- Assuming you have a Handlebars template in your HTML -->
+
+<script>
+ 
+  function getImageReview(event, action) {
+    const parentNode = event.target.parentNode;
+    console.log(parentNode)
+
+    const imageInput = parentNode.querySelector(`#image-${action}-input`);
+    const imageLink = parentNode.querySelector(`#image-${action}-link`);
+    let fileName = event.target.files[0].name;
+    const fileExtension = fileName.split('.').pop();
+    let image = URL.createObjectURL(event.target.files[0]);
+    let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
+    console.log('fileName',fileName)
+    console.log('imageDiv',imageDiv);
+    console.log('imageLink',imageLink);
+    console.log(`${action}`);
+    imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
+    imageLink.value = '/images2/' + fileName;
+  }
+
+  handlePagination();
+
+
+
+  function handlePagination() {
+      const total_cate = {{ total_cate }};
+      const page = {{ page }};
+      const per_page = 6;
+      const total_page = Math.ceil(total_cate / per_page);
+      const pagination = document.getElementById('cate-pagination');
+      let html = ''
+      //Generate page button in pagination
+      for (let i = 1; i <= total_page; ++i) {
+        html += `<li class="page-item"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
+      }
+      pagination.lastElementChild.insertAdjacentHTML('beforebegin', html)
+      const pageNumbers = document.querySelectorAll('.page-number');
+      pageNumbers[page - 1].focus();
+      //Handle previous button
+      const previousPage = document.querySelector('.page-previous');
+      const nextPage = document.querySelector('.page-next');
+      let previous_page = page > 1 ? page - 1 : total_page;
+      let next_page = page >= total_page ? 1 : page + 1;
+      previousPage.setAttribute('href', `/cate?&page=${previous_page}`)
+      nextPage.setAttribute('href', `/cate?&page=${next_page}`)
+  }
+</script>
