@@ -56,5 +56,22 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+    search: async(search) => {
+        try {
+            const query = `
+            SELECT *
+            FROM categories
+            `
+            const queryData = await db.getWithQuery(query)
+            // Lọc tên sản phẩm có chứa chuỗi tìm kiếm
+            const data = queryData.filter((item) => {
+                return item.product_type.toLowerCase().includes(search.toLowerCase())
+            })
+            
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

@@ -63,6 +63,19 @@ module.exports = {
         } catch (error) {
             next(error);
         }
+    },
+    searchProduct: async (req, res, next) => {
+        try {
+            // const product_type = req.query.cate;
+            const search = req.query.search;
+            const prodList = await product.search( search);
+            const cateList = await categories.search(search);
+            console.log('Product list: ', prodList);
+            console.log('Cate list: ', cateList);
+            res.render("prod", { prodList: prodList, cateList: cateList});
+        } catch (error) {
+            next(error);
+        }
     }
     
 }
