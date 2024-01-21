@@ -263,14 +263,14 @@
   </div>
 
   <nav aria-label="Page navigation example">
-  <ul id="pagination" class="pagination flex-wrap d-flex justify-content-center">
-    <li class="page-item"><a class="page-link page-previous" href="">Previous</a></li>
-    {{!-- <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=1">1</a></li>
-    <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=2">2</a></li>
-    <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=3">3</a></li> --}}
-    <li class="page-item"><a class="page-link page-next" href="">Next</a></li>
-  </ul>
-</nav>
+    <ul id="prod-pagination" class="pagination flex-wrap d-flex justify-content-center">
+      <li class="page-item mx-1"><a class="page-link page-previous" href="">Previous</a></li>
+      {{!-- <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=1">1</a></li>
+      <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=2">2</a></li>
+      <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=3">3</a></li> --}}
+      <li class="page-item mx-1"><a class="page-link page-next" href="">Next</a></li>
+    </ul>
+  </nav>
 
 </div>
 <style>
@@ -282,7 +282,7 @@
   const product_type = '{{ product_type }}';
   const per_page = 9;
   const total_page = Math.ceil(total / per_page);
-  const pagination = document.getElementById('pagination');
+  const pagination = document.getElementById('prod-pagination');
   let html = ''
 
   //Generate page button in pagination

@@ -56,5 +56,14 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+    countCate: async() => {
+        try {
+            const count = await db.countTable('categories');
+            // console.log(count);
+            return count;
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

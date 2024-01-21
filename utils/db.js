@@ -329,6 +329,24 @@ module.exports = {
             }
         }
     },
+    countTable: async (tbName) => {
+        let dbcn = null;
+        try {
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(`SELECT COUNT(*) FROM ${tbName}`);
+            const count = parseInt(data[0].count);
+            return count;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
     getTableWithConditionPerPage: async function(tbName, tbColumn, value, offset, itemsPerPage) {
         try {
             const query = await db.any(

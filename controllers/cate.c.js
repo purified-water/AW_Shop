@@ -43,13 +43,13 @@ module.exports = {
     // },
     loadCates: async (req, res, next) => {
         const page = parseInt(req.query.page) || 1;
-        const itemsPerPage = 5;
+        const itemsPerPage = 6;
         const offset = (page - 1) * itemsPerPage;
 
         try {
+            const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            // console.log(cates);
-            res.render("cate",{cateList: cates});
+            res.render("cate",{cateList: cates, page, total_cate});
         } catch (err) {
             console.error(err);
             res.status(500).send('Internal Server Error');

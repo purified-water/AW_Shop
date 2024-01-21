@@ -150,110 +150,42 @@
         </div>
         {{/each}}
 
-      <div class="row">
-        <a href="#" id="prev-page">Previous</a>
-        <a href="#" id="next-page">Next</a>
-      </div>
-      
-    </div>
-  </div>
+    <nav aria-label="Page navigation example">
+      <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
+        <li class="page-item"><a class="page-link page-previous" href="">Previous</a></li>
+        {{!-- <li class="page-item"><a class="page-link" href="/cate?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="/cate?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="/cate?page=3">3</a></li> --}}
+        <li class="page-item"><a class="page-link page-next" href="">Next</a></li>
+      </ul>
+    </nav>
     
 </div>
 
   <!-- Assuming you have a Handlebars template in your HTML -->
-  <script id="data-template" type="text/x-handlebars-template">
-  {{#each data}}
-    <p>{{this.column_name}}</p>
-  {{/each}}
+
+<script>
+  const total_cate = {{ total_cate }};
+  const page = {{ page }};
+  console.log(total_cate);
+  const per_page = 6;
+  const total_page = Math.ceil(total_cate / per_page);
+  console.log(page)
+  const pagination = document.getElementById('cate-pagination');
+  let html = ''
+
+  //Generate page button in pagination
+  for (let i = 1; i <= total_page; ++i) {
+    html += `<li class="page-item mx-1"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
+  }
+  pagination.lastElementChild.insertAdjacentHTML('beforebegin',html)
+   const pageNumbers = document.querySelectorAll('.page-number');
+  pageNumbers[page-1].focus();
+  //Handle previous button
+  const previousPage = document.querySelector('.page-previous');
+  const nextPage = document.querySelector('.page-next');
+  let previous_page = page > 1 ? page - 1 : total_page;
+  let next_page = page >= total_page ? 1 : page + 1;
+  previousPage.setAttribute('href', `/cate?&page=${previous_page}`)
+  nextPage.setAttribute('href', `/cate?&page=${next_page}`)
 </script>
-
-  <script>
-    $(document).ready(function () {
-      var currentPage = 1;
-      var totalPages = 1;
-
-      function loadData(page) {
-        $.ajax({
-          url: '/cate?page='+page,
-          type: 'GET',
-          data: { page: page },
-          success: function (data) {
-            // Assuming data is an array of objects
-            console.log(data)
-            renderData(data);
-          },
-          error: function (error) {
-            console.error('Error fetching data:', error);
-          }
-        });
-      }
-
-      function renderData(data) {
-        // Get the Handlebars template script
-        var source = $('#data-template').html();
-        // Compile the template 
-        var template = Handlebars.compile(source);
-        // Insert the rendered HTML into the container
-        $('#data-container').html(template({ data: data }));
-      }
-
-      function loadPagination() {
-        $.ajax({
-          url: '/cate',
-          type: 'GET',
-          success: function (result) {
-            const totalItems = result.totalItems;
-            totalPages = Math.ceil(totalItems / 5);
-
-            $('#pagination-container').empty();
-            $('#pagination-container').append('<a href="#" id="prev-page">Previous</a>');
-
-            for (let i = 1; i <= totalPages; i++) {
-              $('#pagination-container').append('<a href="#" data-page="' + i + '">' + i + '</a>');
-            }
-
-            $('#pagination-container').append('<a href="#" id="next-page">Next</a>');
-            updatePaginationButtons();
-          },
-          error: function (error) {
-            console.error('Error fetching pagination data:', error);
-          }
-        });
-      }
-
-      function updatePaginationButtons() {
-        $('#prev-page').prop('disabled', currentPage === 1);
-        $('#next-page').prop('disabled', currentPage === totalPages);
-      }
-
-      function navigateToPage(page) {
-        currentPage = page;
-        loadData(currentPage);
-        updatePaginationButtons();
-      }
-
-      $(document).on('click', '#pagination-container a[data-page]', function (e) {
-        e.preventDefault();
-        var page = parseInt($(this).data('page'));
-        navigateToPage(page);
-      });
-
-      $(document).on('click', '#prev-page', function (e) {
-        e.preventDefault();
-        if (currentPage > 1) {
-          navigateToPage(currentPage - 1);
-        }
-      });
-
-      $(document).on('click', '#next-page', function (e) {
-        e.preventDefault();
-        if (currentPage < totalPages) {
-          navigateToPage(currentPage + 1);
-        }
-      });
-
-      // Initial load
-      loadPagination();
-      updatePaginationButtons();
-    });
-  </script>
