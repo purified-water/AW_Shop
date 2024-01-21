@@ -28,6 +28,15 @@ module.exports = {
         }
     },
 
+    loadFormInfo: async(req,res,next) => {
+        try {
+            res.render("payFailed");
+        }
+        catch(e){
+            console.log(e);
+        }
+    },
+
     addItemToCartByID: async (req,res,next) => {
         try {
             // Lấy user để query cart theo user_id

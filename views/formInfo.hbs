@@ -1,0 +1,47 @@
+<div class="container">
+    <h2 class="label mt-3 p-3">
+        TẠO ĐƠN HÀNG
+    </h2>
+    <form class="p-3">
+        <div class="form-group">
+            <label for="productType">Loại hàng hóa</label>
+            <select class="form-control" id="productType" name="productType">
+                <option value="newOrder">Tạo mới đơn hàng</option>
+                <option value="topUp">Nạp tiền điện thoại</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Số tiền</label>
+            <input type="number" class="form-control" id="amount" name="amount" placeholder="Nhập số tiền">
+        </div>
+
+        <div class="form-group">
+            <label for="paymentNote">Nội dung thanh toán</label>
+            <textarea class="form-control" id="paymentNote" name="paymentNote" rows="3" placeholder="Nhập nội dung thanh toán"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="paymentTime">Thời gian thanh toán</label>
+            <input type="text" class="form-control" id="paymentTime" name="paymentTime" value="2024-01-21 20:10:13" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="bank">Ngân hàng</label>
+            <select class="form-control" id="bank" name="bank">
+                <option value="">Không chọn</option>
+                <!-- Thêm các ngân hàng khác nếu cần -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="language">Ngôn ngữ</label>
+            <select class="form-control" id="language" name="language">
+                <option value="vi">Tiếng Việt</option>
+                <!-- Thêm các ngôn ngữ khác nếu cần -->
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
