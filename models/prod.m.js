@@ -1,5 +1,15 @@
 const db = require('../utils/db');
 
+async function getProductCount() {
+    try {
+        const query = `SELECT MAX(id) AS count FROM products`;
+        const data = await db.getWithQuery(query);
+        return data[0].count;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     getProductsWithCate: (product_type) => {
         try {
@@ -20,9 +30,13 @@ module.exports = {
         }
     },
 
+   
+
     addProduct: async (brand, name, price, imageLink, description, product_type) => {
+        const newID = await getProductCount() + 1;
         try {
             const entity = {
+                id: newID,
                 brand: brand,
                 name: name,
                 price: price,
