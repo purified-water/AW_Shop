@@ -342,10 +342,16 @@ input {
   cursor: pointer;
 }
 
-.input-group {
+.search-group{
+  position: relative;
+  /* align-items: center; */
+}
+
+.input-group{
   position: relative;
   margin-bottom: 33px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  /* align-items: center; */
 }
 
 .input--style-3 {

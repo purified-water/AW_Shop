@@ -22,9 +22,18 @@ module.exports = {
 
             // Có thì hiện sản phẩm
             // Không thì hiện là giỏ trống
-            res.render('cart', {cartItems: products});
+            res.render('cart', {cartItems: products, pageTitle: "Cart"});
         } catch (error) {
             next(error);
+        }
+    },
+
+    loadFormInfo: async(req,res,next) => {
+        try {
+            res.render("formInfo");
+        }
+        catch(e){
+            console.log(e);
         }
     },
 

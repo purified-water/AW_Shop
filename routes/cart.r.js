@@ -7,5 +7,6 @@ router.post('/add', cartController.addItemToCartByID);
 router.get('/increase/:id', cartController.increaseItemFromCartByID);
 router.get('/reduce/:id', cartController.reduceItemFromCartByID);
 router.get('/remove/:id', cartController.removeItemFromCartByID);
+router.get('/info',cartController.loadFormInfo);
 
 module.exports = router;

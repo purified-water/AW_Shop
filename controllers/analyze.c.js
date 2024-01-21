@@ -10,7 +10,8 @@ module.exports = {
                 orderListDay: JSON.stringify(orderDay.query),
                 totalDay: orderDay.totalRevDay,
                 orderListMonth: JSON.stringify(orderMonth.query),
-                totalMonth: orderMonth.totalRevMonth
+                totalMonth: orderMonth.totalRevMonth,
+                pageTitle: "Analyze",
             });
         } catch (error) {
             next(error);
