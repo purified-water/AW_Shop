@@ -70,11 +70,24 @@ module.exports = {
         }
     },
 
+    addCate: async (req, res, next) => {
+        try {
+            const image_link = req.body.image_link;
+            const product_type = req.body.product_type;
+
+            await category.addCate(product_type, image_link);
+            res.redirect('/cate');
+        } catch (error) {
+            next(error);
+        }
+    },
+
 
     editCate: async (req, res, next) => {
         try {
-            const { oldCateName } = req.query.oldCateName;
-            const { newCateName } = req.body.newCateName;
+            const oldCateName = req.body.product_type;
+            const newCateName = req.body.new_product_type;
+
             await category.editCate(oldCateName, newCateName);
             res.redirect('/cate');
         } catch (error) {
@@ -84,7 +97,7 @@ module.exports = {
 
     deleteCate: async (req, res, next) => {
         try {
-            const { cateName } = req.params.cateName;
+            const cateName = req.params.product_type;
             await category.deleteCate(cateName);
             res.redirect('/cate');
         } catch (error) {

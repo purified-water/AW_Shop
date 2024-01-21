@@ -2,44 +2,35 @@
 
 -- DROP DATABASE IF EXISTS dbawshop;
 
-CREATE DATABASE dbawshop
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.UTF-8'
-    LC_CTYPE = 'en_US.UTF-8'
-    ICU_LOCALE = 'en-US'
-    LOCALE_PROVIDER = 'icu'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+-- CREATE DATABASE dbawshop
+--     WITH
+--     OWNER = postgres
+--     ENCODING = 'UTF8'
+--     LC_COLLATE = 'en_US.UTF-8'
+--     LC_CTYPE = 'en_US.UTF-8'
+--     ICU_LOCALE = 'en-US'
+--     LOCALE_PROVIDER = 'icu'
+--     TABLESPACE = pg_default
+--     CONNECTION LIMIT = -1
+--     IS_TEMPLATE = False;
 
+drop table if exists shop_order;
+drop table if exists cart_items;
+drop table if exists cart;
+drop table if exists products;
+drop table if exists categories;
+drop table if exists account;
+drop table if exists users;
 
-    
--- Không cần cái này
 -- -- Create table categories
 -- DROP TABLE IF EXISTS product_type;
--- create table categories (
--- 	product_type_name varchar(255) not null
--- );
--- -- Add PK
--- alter table product_type add constraint PK_type primary key (product_type_name) with (fillfactor = 80);
--- -- Insert Data
--- insert into product_type (product_type_name) values ('foundation');
+create table categories (
+	product_type varchar(255) not null,
+    image_link varchar(255)
+);
+-- Add PK
+alter table categories add constraint PK_type primary key (product_type) with (fillfactor = 80);
 
------
--- Create table products
--- drop table if exists products;
--- CREATE TABLE products (
---     id SERIAL,
---     title VARCHAR(255) NOT NULL,
---     price NUMERIC(10, 2) NOT NULL,
---     description TEXT,
---     category VARCHAR(255) REFERENCES categories(category_name),
---     image VARCHAR(255),
---     rating_rate NUMERIC(3, 1) NOT NULL,
---     rating_count INT NOT NULL
--- );
 CREATE TABLE products (
     id SERIAL,
     brand VARCHAR(255),

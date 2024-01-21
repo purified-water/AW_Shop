@@ -3,7 +3,7 @@ const db = require('../utils/db');
 module.exports = {
     getProductsWithCate: (product_type) => {
         try {
-            const query = db.getCondition('public.products', 'product_type', product_type);
+            const query = db.getCondition('products', 'product_type', product_type);
             return query;
         }
         catch(e) {
@@ -12,7 +12,7 @@ module.exports = {
     },
     getProductDetail: (productID) => {
         try {
-            const query = db.getCondition('public.products', 'id', productID);
+            const query = db.getCondition('products', 'id', productID);
             return query;
         }
         catch(e) {
@@ -20,30 +20,37 @@ module.exports = {
         }
     },
 
-    addProduct: async (brand, name, price, imageLink, description, category, product_type, tag_list) => {
+    addProduct: async (brand, name, price, imageLink, description, product_type) => {
         try {
             const entity = {
                 brand: brand,
                 name: name,
                 price: price,
-                price_sign: '$',
-                currency: 'CAD',
-                image_link: imageLink || 'https://dummyimage.com/600x400/000/fff',
+                price_sign: '₫',
+                currency: 'VND',
+                image_link: imageLink || '/images2/default.jpg',
                 description: description,
                 rating: null,
-                category: category,
+                category: null,
                 product_type: product_type,
-                tag_list: tag_list
+                tag_list: null
             }
-            const query = db.insert('public.products', entity, 'id');
+            const query = db.insert('products', entity, 'id');
         } catch (error) {
             console.log(error);
         }
     },
 
-    editProduct: async (productID, edittedProduct) => {
+    editProduct: async (productID, brand, name, price, image_link, description) => {
         try {
-            const query = await db.update('public.products', edittedProduct, 'id', productID);
+            const entity = {
+                brand: brand,
+                name: name,
+                price: price,
+                image_link: image_link || '/images2/default.jpg',
+                description: description
+            }
+            const query = await db.update('products', entity, 'id', productID);
         }
         catch(e) {
             console.log(e);
@@ -52,11 +59,45 @@ module.exports = {
 
     deleteProduct: async (productID) => {
         try {
-            const query = await db.deleteCondition('public.products', 'id', productID);
+            const query = await db.deleteCondition('products', 'id', productID);
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getTop5Products: async () => {
+        try {
+            const query = `
+            SELECT id, price, image_link, name
+            FROM products
+            ORDER BY price DESC
+            LIMIT 5
+
+            `
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    getDeal: async () => {
+        try {
+            const query = `
+            SELECT *
+            FROM products
+            ORDER BY RANDOM()
+            LIMIT 1
+
+            `
+            const data = await db.getWithQuery(query);
+            // console.log('Deal', data);
+            return data;
         } catch (error) {
             console.log(error);
         }
     }
+
+    
 
 
 }

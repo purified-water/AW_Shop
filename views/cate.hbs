@@ -1,29 +1,163 @@
 <div class="container">
-  <h3>DANH MỤC CATEGORY</h3>
+  <h3 class="mt-5">Categories</h3>
   <div class="site-section mt-5">
     <div class="container">
+      <div class="row">
+        <a
+          data-mdb-ripple-init
+          data-mdb-modal-init
+          href="#addCate"
+          class="mb-3 fs-20"
+        ><i class="icon ion-md-create">Add new cate</i></a>
+      </div>
+      <div
+          class="modal fade"
+          id="addCate"
+          aria-hidden="true"
+          aria-labelledby="addCateLabel"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addCateLabel">Add new category</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/cate/add" method="post">
+                <label class="fw-bold" for="image_link">Image</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="image_link"
+                      placeholder="Image link"
+                    />
+                  <div class="input-group">
+                    <label class="fw-bold" for="product_type">Category name</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="product_type"
+                      placeholder="Category name"
+                    />
+                  </div>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+      </div>
+      
       <div class="row" id="data-container">
         {{#each cateList}}
         <div class="col-lg-4 mb-5 col-md-6 cate">
           {{!-- <div id="pagination-container"> --}}
             <div class="wine_v_1 text-center pb-4">
             <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
-              <img src="/images2/{{product_type}}.jpg" alt="{{this.product_type}}" class="img-fluid">
+              <img src="{{this.image_link}}" alt="{{this.product_type}}" class="img-fluid">
             </a>
             <div class="wine-actions">
               <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
             </div>
           </div>
-        {{!-- </div> --}}
+
+          <style>
+              .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
+              kích thước biểu tượng theo mong muốn */ }
+            </style>
+            <div class="text-center">
+              <a
+                data-mdb-ripple-init
+                data-mdb-modal-init
+                href="#editCate{{this.product_type}}"
+                class="mr-3 edit-button"
+              ><i class="icon ion-md-create"></i></a>
+              <a
+                href="/cate/delete/{{this.product_type}}"
+                class="ml-3 delete-button"
+              ><i class="icon ion-md-trash"></i></a>
+            </div>
       </div>
+      <div
+          class="modal fade"
+          id="editCate{{this.product_type}}"
+          aria-hidden="true"
+          aria-labelledby="editCate{{this.product_type}}Label"
+          tabindex="-1"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editCate{{this.product_type}}Label">Editing {{this.product_type}}</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-mdb-ripple-init
+                  data-mdb-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <form class="ml-3" action="/cate/edit" method="post">
+                <div class="fw-bold mb-2" class="input-group">
+                    <input
+                      class="input--style-3"
+                      type="hidden"
+                      name="product_type"
+                      value="{{this.product_type}}"
+                    />
+                  </div>
+                  <label class="fw-bold" for="image_link">Image</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="image_link"
+                      value="Image multer goes here"
+                    />
+                  <div class="input-group">
+                    <label class="fw-bold" for="new_product_type">Category name</label>
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="new_product_type"
+                      value="{{this.product_type}}"
+                    />
+                  </div>
+                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                  <div class="p-t-10">
+                    <button class="btn btn--pill btn--green" type="submit">Confirm</button>
+                  </div>
+                </form>
+
+                  
+              </div>
+              <div class="modal-footer">
+              </div>
+            </div>
+          </div>
+        </div>
         {{/each}}
 
       <div class="row">
         <a href="#" id="prev-page">Previous</a>
         <a href="#" id="next-page">Next</a>
       </div>
+      
     </div>
   </div>
+    
 </div>
 
   <!-- Assuming you have a Handlebars template in your HTML -->

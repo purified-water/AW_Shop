@@ -36,28 +36,30 @@
     {{#each cartItems}}
 
                         <tr>
-                            <td class="product-thumbnail">
+                            <td class="product-thumbnail" style="height: 100px; width: 100px">
                                 <img src="{{this.image_link}}" alt="Image" class="img-fluid">
                             </td>
                             <td class="product-name">
-                                <h2 class="h5 cart-product-title text-black">{{this.name}}</h2>
+                                <h3 class="h5 cart-product-title text-black">{{this.name}}</h3>
                             </td>
-                            <td>{{this.price}}</td>
+                            <td>
+                                <h5>{{this.price}}</h5>
+                            </td>
 
 
 
-                            <td class="image-prod">
+                            <td class="image-prod d-flex justify-content-evenly">
                                 <div class="input-group mb-3" style="width: 250px; margin-top: 10px; margin-left: 20px">
-                                    <div class="input-group-prepend" style="margin-right: 30px">
-                                        <a href="/reduce/{{this.item._id}}" class="btn btn-primary height-auto btn-sm">-</a>
+                                    <div class="input-group-prepend" style="margin-right: 20px">
+                                        <a href="cart/reduce/{{this.id}}" class="btn btn-primary height-auto btn-sm">-</a>
                                     </div>
-                                <div>{{this.quantity}}</div>
+                                    <div>{{this.quantity}}</div>
                                     <div class="input-group-append" style="margin-left: 20px">
-                                        <a href="/add/{{this.item._id}}" class="btn btn-primary height-auto btn-sm">+</a>
+                                        <a href="cart/increase/{{this.id}}" class="btn btn-primary" >+</a>
                                     </div>
                                 </div>
                             </td>
-                              <td><a href="/remove/{{this.item._id}}" class="btn btn-primary height-auto btn-sm">X</a></td>
+                              <td><a href="cart/remove/{{this.id}}" class="btn btn-primary height-auto btn-sm">x</a></td>
                         </tr>
     {{/each}}
 
@@ -97,7 +99,7 @@
                                 <span style="color: black">TOTAL</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black" style="font-size:20px; text-align:center">Rs.{{ totalPrice }}</strong>
+                                <strong class="text-black" style="font-size:20px; text-align:center">₫{{ totalPrice }}</strong>
                             </div>
                         </div>
 

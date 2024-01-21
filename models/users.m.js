@@ -1,5 +1,5 @@
 const dbcn = require('../utils/db')
-const tableName = 'public.users'
+const tableName = 'users'
 
 module.exports = {
     insert: async(user) => {

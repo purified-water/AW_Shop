@@ -38,7 +38,7 @@ module.exports = {
     getProductCount: async function () {
         try {
             const query = await db.one(
-                `SELECT COUNT(*) FROM public.products`
+                `SELECT COUNT(*) FROM products`
             );
             const count = parseInt(query.count, 10);
             return count;
@@ -50,8 +50,9 @@ module.exports = {
     getCategories: async function () {
         try {
             const query = await db.any(
-                `SELECT DISTINCT product_type FROM public.products`
+                `SELECT DISTINCT product_type FROM categories`
             )
+            // console.log('Querying categories: ', query);
             return query;
         } catch (error) {
             console.log(error);
@@ -60,7 +61,9 @@ module.exports = {
 
     getAllCategories: async function () {
         try {
-            const query = await db.one('SELECT COUNT(*) FROM (SELECT DISTINCT product_type FROM public.products)');
+            // const query = await db.one('SELECT COUNT(*) FROM (SELECT DISTINCT product_type FROM public.products)');
+            const query = await db.one('SELECT COUNT(*) FROM categories');
+
             return query
         } catch (error) {
             console.log(error);
@@ -70,7 +73,7 @@ module.exports = {
     getCategoriesByPage: async function(offset, itemsPerPage) {
         try {
             const query = await db.any(
-                `SELECT DISTINCT product_type FROM public.products OFFSET $1 LIMIT $2`,
+                `SELECT * FROM categories OFFSET $1 LIMIT $2`,
                 [offset, itemsPerPage]
             )
             return query;
@@ -81,6 +84,7 @@ module.exports = {
 
     importData: async function (jsonData) {
         try {
+            // gán http cho link ảnh
             const imageLink = jsonData.api_featured_image.startsWith("http:") ? jsonData.api_featured_image : "http:" + jsonData.api_featured_image;
             // get the count of existing products
             const newId = await this.getProductCount() + 1;
@@ -154,6 +158,7 @@ module.exports = {
         }
     },
 
+
     getConditionInTime: async (tbName, tbColum, value, time) => {
         let dbcn = null;
         try {
@@ -163,6 +168,37 @@ module.exports = {
               } else {
                 query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
               }
+          dbcn = await db.connect();
+
+            const data = await dbcn.any(query);
+
+            // console.log(data);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+
+    getMultiConditions: async (tbName, pairs) => {
+        let dbcn = null;
+        try {
+            // console.log('Conditions', pairs);
+            let query = `SELECT * FROM ${tbName} WHERE `;
+
+            for (let i = 0; i < pairs.length; i++) {
+                query += `${pairs[i].tbColumn}='${pairs[i].value}'`;
+                if (i < pairs.length - 1) {
+                    query += ' AND ';
+                }
+            }
+
+            // console.log(query);
             dbcn = await db.connect();
 
             const data = await dbcn.any(query);
@@ -227,7 +263,7 @@ module.exports = {
             const query = pgp.helpers.update(entity, null, tbName);
             // console.log(query);
             dbcn = await db.connect();
-            const data = await dbcn.oneOrNone(query + `WHERE ${tbColumn} = '${value}'`);
+            const data = await dbcn.oneOrNone(query + ` WHERE ${tbColumn} = '${value}'`);
             return data
         }
         catch (error) {
@@ -239,4 +275,40 @@ module.exports = {
             }
         }
     },
+    getTop: async (tbName, tbColumn, limit) => {
+        let dbcn = null;
+        try {
+            const query = `SELECT * FROM ${tbName} ORDER BY ${tbColumn} DESC LIMIT ${limit}`;
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+    getWithQuery: async (query) => {
+        let dbcn = null;
+        try {
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    }
+
 };

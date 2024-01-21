@@ -57,13 +57,14 @@ module.exports = {
                 password: hashedPassword,
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
-                phone: 'req.body.phone',
+                phone: req.body.phone,
                 city: 'req.body.city',
                 street: 'req.body.street',
                 zipcode: 'req.body.zipcode',
             }
             const data = await Users.insert(user);
-            res.json({firstname, lastname, email, username, password, isValid})
+            // res.json({firstname, lastname, email, username, password, isValid})
+            res.redirect('/login');
         }
         catch (e) {
             console.log(e)
