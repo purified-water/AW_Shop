@@ -640,3 +640,8 @@ input {
   color: #9351a3;
   font-weight: bold;
 }
+
+.revenue-label{
+  font-size: 35px;
+  font-weight: bold;
+}

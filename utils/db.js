@@ -158,6 +158,33 @@ module.exports = {
         }
     },
 
+
+    getConditionInTime: async (tbName, tbColum, value, time) => {
+        let dbcn = null;
+        try {
+            var query = "";
+            if (time === "month") {
+                query = `SELECT * FROM ${tbName} WHERE EXTRACT(MONTH FROM ${tbColum}::timestamp)=EXTRACT(MONTH FROM '${value}'::timestamp) AND EXTRACT(YEAR FROM ${tbColum}::timestamp)=EXTRACT(YEAR FROM '${value}'::timestamp)`;
+              } else {
+                query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
+              }
+          dbcn = await db.connect();
+
+            const data = await dbcn.any(query);
+
+            // console.log(data);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+
     getMultiConditions: async (tbName, pairs) => {
         let dbcn = null;
         try {
@@ -170,7 +197,6 @@ module.exports = {
                     query += ' AND ';
                 }
             }
-
 
             // console.log(query);
             dbcn = await db.connect();
@@ -189,6 +215,7 @@ module.exports = {
             }
         }
     },
+
     deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {
