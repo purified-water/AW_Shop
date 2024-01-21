@@ -6,5 +6,4 @@ const {isAuthenticated, isNotAuthenticated} = require('../middlewares/auth.middl
 
 router.get('/', isAuthenticated, homeController.loadHome);
 
-
 module.exports = router;

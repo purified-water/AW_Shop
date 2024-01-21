@@ -30,22 +30,14 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form class="ml-3" action="/cate/add" method="post">
-                <label class="fw-bold" for="image_link">Image</label>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="image_link"
-                      placeholder="Image link"
-                    />
+                <form class="ml-3" action="/cate/add" enctype="multipart/form-data" method="post">
+                  <label class="fw-bold" for="image_link">Image</label>
+                  <input type="file" id="image-input" name="image" onchange="getImageReview(event)" accept=".jpg, .png" id="" required>
+                  <div id="preview"></div>
+                  <input class="input--style-3" id="image-link" type="text" style="display: none;" name="image_link" placeholder="Image link"  required/>
                   <div class="input-group">
                     <label class="fw-bold" for="product_type">Category name</label>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="product_type"
-                      placeholder="Category name"
-                    />
+                    <input class="input--style-3" type="text" name="product_type" placeholder="Category name" required/>
                   </div>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}" />
                   <div class="p-t-10">
@@ -90,6 +82,9 @@
               ><i class="icon ion-md-trash"></i></a>
             </div>
       </div>
+
+      {{!-- <img src="/images2/1705828397269.png" alt="{{this.product_type}}" class="img-fluid"> --}}
+
       <div
           class="modal fade"
           id="editCate{{this.product_type}}"
@@ -124,7 +119,7 @@
                       class="input--style-3"
                       type="text"
                       name="image_link"
-                      value="Image multer goes here"
+                      value="Image multer goes here" required
                     />
                   <div class="input-group">
                     <label class="fw-bold" for="new_product_type">Category name</label>
@@ -132,7 +127,7 @@
                       class="input--style-3"
                       type="text"
                       name="new_product_type"
-                      value="{{this.product_type}}"
+                      value="{{this.product_type}}" required
                     />
                   </div>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}" />
@@ -150,6 +145,8 @@
         </div>
         {{/each}}
 
+    
+
     <nav aria-label="Page navigation example">
       <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
         <li class="page-item"><a class="page-link page-previous mx-1" href="">Previous</a></li>
@@ -162,30 +159,54 @@
     
 </div>
 
+<style>
+  .preview-image {
+    width: 100%;
+  }
+</style>
+
   <!-- Assuming you have a Handlebars template in your HTML -->
 
 <script>
-  const total_cate = {{ total_cate }};
-  const page = {{ page }};
-  console.log(total_cate);
-  const per_page = 6;
-  const total_page = Math.ceil(total_cate / per_page);
-  console.log(page)
-  const pagination = document.getElementById('cate-pagination');
-  let html = ''
-
-  //Generate page button in pagination
-  for (let i = 1; i <= total_page; ++i) {
-    html += `<li class="page-item"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
+  const imageInput = document.getElementById('image-input');
+  const imageLink = document.getElementById('image-link');
+  function getImageReview(event) {
+    let fileName = event.target.files[0].name;
+    const fileExtension = fileName.split('.').pop();
+    let image = URL.createObjectURL(event.target.files[0]);
+    let imageDiv = document.getElementById('preview');
+    let newImg = document.createElement('img');
+    imageDiv.innerHTML = ''
+    newImg.classList.add('preview-image');
+    newImg.src = image;
+    imageDiv.appendChild(newImg);
+    imageLink.value = '/images2/' + fileName;
   }
-  pagination.lastElementChild.insertAdjacentHTML('beforebegin',html)
-   const pageNumbers = document.querySelectorAll('.page-number');
-  pageNumbers[page-1].focus();
-  //Handle previous button
-  const previousPage = document.querySelector('.page-previous');
-  const nextPage = document.querySelector('.page-next');
-  let previous_page = page > 1 ? page - 1 : total_page;
-  let next_page = page >= total_page ? 1 : page + 1;
-  previousPage.setAttribute('href', `/cate?&page=${previous_page}`)
-  nextPage.setAttribute('href', `/cate?&page=${next_page}`)
+
+  handlePagination();
+
+
+
+  function handlePagination() {
+      const total_cate = {{ total_cate }};
+      const page = {{ page }};
+      const per_page = 6;
+      const total_page = Math.ceil(total_cate / per_page);
+      const pagination = document.getElementById('cate-pagination');
+      let html = ''
+      //Generate page button in pagination
+      for (let i = 1; i <= total_page; ++i) {
+        html += `<li class="page-item"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
+      }
+      pagination.lastElementChild.insertAdjacentHTML('beforebegin', html)
+      const pageNumbers = document.querySelectorAll('.page-number');
+      pageNumbers[page - 1].focus();
+      //Handle previous button
+      const previousPage = document.querySelector('.page-previous');
+      const nextPage = document.querySelector('.page-next');
+      let previous_page = page > 1 ? page - 1 : total_page;
+      let next_page = page >= total_page ? 1 : page + 1;
+      previousPage.setAttribute('href', `/cate?&page=${previous_page}`)
+      nextPage.setAttribute('href', `/cate?&page=${next_page}`)
+  }
 </script>

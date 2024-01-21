@@ -73,8 +73,10 @@ module.exports = {
     addCate: async (req, res, next) => {
         try {
             const image_link = req.body.image_link;
+            console.log(image_link);
             const product_type = req.body.product_type;
-
+            console.log(image_link);
+            console.log(product_type);
             await category.addCate(product_type, image_link);
             res.redirect('/cate');
         } catch (error) {
