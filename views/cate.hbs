@@ -32,9 +32,9 @@
               <div class="modal-body">
                 <form class="ml-3" action="/cate/add" enctype="multipart/form-data" method="post">
                   <label class="fw-bold" for="image_link">Image</label>
-                  <input type="file" id="image-input" name="image" onchange="getImageReview(event)" accept=".jpg, .png" id="" required>
-                  <div id="preview"></div>
-                  <input class="input--style-3" id="image-link" type="text" style="display: none;" name="image_link" placeholder="Image link"  required/>
+                  <input type="file" id="image-add-input" name="image" onchange="getImageReview(event,'add')" accept=".jpg, .png" id="" required>
+                  <div id="preview-add-image"></div>
+                  <input class="input--style-3" id="image-add-link" type="text" style="display: none;" name="image_link" placeholder="Image link"  required/>
                   <div class="input-group">
                     <label class="fw-bold" for="product_type">Category name</label>
                     <input class="input--style-3" type="text" name="product_type" placeholder="Category name" required/>
@@ -106,6 +106,7 @@
               </div>
               <div class="modal-body">
                 <form class="ml-3" action="/cate/edit" method="post">
+                {{!-- asdasds --}}
                 <div class="fw-bold mb-2" class="input-group">
                     <input
                       class="input--style-3"
@@ -115,12 +116,16 @@
                     />
                   </div>
                   <label class="fw-bold" for="image_link">Image</label>
+                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
                     <input
                       class="input--style-3"
                       type="text"
-                      name="image_link"
-                      value="Image multer goes here" required
+                      name="image_link" required
                     />
+                    <div id="preview-edit-image">
+                    </div>
+                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
+               
                   <div class="input-group">
                     <label class="fw-bold" for="new_product_type">Category name</label>
                     <input
@@ -168,18 +173,19 @@
   <!-- Assuming you have a Handlebars template in your HTML -->
 
 <script>
-  const imageInput = document.getElementById('image-input');
-  const imageLink = document.getElementById('image-link');
-  function getImageReview(event) {
+ 
+  function getImageReview(event, action) {
+    const imageInput = document.getElementById(`image-${action}-input`);
+    const imageLink = document.getElementById(`image-${action}-link`);
     let fileName = event.target.files[0].name;
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
-    let imageDiv = document.getElementById('preview');
-    let newImg = document.createElement('img');
-    imageDiv.innerHTML = ''
-    newImg.classList.add('preview-image');
-    newImg.src = image;
-    imageDiv.appendChild(newImg);
+    let imageDiv = document.getElementById(`preview-${action}-image`);
+    console.log('fileName',fileName)
+    console.log('imageDiv',imageDiv);
+    console.log('imageLink',imageLink);
+    console.log(`${action}`);
+    imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
     imageLink.value = '/images2/' + fileName;
   }
 
