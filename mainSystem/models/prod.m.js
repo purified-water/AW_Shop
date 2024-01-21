@@ -183,8 +183,8 @@ module.exports = {
             // Lọc tên sản phẩm có chứa chuỗi tìm kiếm
             const data = queryData.filter((item) => {
                 return item.name.toLowerCase().includes(search.toLowerCase())
-            })
-            
+            }).slice(0, 12); // Get the first 10 items
+
             return data;
         } catch (error) {
             console.log(error);

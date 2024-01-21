@@ -76,9 +76,9 @@ module.exports = {
             const search = req.query.search;
             const prodList = await product.search( search);
             const cateList = await categories.search(search);
-            console.log('Product list: ', prodList);
-            console.log('Cate list: ', cateList);
-            res.render("prod", { prodList: prodList, cateList: cateList});
+            // console.log('Product list: ', prodList);
+            // console.log('Cate list: ', cateList);
+            res.render("search", { prodList: prodList, cateList: cateList});
         } catch (error) {
             next(error);
         }

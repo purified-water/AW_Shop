@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         {{#if cateList}}
-          <h3>Categories</h3>
+          <h3 class="mb-3">Categories</h3>
           {{#each cateList}}
             <div class="col-lg-4 mb-5 col-md-6 product">
               <div class="wine_v_1 text-center pb-4">
@@ -31,33 +31,40 @@
 
           {{/each}}
         {{/if}}
+      </div>
+      <div class="row">
 
         {{#if prodList}}
-          <h3>Products</h3>
+          <h3 class="mb-3">Products</h3>
 
           {{#each prodList}}
-            <div class="wine_v_1 text-center pb-4">
-              <a
-                href="/product/detail?id={{this.id}}"
-                id="show-detail"
-                class="thumbnail d-block mb-4"
-              >
-                <img
-                  src="{{this.image_link}}"
-                  alt="{{this.name}}"
-                  class="img-fluid"
-                />
-              </a>
-              <div class="wine-actions">
-                <h3 class="heading-2 product-text" style="font-size:18px"><a
-                    href
-                  >{{this.name}}</a></h3>
-                <h3 class="heading-2 product-text" style="font-size:15px">
-                  {{this.price}}{{this.price_sign}}
-                </h3>
+            <div class="col-lg-4 mb-5 col-md-6 product">
+              <div class="wine_v_1 text-center pb-4">
+                <a
+                  href="/product/detail?id={{this.id}}"
+                  id="show-detail"
+                  class="thumbnail d-block mb-4"
+                >
+                  <img
+                    src="{{this.image_link}}"
+                    alt="{{this.name}}"
+                    class="img-fluid"
+                  />
+                </a>
+                <div class="wine-actions">
+                  <h3 class="heading-2 product-text" style="font-size:18px"><a
+                      href
+                    >{{this.name}}</a></h3>
+                  <h3 class="heading-2 product-text" style="font-size:15px">
+                    {{this.price}}{{this.price_sign}}
+                  </h3>
+                </div>
               </div>
             </div>
+
           {{/each}}
+        {{else}}
+          <h3 class="mb-3">No results found</h3>
         {{/if}}
 
       </div>

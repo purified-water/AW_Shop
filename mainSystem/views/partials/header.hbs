@@ -5,16 +5,22 @@
   <div class="container">
     <a class="navbar-brand" href="/"><bold>AW SHOP</bold></a>
     <div class="row search-group rounded mx-auto">
+      <form action="/product/search?search={{this.search}}" method="get">
         <input
-            type="search"
-            class="col-md-8 form-control-small rounded"
-            placeholder="Search"
-            aria-label="Search"
-            aria-describedby="search-addon"
+          type="search"
+          class="col-md-8 form-control-small rounded"
+          placeholder="Search"
+          aria-label="Search"
+          aria-describedby="search-addon"
+          name="search"
         />
         <span class="col-md-2 search-group-text border-0 align-self-center" id="search-addon">
-            <i class="oi oi-magnifying-glass"></i>
+          <i class="oi oi-magnifying-glass">
+          </i>
         </span>
+        <input class="btn" type="submit" style="display: none"></input>
+      </form>
+        
     </div>
     <button
       class="navbar-toggler"

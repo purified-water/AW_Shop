@@ -7,7 +7,8 @@ const passport =  require('passport');
 const methodOverride = require('method-override')
 const flash = require('express-flash')
 const {isAuthenticated, isNotAuthenticated} = require('./middlewares/auth.middleware')
-const axios = require('axios');
+const path = require('path');
+
 
 const db = require('./utils/db');
 
@@ -22,15 +23,15 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: maxAge }
 }))
-
-
+// console.log('Dirname', __dirname);
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.engine('hbs', handlebars.engine({
-    layoutsDir:`views/layouts/`,
+    layoutsDir: 'mainSystem/views/layouts/',
     defaultLayout: 'index',
     extname: 'hbs',
-    partialsDir: 'views/partials/',
+    partialsDir: 'mainSystem/views/partials/',
     helpers: {
         json: function(context){
             return JSON.stringify(context);
@@ -38,7 +39,6 @@ app.engine('hbs', handlebars.engine({
     },
 }));
 
-const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
