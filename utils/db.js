@@ -1,5 +1,6 @@
 require('dotenv').config();
 const fs = require('fs');
+const { TableName } = require('pg-promise');
 // const { as } = require('pg-promise');
 const pgp = require('pg-promise')({
     capSQL: true
@@ -308,6 +309,35 @@ module.exports = {
             if (dbcn != null) {
                 dbcn.done();
             }
+        }
+    },
+    countTableWithCondition: async (tbName, tbColumn, value) => {
+        let dbcn = null;
+        try {
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(`SELECT COUNT(*) FROM ${tbName} WHERE ${tbColumn} = '${value}'`);
+            const count = parseInt(data[0].count);
+            return count;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+    getTableWithConditionPerPage: async function(tbName, tbColumn, value, offset, itemsPerPage) {
+        try {
+            const query = await db.any(
+                `SELECT * FROM ${tbName} WHERE ${tbColumn} = '${value}' ORDER BY id OFFSET $1 LIMIT $2;`,
+                [offset, itemsPerPage]
+            )
+            return query;
+        } catch (error) {
+            console.log(error);
         }
     }
 

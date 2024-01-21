@@ -262,4 +262,43 @@
     </div>
   </div>
 
+  <nav aria-label="Page navigation example">
+  <ul id="pagination" class="pagination flex-wrap d-flex justify-content-center">
+    <li class="page-item"><a class="page-link page-previous" href="">Previous</a></li>
+    {{!-- <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=1">1</a></li>
+    <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=2">2</a></li>
+    <li class="page-item"><a class="page-link" href="/product?cate={{product_type}}&page=3">3</a></li> --}}
+    <li class="page-item"><a class="page-link page-next" href="">Next</a></li>
+  </ul>
+</nav>
+
 </div>
+<style>
+
+</style>
+<script>
+  const page = {{ page }};
+  const total = {{ total }};
+  const product_type = '{{ product_type }}';
+  const per_page = 9;
+  const total_page = Math.ceil(total / per_page);
+  const pagination = document.getElementById('pagination');
+  let html = ''
+
+  //Generate page button in pagination
+  for (let i = 1; i <= total_page; ++i) {
+    html += `<li class="page-item"><a class="page-link page-number" href="/product?cate=${product_type}&page=${i}">${i}</a></li>`
+  }
+  pagination.lastElementChild.insertAdjacentHTML('beforebegin', html);
+  const pageNumbers = document.querySelectorAll('.page-number');
+  pageNumbers[page-1].focus();
+  //Handle previous button
+  const previousPage = document.querySelector('.page-previous');
+  const nextPage = document.querySelector('.page-next');
+  console.log(previousPage);
+
+  let previous_page = page > 1 ? page - 1 : total_page;
+  let next_page = page >= total_page ? 1 : page + 1;
+  previousPage.setAttribute('href', `/product?cate=${product_type}&page=${previous_page}`)
+  nextPage.setAttribute('href', `/product?cate=${product_type}&page=${next_page}`)
+</script>
