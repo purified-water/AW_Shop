@@ -4394,6 +4394,7 @@ button.close {
 
 .modal-dialog {
   position: relative;
+  height: fit-content;
   width: auto;
   margin: 0.5rem;
   pointer-events: none; }

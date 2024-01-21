@@ -4,7 +4,8 @@ const cateController = require('../controllers/cate.c.js');
 
 // router.get('/',cateController.getAllCates);
 router.get('/',cateController.loadCates);
+router.post('/add',cateController.addCate);
 router.post('/edit',cateController.editCate);
-router.get('/delete/:cateName',cateController.deleteCate);
+router.get('/delete/:product_type',cateController.deleteCate);
 
 module.exports = router;

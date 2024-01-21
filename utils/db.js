@@ -50,8 +50,9 @@ module.exports = {
     getCategories: async function () {
         try {
             const query = await db.any(
-                `SELECT DISTINCT product_type FROM products`
+                `SELECT DISTINCT product_type FROM categories`
             )
+            // console.log('Querying categories: ', query);
             return query;
         } catch (error) {
             console.log(error);
@@ -60,7 +61,9 @@ module.exports = {
 
     getAllCategories: async function () {
         try {
-            const query = await db.one('SELECT COUNT(*) FROM (SELECT DISTINCT product_type FROM public.products)');
+            // const query = await db.one('SELECT COUNT(*) FROM (SELECT DISTINCT product_type FROM public.products)');
+            const query = await db.one('SELECT COUNT(*) FROM categories');
+
             return query
         } catch (error) {
             console.log(error);
@@ -70,7 +73,7 @@ module.exports = {
     getCategoriesByPage: async function(offset, itemsPerPage) {
         try {
             const query = await db.any(
-                `SELECT DISTINCT product_type FROM public.products OFFSET $1 LIMIT $2`,
+                `SELECT * FROM categories OFFSET $1 LIMIT $2`,
                 [offset, itemsPerPage]
             )
             return query;
@@ -81,6 +84,7 @@ module.exports = {
 
     importData: async function (jsonData) {
         try {
+            // gán http cho link ảnh
             const imageLink = jsonData.api_featured_image.startsWith("http:") ? jsonData.api_featured_image : "http:" + jsonData.api_featured_image;
             // get the count of existing products
             const newId = await this.getProductCount() + 1;
@@ -154,6 +158,33 @@ module.exports = {
         }
     },
 
+
+    getConditionInTime: async (tbName, tbColum, value, time) => {
+        let dbcn = null;
+        try {
+            var query = "";
+            if (time === "month") {
+                query = `SELECT * FROM ${tbName} WHERE EXTRACT(MONTH FROM ${tbColum}::timestamp)=EXTRACT(MONTH FROM '${value}'::timestamp) AND EXTRACT(YEAR FROM ${tbColum}::timestamp)=EXTRACT(YEAR FROM '${value}'::timestamp)`;
+              } else {
+                query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
+              }
+          dbcn = await db.connect();
+
+            const data = await dbcn.any(query);
+
+            // console.log(data);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+
     getMultiConditions: async (tbName, pairs) => {
         let dbcn = null;
         try {
@@ -166,7 +197,6 @@ module.exports = {
                     query += ' AND ';
                 }
             }
-
 
             // console.log(query);
             dbcn = await db.connect();
@@ -185,6 +215,7 @@ module.exports = {
             }
         }
     },
+
     deleteCondition: async (tbName, tbColum, value) => {
         let dbcn = null;
         try {
@@ -244,4 +275,40 @@ module.exports = {
             }
         }
     },
+    getTop: async (tbName, tbColumn, limit) => {
+        let dbcn = null;
+        try {
+            const query = `SELECT * FROM ${tbName} ORDER BY ${tbColumn} DESC LIMIT ${limit}`;
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
+    getWithQuery: async (query) => {
+        let dbcn = null;
+        try {
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.any(query);
+            return data;
+        }
+        catch (error) {
+            throw error;
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    }
+
 };

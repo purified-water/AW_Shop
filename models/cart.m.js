@@ -68,7 +68,19 @@ module.exports = {
         try {
             // Lấy cart_id từ user_id
             const cartQuery = await db.getCondition('cart', 'user_id', user_id);
-            const cartID = cartQuery[0].id;
+            let cartID;
+            if (cartQuery) {
+                if (cartQuery.length === 0) {
+                    // Nếu chưa có cart, tạo mới cart
+                    const newCart = await db.insert('cart', {
+                        user_id: user_id
+                    }, 'id');
+                    cartID = newCart.id;
+                }
+                if (cartQuery && cartQuery.length > 0) {
+                    cartID = cartQuery[0].id;
+                }
+            }
 
             // Lấy items trong cart
             const items = await db.getCondition('cart_items', 'cart_id', cartID);

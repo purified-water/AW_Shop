@@ -9,6 +9,8 @@ const flash = require('express-flash')
 const {isAuthenticated, isNotAuthenticated} = require('./middlewares/auth.middleware')
 const axios = require('axios');
 
+const db = require('./utils/db');
+
 
 app.use(flash());
 
@@ -28,11 +30,13 @@ app.engine('hbs', handlebars.engine({
     layoutsDir:`views/layouts/`,
     defaultLayout: 'index',
     extname: 'hbs',
-    partialsDir: 'views/partials/'
+    partialsDir: 'views/partials/',
+    helpers: {
+        json: function(context){
+            return JSON.stringify(context);
+        },
+    },
 }));
-
-
-
 
 const path = require('path');
 app.use(express.static(path.join(__dirname, 'public')));
@@ -43,6 +47,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+// get data
+const databaseRoute = require('./routes/db.r');
+app.use('/getAll', databaseRoute);
 
 //Authentications
 const authRoute = require('./routes/auth.r');
@@ -62,21 +69,14 @@ app.delete('/logout', (req,res) => {
     })
 })
 
-app.get('/', isAuthenticated, (req, res) => {
-    console.log('Authenticated user', req.user);  
-    res.render("home", {user: req.user[0] });
-});
 
-
-const databaseRoute = require('./routes/db.r');
-app.use('/getAll', databaseRoute);
-
-
-// app.get('/', (req, res) => {
-
-//     res.render("home");
+// app.get('/', isAuthenticated, (req, res) => {
+//     console.log('Authenticated user', req.user);  
+//     res.render("home", {user: req.user[0] });
 // });
 
+const homeRoute = require('./routes/home.r');
+app.use('/', homeRoute);
 
 const cateRoute = require('./routes/cate.r');
 app.use('/cate', (req, res, next) => {
@@ -115,8 +115,6 @@ app.use('/user',(req,res,next) => {
     res.locals.user = req.user[0];
     next();
 }, usersRoute)
-// const signoutRoute = require('./routes/signout.r');
-// app.use('/signout', signoutRoute);
 
 
 

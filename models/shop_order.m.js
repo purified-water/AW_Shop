@@ -21,23 +21,30 @@ module.exports = {
     }, 
     getRevenueDay: async () => {
         try {
-            const query = await db.getCondition('public.shop_order','date',str(datetime.date.today()));
-            const totalRevDay = query.reduce((acc,row) => acc + row.total, 0);
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            console.log('Today:', formattedDate);
+            // Assuming db.getCondition is a function that takes a table name, column, and value
+            const query = await db.getConditionInTime('public.shop_order', 'date', formattedDate, 'date');
+            // console.log(query);
+            const totalRevDay = query.reduce((acc, row) => acc + parseInt(row.total, 10), 0);
 
-            return {totalRevDay, query};
-        }
-        catch(e){
+            return { totalRevDay, query };
+        } catch (e) {
             console.log(e);
         }
     },
     getRevenueMonth: async () => {
         try {
-            const query = await db.getCondition('public.shop_order','date',str(datetime.month.today()));
-            const totalRevMonth = query.reduce((acc,row) => acc + row.total, 0);
-
-            return {totalRevMonth, query};
-        }
-        catch(e){
+            const currentDate = new Date();
+            const formattedDate = currentDate.toISOString().split('T')[0]; // Format: YYYY-MM-DD
+            // Assuming db.getCondition is a function that takes a table name, column, and value
+            const query = await db.getConditionInTime('public.shop_order', 'date', formattedDate, 'month');
+            // console.log(query);
+            const totalRevMonth = query.reduce((acc, row) => acc + parseInt(row.total, 10), 0);
+            
+            return { totalRevMonth, query };
+        } catch (e) {
             console.log(e);
         }
     },
