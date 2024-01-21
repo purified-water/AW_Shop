@@ -152,11 +152,11 @@
 
     <nav aria-label="Page navigation example">
       <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
-        <li class="page-item"><a class="page-link page-previous" href="">Previous</a></li>
+        <li class="page-item"><a class="page-link page-previous mx-1" href="">Previous</a></li>
         {{!-- <li class="page-item"><a class="page-link" href="/cate?page=1">1</a></li>
         <li class="page-item"><a class="page-link" href="/cate?page=2">2</a></li>
         <li class="page-item"><a class="page-link" href="/cate?page=3">3</a></li> --}}
-        <li class="page-item"><a class="page-link page-next" href="">Next</a></li>
+        <li class="page-item"><a class="page-link page-next mx-1" href="">Next</a></li>
       </ul>
     </nav>
     
@@ -176,7 +176,7 @@
 
   //Generate page button in pagination
   for (let i = 1; i <= total_page; ++i) {
-    html += `<li class="page-item mx-1"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
+    html += `<li class="page-item"><a class="page-link page-number" href="/cate?page=${i}">${i}</a></li>`
   }
   pagination.lastElementChild.insertAdjacentHTML('beforebegin',html)
    const pageNumbers = document.querySelectorAll('.page-number');
