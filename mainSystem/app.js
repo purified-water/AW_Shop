@@ -15,10 +15,10 @@ const { createCA, createCert } = require('mkcert')
 startServer();
 async function startServer() {
     const ca = await createCA({
-        organization: "Hello CA",
-        countryCode: "NP",
-        state: "Bagmati",
-        locality: "Kathmandu",
+        organization: "AW_Shop",
+        countryCode: "+84",
+        state: "Ho Chi Minh",
+        locality: "Ho Chi Minh",
         validity: 365
     });
     const cert = await createCert({
