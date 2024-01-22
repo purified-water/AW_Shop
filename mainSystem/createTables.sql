@@ -124,7 +124,7 @@ create table shop_order (
     cart_id INT NOT NULL,
     user_id INT NOT NULL,
     note varchar(255),
-    date varchar(255),
+    date TIMESTAMPTZ,
     method VARCHAR(255),
     total NUMERIC(10, 0) NOT NULL,
     status VARCHAR(255) NOT NULL

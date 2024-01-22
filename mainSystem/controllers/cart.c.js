@@ -149,7 +149,9 @@ module.exports = {
     payWithWallet: async (req,res,next) => {
         const cartID = parseInt(req.query.cart_id);
         let date = new Date();
-        let createDate = moment(date).format('YYYYMMDDHHmmss');
+        //TO DO COI THỬ NGÀY ĐÚNG CHƯA
+        let createDate = moment(date);
+        console.log('Create date', createDate);
         let orderId = moment(date).format('DDHHmmss');
         const user = await userModel.getUserByEmail(req.session.passport.user);
         const user_id = user[0].id;
