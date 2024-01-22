@@ -16,10 +16,10 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({storage: storage})
-router.use(isAuthenticated);
+// router.use(isAuthenticated);
 
 // router.get('/',cateController.getAllCates);
-router.get('/',cateController.loadCates);
+router.get('/', cateController.loadCates);
 router.post('/add', upload.single('image'), cateController.addCate);
 router.post('/edit', upload.single('image'), cateController.editCate);
 router.get('/delete/:product_type',cateController.deleteCate);

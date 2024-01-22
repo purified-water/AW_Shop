@@ -7,6 +7,7 @@ module.exports = {
             const orderDay = await shop_order.getRevenueDay();
             const orderMonth = await shop_order.getRevenueMonth();
             res.render('analyze',{
+                user: req.user[0],
                 orderListDay: JSON.stringify(orderDay.query),
                 totalDay: orderDay.totalRevDay,
                 orderListMonth: JSON.stringify(orderMonth.query),

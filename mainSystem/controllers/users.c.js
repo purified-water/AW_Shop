@@ -20,7 +20,7 @@ module.exports = {
     },
     loadProfile: async(req,res,next) => {
         try {
-            res.render('profile',{pageTitle: "Profile"});
+            res.render('profile',{user: req.user[0], pageTitle: "Profile"});
         }
         catch(e){
             console.log(e);
