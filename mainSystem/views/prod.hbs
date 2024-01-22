@@ -92,6 +92,7 @@
       </div>
       <div class="row mb-5">
         <div class="dropdown">
+          {{!-- <span style="display: inline-block;">Filter</span> --}}
           <button
             class="dropdown-toggle"
             type="button"
@@ -100,13 +101,13 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Filter
+          <span id="filter-display"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=A_Z">A-Z</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Z_A">Z-A</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Price_low_to_high">Price low to high</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Price_high_to_low">Price high to low</a>
+            <a class="filter dropdown-item" >A-Z</a>
+            <a class="filter dropdown-item" >Z-A</a>
+            <a class="filter dropdown-item" >Price low to high</a>
+            <a class="filter dropdown-item" >Price high to low</a>
           </div>
         </div>
       </div>
@@ -228,6 +229,12 @@
                       name="description"
                       value="{{this.price}}" required
                     />
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="description"
+                      value="{{this.price_sign}}" required
+                    />
                   </div>
                   <input
                     type="hidden"
@@ -284,20 +291,68 @@
     imageLink.value = '/images2/' + fileName;
   }
 
-  handlePagination()
+  const product_type = '{{product_type}}';
+  const page = {{ page }};
+  const total = {{ total }};
+  let filterContent = '{{filterContent}}';
+  const filterDisplay = document.getElementById('filter-display');
 
+  handleFilterDisplay();
+  function handleFilterDisplay() {
+    switch (filterContent) {
+      case 'A_Z':
+        filterDisplay.textContent = 'A-Z';
+        break;
+      case 'Z_A':
+        filterDisplay.textContent = 'Z-A';
+        break;
+      case 'Price_low_to_high':
+        filterDisplay.textContent = 'Price low to high';
+        break;
+      case 'Price_high_to_low':
+        filterDisplay.textContent = 'Price high to low';
+        break; 
+      default:
+        filterDisplay.textContent = 'Filter';
+        break;
+    }
+  }
+  handleFilter()
+  function handleFilter() {
+    const filters = document.getElementsByClassName('filter');
+    for (const filter of filters) {
+      let filter_content = ''
+      switch (filter.textContent) {
+        case 'A-Z':
+          filter_content = 'A_Z';
+          break;
+        case 'Z-A':
+          filter_content = 'Z_A';
+          break;
+        case 'Price low to high':
+          filter_content = 'Price_low_to_high';
+          break;
+        case 'Price high to low':
+          filter_content = 'Price_high_to_low';
+          break;
+        default:
+          filter_content = '';
+          break;
+      } 
+      filter.setAttribute('href', `/product?cate=${product_type}&page=${page}&filter=${filter_content}`)
+    }
+  }
+  handlePagination();
+  console.log('filterContent', filterContent )
   function handlePagination() {
-    const page = {{ page }};
-    const total = {{ total }};
     const product_type = '{{ product_type }}';
     const per_page = 9;
     const total_page = Math.ceil(total / per_page);
     const pagination = document.getElementById('prod-pagination');
     let html = ''
-
     //Generate page button in pagination
     for (let i = 1; i <= total_page; ++i) {
-      html += `<li class="page-item"><a class="page-link page-number" href="/product?cate=${product_type}&page=${i}">${i}</a></li>`
+      html += `<li class="page-item"><a class="page-link page-number" href="/product?cate=${product_type}&page=${i}&filter=${filterContent}">${i}</a></li>`
     }
     pagination.lastElementChild.insertAdjacentHTML('beforebegin', html);
     const pageNumbers = document.querySelectorAll('.page-number');
@@ -306,7 +361,7 @@
     const nextPage = document.querySelector('.page-next');
     let previous_page = page > 1 ? page - 1 : total_page;
     let next_page = page >= total_page ? 1 : page + 1;
-    previousPage.setAttribute('href', `/product?cate=${product_type}&page=${previous_page}`)
-    nextPage.setAttribute('href', `/product?cate=${product_type}&page=${next_page}`)
+    previousPage.setAttribute('href', `/product?cate=${product_type}&page=${previous_page}&filter=${filterContent}`)
+    nextPage.setAttribute('href', `/product?cate=${product_type}&page=${next_page}&filter=${filterContent}`)
   }
 </script>

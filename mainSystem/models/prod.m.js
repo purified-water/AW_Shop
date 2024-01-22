@@ -60,7 +60,7 @@ module.exports = {
                 brand: brand,
                 name: name,
                 price: price,
-                price_sign: '₫',
+                price_sign: 'đ',
                 currency: 'VND',
                 image_link: imageLink || '/images2/default.jpg',
                 description: description,

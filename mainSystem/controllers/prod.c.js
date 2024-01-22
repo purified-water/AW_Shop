@@ -1,10 +1,25 @@
 const product = require('../models/prod.m')
 const categories = require('../models/cate.m')
+function sortByAttribute(prodList, filter) {
+    switch( filter) {
+        case 'Z_A':
+            return prodList.sort((a,b) => a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1);
+            return 
+        case 'Price_low_to_high':
+            return prodList.sort((a,b) => a.price - b.price);
+        case 'Price_high_to_low':
+            return prodList.sort((a,b) => b.price - a.price);
+        default:
+            return prodList.sort((a,b) => b.name.toLowerCase() > a.name.toLowerCase() ? -1 : 1);
+
+    }
+}
 
 module.exports = {
     loadProductsWithCate: async (req, res, next) => {
         try {
-            
+            console.log(req.query);
+            const filter = req.query.filter ? req.query.filter : '';
             const product_type = req.query.cate;
             const page = req.query.page ? req.query.page: 1;
             const offset = 9*(page-1);
@@ -13,8 +28,9 @@ module.exports = {
             // console.log(total);
             // console.log('product_type: ', product_type);
             // const prodList = await product.getProductsWithCate(product_type);
-            const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
-            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
+            let prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
+            prodList = sortByAttribute(prodList, filter)
+            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List", filterContent: filter});
 
         } catch (error) {
             next(error);
