@@ -47,9 +47,16 @@ module.exports = {
         const offset = (page - 1) * itemsPerPage;
 
         try {
+            const result = await db.getCategories()
             const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            res.render("cate",{cateList: cates, page, total_cate, pageTitle: "Category List"});
+            res.render("cate",{
+                cateList: cates, 
+                page, 
+                total_cate, 
+                pageTitle: "Category List",
+                cateListNav: result,
+            });
 
         } catch (err) {
             console.error(err);

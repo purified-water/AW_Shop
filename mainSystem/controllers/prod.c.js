@@ -1,5 +1,6 @@
 const product = require('../models/prod.m')
 const categories = require('../models/cate.m')
+const db = require('../utils/db');
 
 module.exports = {
     loadProductsWithCate: async (req, res, next) => {
@@ -14,7 +15,16 @@ module.exports = {
             // console.log('product_type: ', product_type);
             // const prodList = await product.getProductsWithCate(product_type);
             const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
-            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
+            const cateList = await categories.getCates();
+            res.render("prod", { 
+                product_type: product_type, 
+                prodList: prodList, 
+                total, 
+                page, 
+                pageTitle: "Product List",
+                cateListNav: cateList,
+                
+            });
 
         } catch (error) {
             next(error);
