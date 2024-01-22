@@ -2,6 +2,8 @@ const axios = require('axios');
 const db = require('../utils/db');
 const bcrypt = require('bcrypt')
 const fs = require('fs');
+const path = require('path');
+
 
 
 // Check if the image link returns a 404 error
@@ -37,8 +39,10 @@ module.exports = {
         }
     },
     importData: async (req, res) => {
+        const sqlScriptPath = path.join(__dirname, '../createTables.sql');
+        console.log('Script', sqlScriptPath);
          // Create tables
-         const sqlScript = fs.readFileSync('createTables.sql', 'utf8');
+         const sqlScript = fs.readFileSync(sqlScriptPath, 'utf8');
         //  const checkIfCreatedTables = await db.getCategories();
         //  if (checkIfCreatedTables.length === 0) {
         const tempQuery = await db.getWithQuery(sqlScript);

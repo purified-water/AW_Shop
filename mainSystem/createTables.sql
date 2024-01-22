@@ -122,7 +122,10 @@ alter table cart_items add constraint FK_productid foreign key (product_id) refe
 create table shop_order (
     id SERIAL,
     cart_id INT NOT NULL,
-    date TIMESTAMPTZ,
+    user_id INT NOT NULL,
+    note varchar(255),
+    date varchar(255),
+    method VARCHAR(255),
     total NUMERIC(10, 0) NOT NULL,
     status VARCHAR(255) NOT NULL
 );
@@ -131,3 +134,4 @@ create table shop_order (
 alter table shop_order add constraint PK_orderid primary key (id) with (fillfactor=80);
 -- Add FK
 alter table shop_order add constraint FK_cartid foreign key (cart_id) references cart(id);
+alter table shop_order add constraint FK_userid foreign key (user_id) references users(id);

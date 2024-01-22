@@ -1,6 +1,7 @@
 // const userModels = require('../models/user.m');
 const bcrypt = require('bcrypt')
 const Users = require('../models/users.m')
+const db = require('../utils/db')
 let i = 0
 
 module.exports = {
@@ -69,6 +70,17 @@ module.exports = {
                 zipcode: 'req.body.zipcode',
             }
             const data = await Users.insert(user);
+            // const queryAcc = `SELECT id FROM users where email = ${req.body.email}`
+            const user_id = await db.getCondition('users', 'email', req.body.email);
+            console.log('User id register', user_id[0].id);
+            // Khởi tạo account user với 1000000 để test
+            const account = {
+                user_id: parseInt(user_id[0].id),
+                balance: 1000000
+            }
+
+            const accountAdd = await db.insert('account', account, 'user_id');
+
             // res.json({firstname, lastname, email, username, password, isValid})
             return res.status(200).json({firstname, phone, lastname, email, username, password, isValid});
         }
