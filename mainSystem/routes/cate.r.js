@@ -3,10 +3,12 @@ const router = express.Router();
 const cateController = require('../controllers/cate.c.js');
 const multer = require('multer')
 const path = require('path')
+const {isAuthenticated} = require('../middlewares/auth.middleware.js')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null,'./public/images2')
+        // console.log(req);
+        cb(null,'./mainSystem/public/images2')
     },
     filename: (req, file, cb) => {
         console.log(file);
@@ -14,7 +16,7 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({storage: storage})
-
+router.use(isAuthenticated);
 
 // router.get('/',cateController.getAllCates);
 router.get('/',cateController.loadCates);
