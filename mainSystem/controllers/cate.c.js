@@ -62,7 +62,7 @@ module.exports = {
         try {
             const result = await db.getAllCategories()
             const totalItems = result.count;
-            console.log(result);
+            // console.log(result);
             res.json({ totalItems });
             // res.render("cate",result);
         } catch (err) {
@@ -74,10 +74,10 @@ module.exports = {
     addCate: async (req, res, next) => {
         try {
             const image_link = req.body.image_link;
-            console.log(image_link);
+            // console.log(image_link);
             const product_type = req.body.product_type;
-            console.log(image_link);
-            console.log(product_type);
+            // console.log(image_link);
+            // console.log(product_type);
             await category.addCate(product_type, image_link);
             res.redirect('/cate');
         } catch (error) {
@@ -91,7 +91,7 @@ module.exports = {
             const oldCateName = req.body.product_type;
             const newCateName = req.body.new_product_type;
             const imageLink = req.body.image_link;
-            console.log(imageLink)
+            // console.log(imageLink)
 
             await category.editCate(oldCateName, newCateName, imageLink);
             res.redirect('/cate');

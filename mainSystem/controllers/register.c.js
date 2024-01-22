@@ -24,7 +24,7 @@ module.exports = {
             isValid = false
         }
         let users = await Users.getUserByEmail(email)
-        console.log('users', users);
+        // console.log('users', users);
         if (users.length > 0) {
             email = 'Email has been set before!'
             isValid = false
@@ -42,6 +42,11 @@ module.exports = {
         regex = /^(?=.*[0-9])(?=.*[a-zA-Z]).{6,}$/
         if (!password.match(regex)) {
             password = 'Password must have at least 6 characters, including letters and numbers!'
+            isValid = false
+        }
+        regex = /^[0-9]{10}$/
+        if (!phone.match(regex)) {
+            phone = 'Phone must contain only 10 numbers!'
             isValid = false
         }
         if (!isValid) {
