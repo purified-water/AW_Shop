@@ -49,7 +49,7 @@ module.exports = {
         try {
             const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
-            res.render("cate",{cateList: cates, page, total_cate, pageTitle: "Category List"});
+            res.render("cate",{user: req.user[0], cateList: cates, page, total_cate, pageTitle: "Category List"});
 
         } catch (err) {
             console.error(err);

@@ -30,7 +30,7 @@ module.exports = {
             // const prodList = await product.getProductsWithCate(product_type);
             let prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
             prodList = sortByAttribute(prodList, filter)
-            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List", filterContent: filter});
+            res.render("prod", {user: req.user[0], product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List", filterContent: filter});
 
         } catch (error) {
             next(error);
@@ -41,7 +41,7 @@ module.exports = {
             const productID = req.query.id;
             const productDetail = await product.getProductDetail(productID);
             // console.log('productDetail: ', productDetail);
-            res.render("detail", { productDetail: productDetail[0], pageTitle: "Detail Product" }); // TO DO: SỬA chỗ này theo Trí
+            res.render("detail", {user: req.user[0], productDetail: productDetail[0], pageTitle: "Detail Product" }); // TO DO: SỬA chỗ này theo Trí
         } catch (error) {
             next(error);
         }
@@ -81,7 +81,7 @@ module.exports = {
             const product_type = req.query.cate;
             const filter = req.query.filter;
             const prodList = await product.filter(product_type, filter);
-            res.render("prod", { product_type: product_type, prodList: prodList});
+            res.render("prod", {user: req.user[0], product_type: product_type, prodList: prodList});
         } catch (error) {
             next(error);
         }
@@ -94,7 +94,7 @@ module.exports = {
             const cateList = await categories.search(search);
             // console.log('Product list: ', prodList);
             // console.log('Cate list: ', cateList);
-            res.render("search", { prodList: prodList, cateList: cateList});
+            res.render("search", {user: req.user[0], prodList: prodList, cateList: cateList});
         } catch (error) {
             next(error);
         }

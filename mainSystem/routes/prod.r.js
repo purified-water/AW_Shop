@@ -3,7 +3,6 @@ const router = express.Router();
 const prodController = require('../controllers/prod.c.js');
 const multer = require('multer')
 const path = require('path')
-const {isAuthenticated} = require('../middlewares/auth.middleware.js')
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -16,7 +15,6 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({storage: storage})
-router.use(isAuthenticated);
 
 router.get('/',prodController.loadProductsWithCate);
 router.post('/add', upload.single('image'), prodController.addProduct);

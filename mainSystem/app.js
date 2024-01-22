@@ -74,53 +74,31 @@ app.delete('/logout', (req,res) => {
 //     console.log('Authenticated user', req.user);  
 //     res.render("home", {user: req.user[0] });
 // });
+const logOutRoute = require('./routes/logout.r');
+app.use('/logout', logOutRoute);
 
+app.use(isAuthenticated);
 const homeRoute = require('./routes/home.r');
 app.use('/', homeRoute);
 
 const cateRoute = require('./routes/cate.r');
-app.use('/cate', (req, res, next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    next();
-}, cateRoute);
+app.use('/cate', cateRoute);
 
 const prodRoute = require('./routes/prod.r');
-app.use('/product', (req, res, next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    next();
-}, prodRoute);
+app.use('/product', prodRoute);
 
 const cartRoute = require('./routes/cart.r');
-app.use('/cart', (req, res, next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    next();
-}, cartRoute);
+app.use('/cart', cartRoute);
 
 const analyzeRoute = require('./routes/analyze.r');
-app.use('/analyze', (req,res,next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    next();
-}, analyzeRoute);
-
-const logOutRoute = require('./routes/logout.r');
-app.use('/logout', logOutRoute);
+app.use('/analyze', analyzeRoute);
 
 const usersRoute = require('./routes/users.r');
-app.use('/user',(req,res,next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    next();
-}, usersRoute)
+app.use('/user', usersRoute)
 
-app.get('/about',(req,res,next) => {
-    req.user = req.user || [];
-    res.locals.user = req.user[0];
-    res.render("about",{pageTitle: "About"});
-})
+app.get('/about', (req, res) => {
+    res.render("about",{user: req.user[0], pageTitle: "About"})
+});
 
 
 app.listen(port, () => {
