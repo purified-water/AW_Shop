@@ -275,7 +275,8 @@
 </div>
 <style>
   .preview-image {
-    width: 100%;
+    max-width: 80%;
+    height: auto;
   }
 </style>
 <script>
@@ -352,10 +353,39 @@
     let html = ''
     //Generate page button in pagination
     for (let i = 1; i <= total_page; ++i) {
-      html += `<li class="page-item"><a class="page-link page-number" href="/product?cate=${product_type}&page=${i}&filter=${filterContent}">${i}</a></li>`
+      html += `<li class="page-item"><a class="page-link page-number" style="display: none" href="/product?cate=${product_type}&page=${i}&filter=${filterContent}">${i}</a></li>`
     }
+
     pagination.lastElementChild.insertAdjacentHTML('beforebegin', html);
     const pageNumbers = document.querySelectorAll('.page-number');
+
+    //Overflow pagination
+    pageNumbers[0].style.display = 'block';
+    pageNumbers[page-1].style.display = 'block';
+    pageNumbers[total_page-1].style.display = 'block';
+    for (let i = 1; i <= 2; ++i) {
+      if (pageNumbers[page-i-1]) {
+        pageNumbers[page-i-1].style.display = 'block';
+      }
+      if (pageNumbers[page+i-1]) {
+        pageNumbers[page+i-1].style.display = 'block';
+      }
+    }
+
+    let dotPage = page - 4;
+    if (pageNumbers[dotPage] && dotPage != 0  ) {
+      pageNumbers[dotPage].textContent = '...';
+      pageNumbers[dotPage].style.display = 'block';
+      pageNumbers[dotPage].classList.add('disabled');
+    }
+    dotPage = page + 3;
+     if (pageNumbers[dotPage] && dotPage != total_page-1 ) {
+      pageNumbers[dotPage].textContent = '...';
+      pageNumbers[dotPage].style.display = 'block';
+      pageNumbers[dotPage].classList.add('disabled');
+    }
+
+
     pageNumbers[page-1].focus();
     const previousPage = document.querySelector('.page-previous');
     const nextPage = document.querySelector('.page-next');
