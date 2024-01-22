@@ -40,8 +40,10 @@ module.exports = {
         try {
             const productID = req.query.id;
             const productDetail = await product.getProductDetail(productID);
+            const similarProducts = await product.getSimilarProducts(productDetail[0].product_type);
             // console.log('productDetail: ', productDetail);
-            res.render("detail", {user: req.user[0], productDetail: productDetail[0], pageTitle: "Detail Product" }); // TO DO: SỬA chỗ này theo Trí
+            res.render("detail", {user: req.user[0], productDetail: productDetail[0], pageTitle: "Detail Product", similarProducts: similarProducts }); // TO DO: SỬA chỗ này theo Trí
+
         } catch (error) {
             next(error);
         }
