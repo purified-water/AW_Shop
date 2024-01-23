@@ -1,5 +1,6 @@
 const product = require('../models/prod.m')
 const categories = require('../models/cate.m')
+const db = require('../utils/db');
 function sortByAttribute(prodList, filter) {
     switch( filter) {
         case 'Z_A':
@@ -28,9 +29,8 @@ module.exports = {
             // console.log(total);
             // console.log('product_type: ', product_type);
             // const prodList = await product.getProductsWithCate(product_type);
-            let prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
-            prodList = sortByAttribute(prodList, filter)
-            res.render("prod", {user: req.user[0], product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List", filterContent: filter});
+            const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
+            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
 
         } catch (error) {
             next(error);

@@ -11,13 +11,14 @@ module.exports = {
         const top5Products = await products.getTop5Products();
         const top5Categories = await categories.getTop5Categories();
         const deal = await products.getDeal();
-      
+        const cateList = await categories.getCates();
         res.render("home", {
             user: req.user[0], 
             top5Products: top5Products, 
             top5Categories: top5Categories,
             deal: deal[0],
-            pageTitle: "Homepage"
+            pageTitle: "Homepage",
+            cateListNav: cateList,
         });
 
     }
