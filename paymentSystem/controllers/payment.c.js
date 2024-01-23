@@ -22,5 +22,25 @@ module.exports = {
         await paymentModel.updateAccount(userID, newBalance);
         res.status(200).json({message: 'Payment success'});
 
-    }
+    },
+    rechargeBalance: async (req,res,next) => {
+        try {
+            const userID = req.body.user_id;
+            const account = await paymentModel.getAccount(userID);
+            if (account.length == 0){
+                return res.status(400).json({
+                    message: 'Account not found'
+                })
+            }
+            const rechargeAmount = req.body.rechargeAmount;
+
+            const newBalance = account[0].balance + parseInt(rechargeAmount);
+            
+            await paymentModel.updateAccount(userID,newBalance);
+            res.status(200).json({message: 'Recharge success'});
+        }
+        catch (e){
+            console.log(e);
+        }
+    },
 }
