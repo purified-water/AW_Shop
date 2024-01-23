@@ -2,6 +2,7 @@
   <h1 class="mt-5">{{product_type}} products</h1>
   <div class="site-section mt-4">
     <div class="container">
+      {{#if (eq user/role "admin")}}
       <div class="row">
         <a
           data-mdb-ripple-init
@@ -10,6 +11,7 @@
           class="mb-3 fs-20"
         ><i class="icon ion-md-create">Add new product</i></a>
       </div>
+      {{/if}}
       <div
         class="modal fade"
         id="addProduct"
