@@ -51,6 +51,7 @@ module.exports = {
             const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
             res.render("cate",{
+                user: req.user[0],
                 cateList: cates, 
                 page, 
                 total_cate, 

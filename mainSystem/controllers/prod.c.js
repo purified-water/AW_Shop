@@ -1,11 +1,10 @@
 const product = require('../models/prod.m')
 const categories = require('../models/cate.m')
 const db = require('../utils/db');
-function sortByAttribute(prodList, filter) {
+function sortByFilter(prodList, filter) {
     switch( filter) {
         case 'Z_A':
             return prodList.sort((a,b) => a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 1);
-            return 
         case 'Price_low_to_high':
             return prodList.sort((a,b) => a.price - b.price);
         case 'Price_high_to_low':
@@ -26,11 +25,9 @@ module.exports = {
             const offset = 9*(page-1);
             const itemsPerPage = 9;
             const total = await product.countProductsWithTcate(product_type);
-            // console.log(total);
-            // console.log('product_type: ', product_type);
-            // const prodList = await product.getProductsWithCate(product_type);
-            const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
-            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
+            let prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
+            prodList = sortByFilter(prodList, filter)
+            res.render("prod", {user: req.user[0], product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List", filterContent: filter});
 
         } catch (error) {
             next(error);
