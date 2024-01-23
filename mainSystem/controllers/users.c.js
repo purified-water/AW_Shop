@@ -1,8 +1,37 @@
 const userModel = require('../models/users.m.js');
 const accountModel = require('../models/account.m.js');
 require('dotenv').config();
-const rechargeLink = 'https://localhost:8888'
+const rechargeLink = 'https://localhost:3000'
 module.exports = {
+    redirectVnPay: async (req, res, next) => {
+        console.log('redirect VNPAY')
+        const rechargeAmount = parseInt(req.body.rechargeAmount);
+
+        const params = {
+            amount: rechargeAmount,
+            bankCode: ''
+            // Add more parameters as needed
+        };
+
+        // Replace with your server URL
+        const serverUrl = 'https://localhost:8888/order/create_payment_url';
+
+        // Use Fetch API to send a POST request
+        try {
+
+            let response = await fetch(serverUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(params),
+            })
+            const data = await response.json()
+            console.log(data)
+        } catch (e) {
+            console.log(e)
+        }
+    },
     updateUser: async (req, res, next) => {
         try {
             const id = req.params.id;
