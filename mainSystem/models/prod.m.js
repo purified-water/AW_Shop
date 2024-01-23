@@ -60,7 +60,7 @@ module.exports = {
                 brand: brand,
                 name: name,
                 price: price,
-                price_sign: '₫',
+                price_sign: 'đ',
                 currency: 'VND',
                 image_link: imageLink || '/images2/default.jpg',
                 description: description,
@@ -191,6 +191,21 @@ module.exports = {
         }
     },
 
+    getSimilarProducts: async (product_type) => {
+        try {
+            const query = `
+            SELECT *
+            FROM products
+            WHERE product_type = '${product_type}'
+            ORDER BY RANDOM()
+            LIMIT 6
+            `
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
 

@@ -78,10 +78,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row mb-5">
-
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/menu">Continue Shopping</a></button>
-                    </div>
                 </div>
             </div>
             <div class="col-md-6 pl-5">
@@ -99,13 +95,18 @@
                                 <span style="color: black">TOTAL</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black" style="font-size:20px; text-align:center">₫{{ totalPrice }}</strong>
+                                <strong class="text-black" style="font-size:20px; text-align:center">{{ total }}₫</strong>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/checkout">Proceed to checkout</a></button>
+                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/cart/payWithWallet?cart_id={{cartID}}">Pay with wallet</a></button>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12">
+                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/checkout">Pay with VNPay</a></button>
                             </div>
                         </div>
                     </div>

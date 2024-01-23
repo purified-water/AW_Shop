@@ -32,13 +32,10 @@
             <div class="modal-body">
               <form class="ml-3" action="/product/add" enctype="multipart/form-data" method="post">
                 <div class="input-group">
-                  <label class="fw-bold" for="image_link">Image</label>
-                  <input
-                    class="input--style-3"
-                    type="text"
-                    name="image_link"
-                    placeholder="Image link" required
-                  />
+                   <label class="fw-bold" for="image_link">Image</label>
+                  <input type="file" id="image-add-input" name="image" onchange="getImageReview(event,'add')" accept=".jpg, .png" id="" required>
+                  <div id="preview-add-image"></div>
+                  <input class="input--style-3" id="image-add-link" type="text" style="display: none;" name="image_link" placeholder="Image link"  required/>
                   <label class="fw-bold" for="brand">Brand</label>
                   <input
                     class="input--style-3"
@@ -60,7 +57,7 @@
                   <label class="fw-bold" for="price">Price</label>
                   <input
                     class="input--style-3"
-                    type="text"
+                    type="number"
                     name="price"
                     placeholder="Price" required
                   />
@@ -95,6 +92,7 @@
       </div>
       <div class="row mb-5">
         <div class="dropdown">
+          {{!-- <span style="display: inline-block;">Filter</span> --}}
           <button
             class="dropdown-toggle"
             type="button"
@@ -103,13 +101,13 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Filter
+          <span id="filter-display"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=A_Z">A-Z</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Z_A">Z-A</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Price_low_to_high">Price low to high</a>
-            <a class="dropdown-item" href="/product/filter?cate={{product_type}}&filter=Price_high_to_low">Price high to low</a>
+            <a class="filter dropdown-item" >A-Z</a>
+            <a class="filter dropdown-item" >Z-A</a>
+            <a class="filter dropdown-item" >Price low to high</a>
+            <a class="filter dropdown-item" >Price high to low</a>
           </div>
         </div>
       </div>
@@ -179,7 +177,7 @@
                 <form
                   class="ml-3"
                   action="/product/edit/{{this.id}}"
-                  method="post"
+                  method="post" enctype="multipart/form-data"
                 >
                   <div class="fw-bold mb-2" class="input-group">
                     <input
@@ -191,13 +189,10 @@
                   </div>
                   <div class="input-group">
                   <label class="fw-bold" for="image_link">Image</label>
-                  <input
-                    class="input--style-3"
-                    type="text"
-                    name="image_link"
-                    placeholder="Image link"
-                    value="{{this.image_link}}" required
-                  />
+                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
+                    <div id="preview-edit-image">
+                    </div>
+                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
                   </div>
                   <div class="input-group">
                     <label class="fw-bold" for="brand">Brand</label>
@@ -221,7 +216,7 @@
                     <label class="fw-bold" for="price">Price</label>
                     <input
                       class="input--style-3"
-                      type="text"
+                      type="number"
                       name="price"
                       value="{{this.price}}" required
                     />
@@ -233,6 +228,12 @@
                       type="text"
                       name="description"
                       value="{{this.price}}" required
+                    />
+                    <input
+                      class="input--style-3"
+                      type="text"
+                      name="description"
+                      value="{{this.price_sign}}" required
                     />
                   </div>
                   <input
@@ -271,34 +272,126 @@
       <li class="page-item mx-1"><a class="page-link page-next" href="">Next</a></li>
     </ul>
   </nav>
-
 </div>
 <style>
-
+  .preview-image {
+    max-width: 80%;
+    height: auto;
+  }
 </style>
 <script>
+  function getImageReview(event, action) {
+    const parentNode = event.target.parentNode;
+    const imageInput = parentNode.querySelector(`#image-${action}-input`);
+    const imageLink = parentNode.querySelector(`#image-${action}-link`);
+    let fileName = event.target.files[0].name;
+    const fileExtension = fileName.split('.').pop();
+    let image = URL.createObjectURL(event.target.files[0]);
+    let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
+    imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
+    imageLink.value = '/images2/' + fileName;
+  }
+
+  const product_type = '{{product_type}}';
   const page = {{ page }};
   const total = {{ total }};
-  const product_type = '{{ product_type }}';
-  const per_page = 9;
-  const total_page = Math.ceil(total / per_page);
-  const pagination = document.getElementById('prod-pagination');
-  let html = ''
+  let filterContent = '{{filterContent}}';
+  const filterDisplay = document.getElementById('filter-display');
 
-  //Generate page button in pagination
-  for (let i = 1; i <= total_page; ++i) {
-    html += `<li class="page-item"><a class="page-link page-number" href="/product?cate=${product_type}&page=${i}">${i}</a></li>`
+  handleFilterDisplay();
+  function handleFilterDisplay() {
+    switch (filterContent) {
+      case 'A_Z':
+        filterDisplay.textContent = 'A-Z';
+        break;
+      case 'Z_A':
+        filterDisplay.textContent = 'Z-A';
+        break;
+      case 'Price_low_to_high':
+        filterDisplay.textContent = 'Price low to high';
+        break;
+      case 'Price_high_to_low':
+        filterDisplay.textContent = 'Price high to low';
+        break; 
+      default:
+        filterDisplay.textContent = 'Filter';
+        break;
+    }
   }
-  pagination.lastElementChild.insertAdjacentHTML('beforebegin', html);
-  const pageNumbers = document.querySelectorAll('.page-number');
-  pageNumbers[page-1].focus();
-  //Handle previous button
-  const previousPage = document.querySelector('.page-previous');
-  const nextPage = document.querySelector('.page-next');
-  console.log(previousPage);
+  handleFilter()
+  function handleFilter() {
+    const filters = document.getElementsByClassName('filter');
+    for (const filter of filters) {
+      let filter_content = ''
+      switch (filter.textContent) {
+        case 'A-Z':
+          filter_content = 'A_Z';
+          break;
+        case 'Z-A':
+          filter_content = 'Z_A';
+          break;
+        case 'Price low to high':
+          filter_content = 'Price_low_to_high';
+          break;
+        case 'Price high to low':
+          filter_content = 'Price_high_to_low';
+          break;
+        default:
+          filter_content = '';
+          break;
+      } 
+      filter.setAttribute('href', `/product?cate=${product_type}&page=${page}&filter=${filter_content}`)
+    }
+  }
+  handlePagination();
+  console.log('filterContent', filterContent )
+  function handlePagination() {
+    const product_type = '{{ product_type }}';
+    const per_page = 9;
+    const total_page = Math.ceil(total / per_page);
+    const pagination = document.getElementById('prod-pagination');
+    let html = ''
+    //Generate page button in pagination
+    for (let i = 1; i <= total_page; ++i) {
+      html += `<li class="page-item"><a class="page-link page-number" style="display: none" href="/product?cate=${product_type}&page=${i}&filter=${filterContent}">${i}</a></li>`
+    }
 
-  let previous_page = page > 1 ? page - 1 : total_page;
-  let next_page = page >= total_page ? 1 : page + 1;
-  previousPage.setAttribute('href', `/product?cate=${product_type}&page=${previous_page}`)
-  nextPage.setAttribute('href', `/product?cate=${product_type}&page=${next_page}`)
+    pagination.lastElementChild.insertAdjacentHTML('beforebegin', html);
+    const pageNumbers = document.querySelectorAll('.page-number');
+
+    //Overflow pagination
+    pageNumbers[0].style.display = 'block';
+    pageNumbers[page-1].style.display = 'block';
+    pageNumbers[total_page-1].style.display = 'block';
+    for (let i = 1; i <= 2; ++i) {
+      if (pageNumbers[page-i-1]) {
+        pageNumbers[page-i-1].style.display = 'block';
+      }
+      if (pageNumbers[page+i-1]) {
+        pageNumbers[page+i-1].style.display = 'block';
+      }
+    }
+
+    let dotPage = page - 4;
+    if (pageNumbers[dotPage] && dotPage != 0  ) {
+      pageNumbers[dotPage].textContent = '...';
+      pageNumbers[dotPage].style.display = 'block';
+      pageNumbers[dotPage].classList.add('disabled');
+    }
+    dotPage = page + 3;
+     if (pageNumbers[dotPage] && dotPage != total_page-1 ) {
+      pageNumbers[dotPage].textContent = '...';
+      pageNumbers[dotPage].style.display = 'block';
+      pageNumbers[dotPage].classList.add('disabled');
+    }
+
+
+    pageNumbers[page-1].focus();
+    const previousPage = document.querySelector('.page-previous');
+    const nextPage = document.querySelector('.page-next');
+    let previous_page = page > 1 ? page - 1 : total_page;
+    let next_page = page >= total_page ? 1 : page + 1;
+    previousPage.setAttribute('href', `/product?cate=${product_type}&page=${previous_page}&filter=${filterContent}`)
+    nextPage.setAttribute('href', `/product?cate=${product_type}&page=${next_page}&filter=${filterContent}`)
+  }
 </script>
