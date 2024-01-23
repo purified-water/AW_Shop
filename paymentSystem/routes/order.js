@@ -9,6 +9,7 @@ let router = express.Router();
 let $ = require('jquery');
 const request = require('request');
 const moment = require('moment');
+const payment = require('../models/payment.m');
 
 
 router.get('/', function (req, res, next) {
@@ -51,6 +52,9 @@ router.post('/create_payment_url', function (req, res, next) {
     let vnpUrl = config.get('vnp_Url');
     let returnUrl = config.get('vnp_ReturnUrl');
     let orderId = moment(date).format('DDHHmmss');
+    let user_id = req.body.user_id;
+
+    let info = orderId + user_id
     let amount = parseInt(req.body.rechargeAmount);
     let bankCode = '';
     // let amount = 300000
@@ -68,8 +72,8 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_TmnCode'] = tmnCode;
     vnp_Params['vnp_Locale'] = locale;
     vnp_Params['vnp_CurrCode'] = currCode;
-    vnp_Params['vnp_TxnRef'] = orderId;
-    vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + orderId;
+    vnp_Params['vnp_TxnRef'] = info;
+    vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + info;
     vnp_Params['vnp_OrderType'] = 'other';
     vnp_Params['vnp_Amount'] = amount * 100;
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
@@ -93,7 +97,7 @@ router.post('/create_payment_url', function (req, res, next) {
 });
 
 router.get('/vnpay_return', async function (req, res, next) {
-    console.log('vào vnpay return')
+    console.log('vào vnpay return', req.body)
     let vnp_Params = req.query;
 
     let secureHash = vnp_Params['vnp_SecureHash'];
@@ -102,6 +106,15 @@ router.get('/vnpay_return', async function (req, res, next) {
     delete vnp_Params['vnp_SecureHashType'];
 
     vnp_Params = sortObject(vnp_Params);
+
+    // console.log(vnp_Params);
+    let info = vnp_Params['vnp_TxnRef'];
+    let order_id = info.slice(0,8);
+    let user_id = info.slice(8);
+    let rechargeAmount = vnp_Params['vnp_Amount'];
+
+    console.log('user id: ', user_id)
+    console.log('recharge amount: ', rechargeAmount)
 
     let config = require('config');
     let tmnCode = config.get('vnp_TmnCode');
@@ -119,12 +132,21 @@ router.get('/vnpay_return', async function (req, res, next) {
         // res.render('success', {code: vnp_Params['vnp_ResponseCode']})
         // res.redirect('https://localhost:3000/', {code: vnp_Params['vnp_ResponseCode']})
         try {
-
-            let response = await fetch('https://localhost:3000/', {
-                method: 'GET',
+            user_id = String(user_id);
+            rechargeAmount = String(rechargeAmount);
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            // Buffer.from(arg);
+            let response = await fetch('https://localhost:8888/payment/recharge', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body : JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
             })
-            const data = await response.json()
-            console.log(data)
+
+            // const data = await response;
+            // console.log(data)
+            res.redirect('https://localhost:3000/user/profile/')
         } catch (e) {
             console.log(e)
         }

@@ -210,6 +210,7 @@
                 <input type="number" name="rechargeAmount" class="form-control" id="rechargeAmount" placeholder="Enter amount">
               </div>
               <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+              <input type="hidden" name="user_id" value="{{account.user_id}}"/>
               {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
               <button class="btn btn-primary" type="submit">Recharge</button>
             </form>
