@@ -34,11 +34,39 @@
       Menu
     </button>
 
+    <style>
+    /* Ẩn danh sách danh mục con mặc định */
+    .nav-item.dropdown .dropdown-menu {
+      display: none;
+    }
+
+    /* Hiển thị danh sách danh mục con khi hover */
+    .nav-item.dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
+    /* Thiết lập vị trí của danh sách danh mục con */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 200px; /* Điều chỉnh kích thước theo nhu cầu */
+      background-color: #fff;
+      border: 1px solid #ddd;
+      z-index: 1000;
+    }
+    </style>
     <div class="collapse navbar-collapse" id="ftco-nav">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item"><a
-            href="/cate"
-            class="nav-link">Categories</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="/cate" id="dropdownCategories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
+          <div class="dropdown-menu" aria-labelledby="dropdownCategories">
+              <a class="dropdown-item" href="/cate">List categorise</a>
+            {{#each cateListNav}}
+              <a class="dropdown-item" href="/product?cate={{this.product_type}}">{{this.product_type}}</a>
+            {{/each}}
+          </div>
+        </li>
 
         <li class="nav-item"><a
             href="/about"
@@ -76,4 +104,6 @@
   </div>
 </nav>
 {{/if}}
+
+
 <!-- END nav -->

@@ -1,7 +1,7 @@
 const cartModel = require('../models/cart.m');
 const userModel = require('../models/users.m');
 require('dotenv').config();
-const paymentLink = 'http://localhost:8888'
+const paymentLink = 'https://localhost:8888'
 const shopOrderModel = require('../models/shop_order.m');
 const moment = require('moment');
 
@@ -151,6 +151,7 @@ module.exports = {
         let date = new Date();
         //TO DO COI THỬ NGÀY ĐÚNG CHƯA
         let createDate = moment(date);
+        
         console.log('Create date', createDate);
         let orderId = moment(date).format('DDHHmmss');
         const user = await userModel.getUserByEmail(req.session.passport.user);
@@ -159,6 +160,9 @@ module.exports = {
         const shopOrder = await shopOrderModel.createOrder(parseInt(orderId), user_id, cartID, total, createDate, '' ,'Wallet');
 
         console.log(`Payment link is ${paymentLink}/payment/payWithWallet`);
+        // Xử lý lỗi self signed certificate in certificate chain
+        process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
         const result = await fetch(`${paymentLink}/payment/payWithWallet`, {
             method: 'POST',
             headers: {

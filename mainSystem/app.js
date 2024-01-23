@@ -121,8 +121,10 @@ async function startServer() {
     });
 
     const server = https.createServer({
-        key: cert.key,
-        cert: cert.cert,
+        key: fs.readFileSync("./mainSystem/configs/cert.key"),
+        cert: fs.readFileSync("./mainSystem/configs/cert.crt"),
+        // key: cert.key,
+        // cert: cert.cert,
     }, app)
     server.listen(port, () => {
         console.log(`https://localhost:${port}`)
