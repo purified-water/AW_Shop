@@ -67,8 +67,11 @@ module.exports = {
     getItemInCart: async (user_id) => {
         try {
             // Lấy cart_id từ user_id
+            console.log('User id để lấy cart', user_id);
             const cartQuery = await db.getCondition('cart', 'user_id', user_id);
+            console.log('User cart', cartQuery);
             let cartID;
+           
             if (cartQuery) {
                 if (cartQuery.length === 0) {
                     // Nếu chưa có cart, tạo mới cart
@@ -81,6 +84,7 @@ module.exports = {
                     cartID = cartQuery[0].id;
                 }
             }
+
 
             // Lấy items trong cart
             const items = await db.getCondition('cart_items', 'cart_id', cartID);
@@ -199,6 +203,20 @@ module.exports = {
             // Xóa items trong cart
             const items = db.deleteCondition('cart_items', 'cart_id', cartID);
             return items;
+        } catch (error) {
+            console.log(error);
+
+        }
+    },
+    getCartID: async (user_id) => {
+        try {
+            // Lấy cart_id từ user_id
+            const cartQuery = await db.getCondition('cart', 'user_id', user_id);
+            let cartID = 0;
+            if (cartQuery && cartQuery.length > 0) {
+                cartID = cartQuery[0].id;
+            }
+            return cartID;
         } catch (error) {
             console.log(error);
 

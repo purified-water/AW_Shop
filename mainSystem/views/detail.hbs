@@ -55,4 +55,46 @@
     </p>
     <hr class="section-divider" />
   </div>
+  <div class="detail-section">
+    <p class="detail-text mb-3">
+      Similar products
+    </p>
+    {{#if similarProducts}}
+      <div class="row">
+        {{#each similarProducts}}
+          <div class="col-lg-4 mb-5 col-md-6 product">
+            <div class="wine_v_1 text-center pb-4">
+              <a
+                href="/product/detail?id={{this.id}}"
+                id="show-detail"
+                class="thumbnail d-block mb-4"
+              >
+                <img
+                  src="{{this.image_link}}"
+                  alt="{{this.name}}"
+                  class="img-fluid"
+                />
+              </a>
+              <div class="wine-actions">
+                <h3 class="heading-2 product-text" style="font-size:18px"><a
+                    href
+                  >{{this.name}}</a></h3>
+                <h3 class="heading-2 product-text" style="font-size:15px">
+                  {{this.price}}{{this.price_sign}}
+                </h3>
+              </div>
+            </div>
+
+          </div>
+        {{/each}}
+      </div>
+
+    {{else}}
+      <p class="detail-description">
+        There are no similar products
+      </p>
+    {{/if}}
+
+    <hr class="section-divider" />
+  </div>
 </div>

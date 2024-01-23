@@ -123,6 +123,7 @@
         document.querySelector('.password-error').innerHTML = ''
         document.querySelector('.username-error').innerHTML = ''
         document.querySelector('.email-error').innerHTML = ''
+        document.querySelector('.phone-error').innerHTML = ''
         const firstname = form.querySelector('input[name="firstname"]').value;
         const lastname = form.querySelector('input[name="lastname"]').value;
         const email = form.querySelector('input[name="email"]').value;
@@ -145,6 +146,7 @@
             document.querySelector('.password-error').innerHTML = data.password.includes('!') ? data.password : '';
             document.querySelector('.email-error').innerHTML = data.email.includes('!') ? data.email : '';
             document.querySelector('.username-error').innerHTML = data.username.includes('!') ? data.username : '';
+            document.querySelector('.phone-error').innerHTML = data.phone.includes('!') ? data.phone : '';
           }
           else {
             console.log('hahaha');

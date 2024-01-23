@@ -2,3 +2,4 @@
 .env
 /.vscode
 /cert/
+/paymentSystem/node_modules/

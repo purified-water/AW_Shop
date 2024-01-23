@@ -105,7 +105,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form class="ml-3" action="/cate/edit" method="post">
+                <form class="ml-3" action="/cate/edit" enctype="multipart/form-data" method="post">
                 {{!-- asdasds --}}
                 <div class="fw-bold mb-2" class="input-group">
                     <input
@@ -150,9 +150,6 @@
     <nav aria-label="Page navigation example">
       <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
         <li class="page-item"><a class="page-link page-previous mx-1" href="">Previous</a></li>
-        {{!-- <li class="page-item"><a class="page-link" href="/cate?page=1">1</a></li>
-        <li class="page-item"><a class="page-link" href="/cate?page=2">2</a></li>
-        <li class="page-item"><a class="page-link" href="/cate?page=3">3</a></li> --}}
         <li class="page-item"><a class="page-link page-next mx-1" href="">Next</a></li>
       </ul>
     </nav>
@@ -171,18 +168,12 @@
  
   function getImageReview(event, action) {
     const parentNode = event.target.parentNode;
-    console.log(parentNode)
-
     const imageInput = parentNode.querySelector(`#image-${action}-input`);
     const imageLink = parentNode.querySelector(`#image-${action}-link`);
     let fileName = event.target.files[0].name;
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
     let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
-    console.log('fileName',fileName)
-    console.log('imageDiv',imageDiv);
-    console.log('imageLink',imageLink);
-    console.log(`${action}`);
     imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
     imageLink.value = '/images2/' + fileName;
   }
