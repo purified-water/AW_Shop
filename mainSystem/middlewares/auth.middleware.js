@@ -1,5 +1,5 @@
 function isAuthenticated(req, res, next) {
-    console.log('req.user', req.user);
+    // console.log('req.user', req.user);
     if (req.user && req.user[0]) {
         return next()
     }

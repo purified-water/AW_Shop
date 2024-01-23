@@ -6,6 +6,7 @@ module.exports = {
         try {       
             const orderDay = await shop_order.getRevenueDay();
             const orderMonth = await shop_order.getRevenueMonth();
+            // console.log(orderDay)
             res.render('analyze',{
                 user: req.user[0],
                 orderListDay: JSON.stringify(orderDay.query),

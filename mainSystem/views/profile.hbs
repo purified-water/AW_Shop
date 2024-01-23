@@ -5,7 +5,7 @@
     </section>
     
     <style>
-        .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
+        .edit-button i, .delete-button i, .recharge-button i { font-size: 20px; /* Điều chỉnh
         kích thước biểu tượng theo mong muốn */ }
     </style>
     <div class="container mt-5 mb-3 d-flex flex-row p-0">
@@ -176,7 +176,60 @@
         </div>
     {{/if}}
      
-    
+    <div class="container mt-5 mb-3 d-flex flex-row p-0">
+      <h3 class="me-3">Account</h3>
+        <a class="recharge-button" 
+          data-mdb-ripple-init
+          data-mdb-modal-init
+          href="#rechargeModal">
+          <i class="icon ion-md-refresh"></i>
+        </a>
+    </div>
+
+    <!-- Modal để nhập số tiền cần nạp -->
+    <div class="modal fade" id="rechargeModal" tabindex="-1" aria-labelledby="rechargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          {{!-- modal header --}}
+          <div class="modal-header">
+            <h5 class="modal-title" id="rechargeModalLabel">Recharge</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-ripple-init
+                data-mdb-dismiss="modal"
+                aria-label="Close"
+              ></button>
+          </div>
+
+          {{!-- modal body --}}
+          <div class="modal-body">
+            <form action="/user/profile/recharge/{{user.id}}" method="post">
+              <div class="form-group">
+                <label for="rechargeAmount">Enter recharge amount:</label>
+                <input type="number" name="rechargeAmount" class="form-control" id="rechargeAmount" placeholder="Enter amount">
+              </div>
+              <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+              {{!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+              <button class="btn btn-primary" type="submit">Recharge</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row pt-3">
+      <div class="col-md-12 mb-5">
+        <p style="font-size:18px">Balance: {{account.balance}}</p>
+      </div>
+
+      {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rechargeModal">
+        Recharge
+      </button> --}}
+
+    </div>
 
 </div>
 
