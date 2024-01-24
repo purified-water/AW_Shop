@@ -2,7 +2,7 @@ const paymentModel = require('../models/payment.m')
 module.exports = {
     payWithWallet: async (req,res,next) => {
         const paymentInfo = req.body.shopOrder;
-        console.log('Payment info: ', paymentInfo);
+        // console.log('Payment info: ', paymentInfo);
         const userID = req.body.user_id;
         console.log('User info', userID);
         const account = await paymentModel.getAccount(userID);
@@ -16,7 +16,7 @@ module.exports = {
                 message: 'Not enough money'
             })
         }
-
+        
         const newBalance = account[0].balance - paymentInfo.total;
         console.log('New balance: ', newBalance);
         await paymentModel.updateAccount(userID, newBalance);
