@@ -223,8 +223,30 @@
 
     <div class="row pt-3">
       <div class="col-md-12 mb-5">
-        <p style="font-size:18px">Balance: {{account.balance}}</p>
+        <p id="balance" style="font-size:18px">Balance: <span id="actual-balance">{{account.balance}}</span>
+        <button id="toggleBalance" onclick="toggleBalance()">
+            <i class="icon ion-md-eye ml-3"></i>
+        </button>
+        </p>
       </div>
+    </div>
+
+    <script>
+      function toggleBalance() {
+        var balanceElement = document.getElementById('actual-balance');
+        var toggleButton = document.getElementById('toggleBalance');
+
+        if (balanceElement.style.visibility === 'hidden') {
+          balanceElement.style.visibility = 'visible';
+          balanceElement.classList.remove('hidden-balance');
+          toggleButton.innerHTML = '<i class="icon ion-md-eye ml-3"></i>';
+        } else {
+          balanceElement.style.visibility = 'hidden';
+          balanceElement.classList.add('hidden-balance');
+          toggleButton.innerHTML = '<i class="icon ion-md-eye-off ml-3"></i>';
+        }
+      }
+    </script>
 
       {{!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rechargeModal">
         Recharge
