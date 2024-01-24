@@ -31,14 +31,21 @@ module.exports = {
             console.log('User when render cart', user);
             const user_id = user[0].id
 
-
+            const nav = await db.getCategories()
             const cartItems = await cartModel.getItemInCart(parseInt(user_id));
             const cartID = await cartModel.getCartID(parseInt(user_id));
             // Lấy cart id
             const total = await getCartTotal(user_id, cartID);
 
             if (cartItems.length == 0) {
-                return res.render('cart', {user: req.user[0], cartItems: [], cartID: cartID, pageTitle: "Cart", total: 0});
+                return res.render('cart', {
+                    user: req.user[0], 
+                    cartItems: [], 
+                    cartID: cartID, 
+                    pageTitle: "Cart", 
+                    total: 0,
+                    cateListNav: nav,
+                });
             }
             // console.log('cartItems: ', cartItems);
             let products = [];
@@ -53,7 +60,14 @@ module.exports = {
             // console.log('products', products);
 
 
-            res.render('cart', {user: req.user[0], cartItems: products, cartID: cartID, pageTitle: "Cart", total: total});
+            res.render('cart', {
+                user: req.user[0], 
+                cartItems: products, 
+                cartID: cartID, 
+                pageTitle: "Cart", 
+                total: total,
+                cateListNav: nav,
+            });
         } catch (error) {
             next(error);
         }

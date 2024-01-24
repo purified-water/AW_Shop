@@ -30,7 +30,16 @@ module.exports = {
             // console.log('product_type: ', product_type);
             // const prodList = await product.getProductsWithCate(product_type);
             const prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
-            res.render("prod", { product_type: product_type, prodList: prodList, total, page, pageTitle: "Product List"});
+            const nav = await db.getCategories()
+            res.render("prod", { 
+                user: req.user[0],
+                product_type: product_type, 
+                prodList: prodList, 
+                total, 
+                page, 
+                pageTitle: "Product List",
+                cateListNav: nav,
+            });
 
         } catch (error) {
             next(error);
@@ -41,8 +50,15 @@ module.exports = {
             const productID = req.query.id;
             const productDetail = await product.getProductDetail(productID);
             const similarProducts = await product.getSimilarProducts(productDetail[0].product_type);
+            const nav = await db.getCategories();
             // console.log('productDetail: ', productDetail);
-            res.render("detail", {user: req.user[0], productDetail: productDetail[0], pageTitle: "Detail Product", similarProducts: similarProducts }); // TO DO: SỬA chỗ này theo Trí
+            res.render("detail", {
+                user: req.user[0], 
+                productDetail: productDetail[0], 
+                pageTitle: "Detail Product", 
+                similarProducts: similarProducts,
+                cateListNav: nav,
+            }); // TO DO: SỬA chỗ này theo Trí
 
         } catch (error) {
             next(error);
@@ -83,7 +99,14 @@ module.exports = {
             const product_type = req.query.cate;
             const filter = req.query.filter;
             const prodList = await product.filter(product_type, filter);
-            res.render("prod", {user: req.user[0], product_type: product_type, prodList: prodList});
+            const nav = await db.getCategories();
+            res.render("prod", {
+                user: req.user[0], 
+                product_type: product_type, 
+                prodList: prodList, 
+                pageTitle: "Filter Product", 
+                cateListNav: nav,
+            });
         } catch (error) {
             next(error);
         }
@@ -94,9 +117,16 @@ module.exports = {
             const search = req.query.search;
             const prodList = await product.search( search);
             const cateList = await categories.search(search);
+            const nav = await db.getCategories();
             // console.log('Product list: ', prodList);
             // console.log('Cate list: ', cateList);
-            res.render("search", {user: req.user[0], prodList: prodList, cateList: cateList});
+            res.render("search", {
+                user: req.user[0], 
+                prodList: prodList, 
+                cateList: cateList,
+                pageTitle: "Filter Product", 
+                cateListNav: nav,
+            });
         } catch (error) {
             next(error);
         }
