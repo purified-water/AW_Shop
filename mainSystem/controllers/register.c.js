@@ -52,7 +52,7 @@ module.exports = {
         }
         if (!isValid) {
             console.log('not valid');
-            return res.status(500).json({firstname, phone, lastname, email, username, password, isValid})
+            return res.status(500).json({ firstname, phone, lastname, email, username, password, isValid })
         }
         try {
             console.log(req.body);
@@ -71,40 +71,40 @@ module.exports = {
             }
             const data = await Users.insert(user);
             // const queryAcc = `SELECT id FROM users where email = ${req.body.email}`
-            const user_id = await db.getCondition('users', 'email', req.body.email);
-            console.log('User id register', user_id[0].id);
-            
+            const userQuery = await db.getCondition('users', 'email', req.body.email);
+            console.log('User id register', userQuery[0].id);
+
             // Khởi tạo account user với 0 để test
             const account = {
-                user_id: parseInt(user_id[0].id),
+                user_id: parseInt(userQuery[0].id),
                 balance: 0
             }
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-            const jsonRes = fetch ('https://localhost:8888/account/add', {
+            console.log('Google account is', account);
+            const jsonRes = await fetch('https://localhost:8888/account/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({account})
+                body: JSON.stringify({ account })
             })
+            const jsonRes2 = await jsonRes.json();
             if (jsonRes.status !== 200) {
                 console.log('Error when create account');
-                return res.status(500).json({message: 'Error when create account'});
+                return res.status(500).json({ message: 'Error when create account' });
+            } else {
+                console.log('Message from account', jsonRes2.message);
             }
-
-            // const accountAdd = await db.insert('account', account, 'user_id');
-
-            // res.json({firstname, lastname, email, username, password, isValid})
-            return res.status(200).json({firstname, phone, lastname, email, username, password, isValid});
+            return res.status(200).json({ firstname, phone, lastname, email, username, password, isValid });
         }
         catch (e) {
             console.log(e)
             res.redirect('/register');
         }
-            
+
     },
-    register_get: (req,res,next) => {
-        res.render("register", {pageTitle: "Register"});
+    register_get: (req, res, next) => {
+        res.render("register", { pageTitle: "Register" });
     }
 }
