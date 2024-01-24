@@ -4,6 +4,7 @@ require('dotenv').config();
 const paymentLink = 'https://localhost:8888'
 const shopOrderModel = require('../models/shop_order.m');
 const moment = require('moment');
+const db = require('../utils/db');
 
 async function getCartTotal(user_id, cartID) {
     console.log('Tính cartID', cartID);

@@ -141,6 +141,7 @@
               .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
               kích thước biểu tượng theo mong muốn */ }
             </style>
+            {{#if (eq user/role "admin")}}
             <div class="text-center">
               <a
                 data-mdb-ripple-init
@@ -153,6 +154,7 @@
                 class="ml-3 delete-button"
               ><i class="icon ion-md-trash"></i></a>
             </div>
+            {{/if}}
           </div>
           <div
             class="modal fade"

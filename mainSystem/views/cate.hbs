@@ -2,6 +2,7 @@
   <h1 class="mt-5">Categories</h1>
   <div class="site-section mt-4">
     <div class="container">
+      {{#if (eq user/role "admin")}}
       <div class="row">
         <a
           data-mdb-ripple-init
@@ -9,6 +10,7 @@
           href="#addCate"
           class="mb-4 fs-40"
         ><i class="icon ion-md-create">Add new cate</i></a>
+        {{/if}}
       </div>
       <div
           class="modal fade"
@@ -69,6 +71,7 @@
               .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
               kích thước biểu tượng theo mong muốn */ }
             </style>
+            {{#if (eq user/role "admin")}}
             <div class="text-center">
               <a
                 data-mdb-ripple-init
@@ -81,6 +84,7 @@
                 class="ml-3 delete-button"
               ><i class="icon ion-md-trash"></i></a>
             </div>
+            {{/if}}
       </div>
 
       {{!-- <img src="/images2/1705828397269.png" alt="{{this.product_type}}" class="img-fluid"> --}}
