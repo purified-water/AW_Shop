@@ -131,7 +131,7 @@ create table shop_order (
 );
 
 -- Add PK
-alter table shop_order add constraint PK_orderid primary key (id) with (fillfactor=80);
+alter table shop_order add constraint PK_orderid primary key (id, date) with (fillfactor=80);
 -- Add FK
 alter table shop_order add constraint FK_cartid foreign key (cart_id) references cart(id);
 alter table shop_order add constraint FK_userid foreign key (user_id) references users(id);

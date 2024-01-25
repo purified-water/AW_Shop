@@ -52,7 +52,7 @@ module.exports = {
             let products = [];
             for (let i = 0; i < cartItems.length; i++) {
                 let product = await cartModel.getProductByID(cartItems[i].product_id);
-                console.log('Product đã lấy là', product);
+                // console.log('Product đã lấy là', product);
                 product[0].quantity = cartItems[i].quantity; // Add quantity attribute
                 products.push(product[0]);
             }
@@ -191,14 +191,17 @@ module.exports = {
         const jsonRes = await result.json();
         if (result.status !== 200) {
             console.log('Error in payment with wallet'); 
+            // Nếu mà lỗi thì 
+            res.render('payFailed', {user: req.user[0]});
         }
-        // else {
-        //     // res.render('paymentSuccess');
-        //     console.log('Payment with wallet success');
-        // }
+        else {
+            // res.render('paymentSuccess');
+            console.log('Payment with wallet success');
+             // Xóa items khỏi cart
+            const remove = await cartModel.removeAllCartItem(user_id);
+            res.render('paySuccess', {user: req.user[0]});
+        }
 
-        // Xóa items khỏi cart
-        const remove = await cartModel.removeAllCartItem(user_id);
-        res.render('paySuccess');
+       
     }   
 }
