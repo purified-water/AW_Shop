@@ -205,6 +205,7 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+
     },
 
     getTop5BestSeller: async () => {
@@ -221,6 +222,7 @@ module.exports = {
             console.log(error);
         }
     }
+
 
 
 

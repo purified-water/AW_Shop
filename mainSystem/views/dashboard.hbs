@@ -1,0 +1,92 @@
+<div class="container">
+  <h1 class="mt-5">Dashboard</h1>
+
+  <div class="row mt-4">
+    <div class="col-md-5 mb-4">
+      <div class="card">
+        <style>
+          /* CSS cho bảng */ .table-card { width: 100%; margin-bottom: 1rem;
+          color: #212529; } .table-card th, .table-card td { padding: 0.75rem;
+          vertical-align: top; border-top: 1px solid #dee2e6; } .table-card
+          thead th { vertical-align: bottom; border-bottom: 2px solid #dee2e6;
+          background-color: #f8f9fa; } .table-card tbody + tbody { border-top:
+          2px solid #dee2e6; }
+        </style>
+        <div class="card-body">
+          <h5 class="card-title">Users Ranking</h5>
+          <table class="table-card">
+            <thead class="thead">
+              <tr>
+                <th scope="col">Index</th>
+                <th scope="col">Username</th>
+                <th scope="col">Total Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each customerAmount}}
+                <tr>
+                  <th scope="row">{{indexInc @index}}</th>
+                  <td>{{this.username}}</td>
+                  <td>{{this.totalAmount}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+
+          <!-- Hiển thị thông tin về tổng số người dùng -->
+          <p class="card-text">Total users: {{customerCount}}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Orders Ranking</h5>
+          <table class="table-card">
+            <thead class="thead">
+              <tr>
+                <th scope="col">Index</th>
+                <th scope="col">Username</th>
+                <th scope="col">Total order</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each customerOrder}}
+                <tr>
+                  <th scope="row">{{indexInc @index}}</th>
+                  <td>{{this.username}}</td>
+                  <td>{{this.orderCount}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+
+          <!-- Hiển thị thông tin về tổng số người dùng -->
+          <p class="card-text">Total orders: {{orderCount}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-5 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Product</h5>
+          <!-- Hiển thị thông tin về số lượng đơn đặt hàng -->
+          <p class="card-text">Total orders: 200</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-5 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Revenue</h5>
+          <p class="card-text">This day: {{revDay}}</p>
+          <p class="card-text">This month: {{revMonth}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

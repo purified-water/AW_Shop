@@ -59,6 +59,9 @@ async function startServer() {
             eq: function (a, b) {
                 return a == b;
             },
+            indexInc: function(index) {
+                return index + 1;
+            },
         },
     }));
 
