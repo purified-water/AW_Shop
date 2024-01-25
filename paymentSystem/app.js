@@ -20,9 +20,14 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const accountRoute = require('./routes/account.r');
+app.use('/account', accountRoute);
+
 app.use('/order', order);
 const paymentRoute = require('./routes/wallet.r');
 app.use('/payment', paymentRoute);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
