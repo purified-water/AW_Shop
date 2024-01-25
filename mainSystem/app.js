@@ -57,7 +57,7 @@ async function startServer() {
                 return JSON.stringify(context);
             },
             eq: function (a, b) {
-                return a === b;
+                return a == b;
             },
         },
     }));
