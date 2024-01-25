@@ -205,6 +205,21 @@ module.exports = {
         } catch (error) {
             console.log(error);
         }
+    },
+
+    getTop5BestSeller: async () => {
+        try {
+            const query = `
+            SELECT sum(total) as total, 
+            FROM shop_order
+            ORDER BY RANDOM()
+            LIMIT 5
+            `
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
