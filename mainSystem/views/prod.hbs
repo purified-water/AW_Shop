@@ -2,7 +2,7 @@
   <h1 class="mt-5">{{product_type}} products</h1>
   <div class="site-section mt-4">
     <div class="container">
-      {{#if (eq user/role "admin")}}
+      {{#if (eq user.role "admin")}}
       <div class="row">
         <a
           data-mdb-ripple-init
@@ -142,16 +142,18 @@
               kích thước biểu tượng theo mong muốn */ }
             </style>
             <div class="text-center">
+              {{#if (eq ../user.role "admin")}}
               <a
                 data-mdb-ripple-init
                 data-mdb-modal-init
-                href="#editProduct{{this.id}}"
+                href="#editProduct{{prodList.id}}"
                 class="mr-3 edit-button"
               ><i class="icon ion-md-create"></i></a>
               <a
-                href="/product/delete?id={{this.id}}&product_type={{product_type}}"
+                href="/product/delete?id={{prodList.id}}&product_type={{prodList.product_type}}"
                 class="ml-3 delete-button"
               ><i class="icon ion-md-trash"></i></a>
+              {{/if}}
             </div>
           </div>
           <div

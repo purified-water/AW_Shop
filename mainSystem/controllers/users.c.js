@@ -1,5 +1,6 @@
 const userModel = require('../models/users.m.js');
 const accountModel = require('../models/account.m.js');
+const db = require('../utils/db.js')
 require('dotenv').config();
 const rechargeLink = 'https://localhost:3000'
 module.exports = {
@@ -53,8 +54,14 @@ module.exports = {
         try {
             const id = req.user[0].id;
             const account = await accountModel.getAccount(id);
+            const nav = await db.getCategories();
             // console.log(account);
-            res.render('profile', { user: req.user[0], pageTitle: "Profile", account: account[0], });
+            res.render('profile', { 
+                user: req.user[0], 
+                pageTitle: "Profile", 
+                account: account[0], 
+                cateListNav: nav,
+            });
         }
         catch (e) {
             console.log(e);

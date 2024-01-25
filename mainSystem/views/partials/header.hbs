@@ -72,9 +72,11 @@
             href="/about"
             class="nav-link">About</a></li>
 
+        {{#if (eq user/role "admin")}}
         <li class="nav-item"><a
             href="/analyze"
             class="nav-link">Analyze</a></li>
+        {{/if}}
 
         <li class="nav-item dropdown">
           <a

@@ -128,9 +128,6 @@ router.get('/vnpay_return', async function (req, res, next) {
 
     if (secureHash === signed) {
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
-
-        // res.render('success', {code: vnp_Params['vnp_ResponseCode']})
-        // res.redirect('https://localhost:3000/', {code: vnp_Params['vnp_ResponseCode']})
         try {
             user_id = String(user_id);
             rechargeAmount = String(rechargeAmount);
@@ -144,8 +141,6 @@ router.get('/vnpay_return', async function (req, res, next) {
                 body : JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
             })
 
-            // const data = await response;
-            // console.log(data)
             res.redirect('https://localhost:3000/user/profile/')
         } catch (e) {
             console.log(e)
