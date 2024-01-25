@@ -138,7 +138,7 @@ router.get('/vnpay_return', async function (req, res, next) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body : JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
+                body : JSON.stringify({ rechargeAmount: parseInt(rechargeAmount)/100, user_id: user_id }),
             })
 
             res.redirect('https://localhost:3000/user/profile/')
