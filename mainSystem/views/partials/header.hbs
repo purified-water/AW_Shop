@@ -68,14 +68,24 @@
           </div>
         </li>
 
+        {{#if (eq user/role "client")}}
         <li class="nav-item"><a
             href="/about"
             class="nav-link">About</a></li>
+        {{/if}}
 
         {{#if (eq user/role "admin")}}
         <li class="nav-item"><a
             href="/analyze"
             class="nav-link">Analyze</a></li>
+        
+        <li class="nav-item"><a
+            href="/analyze"
+            class="nav-link">Order</a></li>
+
+        <li class="nav-item"><a
+            href="/analyze"
+            class="nav-link">User</a></li>
         {{/if}}
 
         <li class="nav-item dropdown">
