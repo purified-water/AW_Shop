@@ -34,7 +34,7 @@ module.exports = {
             }
             const rechargeAmount = req.body.rechargeAmount;
 
-            const newBalance = parseInt(account[0].balance) + parseInt(rechargeAmount);
+            const newBalance = parseInt(account[0].balance) + parseInt(rechargeAmount)/100;
             
             await paymentModel.updateAccount(userID,newBalance);
             res.status(200).json({message: 'Recharge success'});

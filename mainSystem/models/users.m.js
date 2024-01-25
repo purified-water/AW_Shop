@@ -59,6 +59,15 @@ module.exports = {
         catch (e) {
             throw e
         }
-    }
+    }, 
+    getTotalCustomer: async() => {
+        try {
+            const data = await dbcn.getCondition(tableName, 'role','client');
+            return data;
+        }
+        catch (e){
+            throw e
+        }
+    },
 }
 
