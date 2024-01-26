@@ -173,6 +173,7 @@ module.exports = {
         const user_id = user[0].id;
         const total = await getCartTotal(user_id, cartID);
         const shopOrder = await shopOrderModel.createOrder(parseInt(orderId), user_id, cartID, total, createDate, '' ,'Wallet');
+        const token = req.cookies.jwt;
 
         console.log(`Payment link is ${paymentLink}/payment/payWithWallet`);
         // Xử lý lỗi self signed certificate in certificate chain
@@ -182,13 +183,15 @@ module.exports = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
                 
             },
             //CHƯA CÓ TOKEN
-            // 'Authorization': `Bearer ${token}`,
             body: JSON.stringify({ shopOrder: shopOrder, user_id: user_id }),
         });
         const jsonRes = await result.json();
+        console.log('shopOrder', shopOrder);
+        console.log('user_id', user_id);
         if (result.status !== 200) {
             console.log('Error in payment with wallet'); 
             // Nếu mà lỗi thì 
