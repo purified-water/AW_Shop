@@ -2,6 +2,7 @@ const users = require("../models/users.m");
 const products = require("../models/prod.m");
 const categories = require("../models/cate.m");
 const shop_order = require("../models/shop_order.m");
+const detail_order = require("../models/detail_order.m");
 
 async function getCustomersSortedByTotalAmount(orders, customers) {
   const totalAmountByUser = {};
@@ -66,7 +67,36 @@ async function getUsersSortedByOrderCount(orders, users) {
     });
   
     return result;
+}
+
+async function getProductSortredByCount(details) {
+  const productCounts = {};
+
+  for (const detail of details) {
+      const { product_id, quantity } = detail;
+
+      if (productCounts[product_id] === undefined) {
+          productCounts[product_id] = 0;
+      }
+      productCounts[product_id] += quantity;
   }
+
+  const productCountsArray = Object.entries(productCounts);
+
+  productCountsArray.sort((a, b) => b[1] - a[1]);
+
+  const sortedProducts = await Promise.all(productCountsArray.map(async ([product_id, quantity]) => {
+    const product = await products.getProductDetail(product_id);
+    // console.log(product);
+    return {
+        product_id: parseInt(product_id),
+        quantity: quantity,
+        name: product[0].name,
+    };
+  }));
+
+  return sortedProducts.slice(0,5);
+}
 
 module.exports = {
   loadHome: async (req, res) => {
@@ -91,26 +121,32 @@ module.exports = {
       const order = await shop_order.getShopOrder();
       const orderDay = await shop_order.getRevenueDay();
       const orderMonth = await shop_order.getRevenueMonth();
+      const detail = await detail_order.getDetailOrder();
       // Gọi hàm tìm user mua nhiều nhất
       const sortCustomerByAmount = await getCustomersSortedByTotalAmount(order, customer);
       const sortCustomerByOrder = await getUsersSortedByOrderCount(order,customer);
-        
-    //   // Hiển thị kết quả
-    //   console.log("User mua nhiều tiền nhất:");
-    //   console.log(sortCustomerByAmount);
+      const sortProduct = await getProductSortredByCount(detail);
 
-    //   console.log("User mua nhiều order nhất:");
-    //   console.log(sortCustomerByOrder);
+      // // Hiển thị kết quả
+      // console.log("User mua nhiều tiền nhất:");
+      // console.log(sortCustomerByAmount);
+
+      // console.log("User mua nhiều order nhất:");
+      // console.log(sortCustomerByOrder);
     
-        console.log("Doanh thu ngày: ", orderDay);
-        console.log("Doanh thu tháng: ", orderMonth);
+      // console.log("Doanh thu ngày: ", orderDay);
+      // console.log("Doanh thu tháng: ", orderMonth);
 
+      console.log("Sản phẩm top: ", sortProduct);
+        
       res.render("dashboard", {
         user: user,
         customerCount: sortCustomerByAmount.length,
         orderCount: order.length,
         customerAmount: sortCustomerByAmount,
         customerOrder: sortCustomerByOrder,
+        mostBuyProduct: sortProduct,
+        productCount: sortProduct.length,
         revDay: orderDay.totalRevDay,
         revMonth: orderMonth.totalRevMonth,
         pageTitle: "Dashboard",
