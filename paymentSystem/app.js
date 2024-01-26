@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var order = require('./routes/order');
+const {verifyJWT} = require('./middlewares/verifyJWT.m')
 
 var app = express();
 
@@ -20,12 +21,19 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+const tokenRoute = require('./routes/token.r')
+app.use('/token', tokenRoute);
+
+
 const accountRoute = require('./routes/account.r');
 app.use('/account', accountRoute);
 
+
+
 app.use('/order', order);
 const paymentRoute = require('./routes/wallet.r');
-app.use('/payment', paymentRoute);
+app.use('/payment', verifyJWT, paymentRoute);
 
 
 

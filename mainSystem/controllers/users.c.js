@@ -53,13 +53,17 @@ module.exports = {
     loadProfile: async (req, res, next) => {
         try {
             const id = req.user[0].id;
+            const account = await accountModel.getAccount(id);
+            const orders = await db.getCondition('shop_order', 'user_id', id);
+
             const nav = await db.getCategories();
             // console.log(account);
             res.render('profile', { 
                 user: req.user[0], 
-                pageTitle: "Manage User", 
-                cateListNav: nav,
-                users: combinedData,
+                pageTitle: "Profile", 
+                account: account[0], 
+                orders: orders,
+                cateListNav: nav
             });
         }
         catch (e) {

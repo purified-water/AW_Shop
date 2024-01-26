@@ -114,154 +114,159 @@
         </div>
       </div>
       <div class="row">
-        {{#each prodList}}
-          <div class="col-lg-4 mb-5 col-md-6 product">
-            <div class="wine_v_1 text-center pb-4">
-              <a
-                href="/product/detail?id={{this.id}}"
-                id="show-detail"
-                class="thumbnail d-block mb-4"
-              >
-                <img
-                  src="{{this.image_link}}"
-                  alt="{{this.name}}"
-                  class="img-fluid"
-                />
-              </a>
-              <div class="wine-actions">
-                <h3 class="heading-2 product-text" style="font-size:18px"><a
-                    href
-                  >{{this.name}}</a></h3>
-                <h3 class="heading-2 product-text" style="font-size:15px">
-                  {{this.price}}{{this.price_sign}}
-                </h3>
-              </div>
-            </div>
-            <style>
-              .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
-              kích thước biểu tượng theo mong muốn */ }
-            </style>
-            <div class="text-center">
-              {{#if (eq ../user.role "admin")}}
-              <a
-                data-mdb-ripple-init
-                data-mdb-modal-init
-                href="#editProduct{{prodList.id}}"
-                class="mr-3 edit-button"
-              ><i class="icon ion-md-create"></i></a>
-              <a
-                href="/product/delete?id={{prodList.id}}&product_type={{prodList.product_type}}"
-                class="ml-3 delete-button"
-              ><i class="icon ion-md-trash"></i></a>
-              {{/if}}
-            </div>
-          </div>
-          <div
-            class="modal fade"
-            id="editProduct{{this.id}}"
-            aria-hidden="true"
-            aria-labelledby="editProduct{{this.id}}Label"
-            tabindex="-1"
-          >
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5
-                    class="modal-title"
-                    id="editProduct{{this.id}}Label"
-                  >Editing {{this.name}}</h5>
-                  <button
-                    type="button"
-                    class="btn-close"
-                    data-mdb-ripple-init
-                    data-mdb-dismiss="modal"
-                    aria-label="Close"
-                  ></button>
-                </div>
-                <form
-                  class="ml-3"
-                  action="/product/edit/{{this.id}}"
-                  method="post" enctype="multipart/form-data"
+        {{#if prodList.length}}
+          {{#each prodList}}
+            <div class="col-lg-4 mb-5 col-md-6 product">
+              <div class="wine_v_1 text-center pb-4">
+                <a
+                  href="/product/detail?id={{this.id}}"
+                  id="show-detail"
+                  class="thumbnail d-block mb-4"
                 >
-                  <div class="fw-bold mb-2" class="input-group">
-                    <input
-                      class="input--style-3"
-                      type="hidden"
-                      name="id"
-                      value="{{this.id}}" required
-                    />
-                  </div>
-                  <div class="input-group">
-                  <label class="fw-bold" for="image_link">Image</label>
-                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
-                    <div id="preview-edit-image">
-                    </div>
-                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
-                  </div>
-                  <div class="input-group">
-                    <label class="fw-bold" for="brand">Brand</label>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="brand"
-                      value="{{this.brand}}" required
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label class="fw-bold" for="name">Name</label>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="name"
-                      value="{{this.name}}" required
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label class="fw-bold" for="price">Price</label>
-                    <input
-                      class="input--style-3"
-                      type="number"
-                      name="price"
-                      value="{{this.price}}" required
-                    />
-                  </div>
-                  <div class="input-group">
-                    <label class="fw-bold" for="description">Description</label>
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="description"
-                      value="{{this.price}}" required
-                    />
-                    <input
-                      class="input--style-3"
-                      type="text"
-                      name="description"
-                      value="{{this.price_sign}}" required
-                    />
-                  </div>
-                  <input
-                    type="hidden"
-                    name="product_type"
-                    value="{{product_type}}" required
+                  <img
+                    src="{{this.image_link}}"
+                    alt="{{this.name}}"
+                    class="img-fluid"
                   />
-
-                  <input type="hidden" name="_csrf" value="{{csrfToken}}" />
-                  <div class="ms-3 mb-3">
+                </a>
+                <div class="wine-actions">
+                  <h3 class="heading-2 product-text" style="font-size:18px"><a
+                      href
+                    >{{this.name}}</a></h3>
+                  <h3 class="heading-2 product-text" style="font-size:15px">
+                    {{this.price}}{{this.price_sign}}
+                  </h3>
+                </div>
+              </div>
+              <style>
+                .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
+                kích thước biểu tượng theo mong muốn */ }
+              </style>
+              <div class="text-center">
+                {{#if (eq ../user.role "admin")}}
+                <a
+                  data-mdb-ripple-init
+                  data-mdb-modal-init
+                  href="#editProduct{{this.id}}"
+                  class="mr-3 edit-button"
+                ><i class="icon ion-md-create"></i></a>
+                <a
+                  href="/product/delete?id={{this.id}}&product_type={{this.product_type}}"
+                  class="ml-3 delete-button"
+                ><i class="icon ion-md-trash"></i></a>
+                {{/if}}
+              </div>
+            </div>
+            <div
+              class="modal fade"
+              id="editProduct{{this.id}}"
+              aria-hidden="true"
+              aria-labelledby="editProduct{{this.id}}Label"
+              tabindex="-1"
+            >
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5
+                      class="modal-title"
+                      id="editProduct{{this.id}}Label"
+                    >Editing {{this.name}}</h5>
                     <button
-                      class="btn btn--pill btn--green"
-                      type="submit"
-                    >Confirm</button>
+                      type="button"
+                      class="btn-close"
+                      data-mdb-ripple-init
+                      data-mdb-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
                   </div>
+                  <form
+                    class="ml-3"
+                    action="/product/edit/{{this.id}}"
+                    method="post" enctype="multipart/form-data"
+                  >
+                    <div class="fw-bold mb-2" class="input-group">
+                      <input
+                        class="input--style-3"
+                        type="hidden"
+                        name="id"
+                        value="{{this.id}}" required
+                      />
+                    </div>
+                    <div class="input-group">
+                    <label class="fw-bold" for="image_link">Image</label>
+                      <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
+                      <div id="preview-edit-image">
+                      </div>
+                      <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
+                    </div>
+                    <div class="input-group">
+                      <label class="fw-bold" for="brand">Brand</label>
+                      <input
+                        class="input--style-3"
+                        type="text"
+                        name="brand"
+                        value="{{this.brand}}" required
+                      />
+                    </div>
+                    <div class="input-group">
+                      <label class="fw-bold" for="name">Name</label>
+                      <input
+                        class="input--style-3"
+                        type="text"
+                        name="name"
+                        value="{{this.name}}" required
+                      />
+                    </div>
+                    <div class="input-group">
+                      <label class="fw-bold" for="price">Price</label>
+                      <input
+                        class="input--style-3"
+                        type="number"
+                        name="price"
+                        value="{{this.price}}" required
+                      />
+                    </div>
+                    <div class="input-group">
+                      <label class="fw-bold" for="description">Description</label>
+                      <input
+                        class="input--style-3"
+                        type="text"
+                        name="description"
+                        value="{{this.price}}" required
+                      />
+                      <input
+                        class="input--style-3"
+                        type="text"
+                        name="description"
+                        value="{{this.price_sign}}" required
+                      />
+                    </div>
+                    <input
+                      type="hidden"
+                      name="product_type"
+                      value="{{product_type}}" required
+                    />
 
-                </form>
+                    <input type="hidden" name="_csrf" value="{{csrfToken}}" />
+                    <div class="ms-3 mb-3">
+                      <button
+                        class="btn btn--pill btn--green"
+                        type="submit"
+                      >Confirm</button>
+                    </div>
 
-                <div class="modal-footer">
+                  </form>
+
+                  <div class="modal-footer">
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        {{/each}}
+          {{/each}}
+        {{else}}
+            <h3 class="text-center my-5">No product found</h3>
+        {{/if}}
+        
 
       </div>
     </div>
