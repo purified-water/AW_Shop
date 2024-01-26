@@ -18,7 +18,7 @@ module.exports = {
             console.log(error);
         }
     },
-    getDetailOrder: async () => {
+    getAllDetailOrder: async () => {
         try {
             const query = await db.getAll('public.order_detail');
             return query;
@@ -26,6 +26,15 @@ module.exports = {
         catch(e){
             console.log(e);
         }
-    }, 
+    },
+    getDetailOrder: async (order_id) => {
+        try {
+            const query = await db.getCondition('order_detail', 'order_id', order_id);
+            return query;
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
     
 }

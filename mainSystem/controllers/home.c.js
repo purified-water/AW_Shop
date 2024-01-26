@@ -121,7 +121,7 @@ module.exports = {
       const order = await shop_order.getShopOrder();
       const orderDay = await shop_order.getRevenueDay();
       const orderMonth = await shop_order.getRevenueMonth();
-      const detail = await detail_order.getDetailOrder();
+      const detail = await detail_order.getAllDetailOrder();
       // Gọi hàm tìm user mua nhiều nhất
       const sortCustomerByAmount = await getCustomersSortedByTotalAmount(order, customer);
       const sortCustomerByOrder = await getUsersSortedByOrderCount(order,customer);
