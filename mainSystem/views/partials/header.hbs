@@ -106,11 +106,12 @@
             {{/if}}
           </div>
         </li>
+        {{#if (eq user/role "client")}}
         <li class="nav-item cta cta-colored"><a
             href="/cart"
-            class="nav-link"><span
-              class="icon-shopping_cart"></span>[{{this.session.cart.totalQty}}]</a></li>
-
+            class="nav-link"><span class="icon-shopping_cart"></span>[{{this.session.cart.totalQty}}]</a>
+              </li>
+        {{/if}}
       </ul>
     </div>
   </div>
