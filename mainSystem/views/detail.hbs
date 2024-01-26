@@ -28,6 +28,7 @@
           <span class="detail-description">{{this}}</span>
         {{/each}}
         <br />
+        {{#if (eq user.role "client")}}
         <form action="/cart/add?id={{productDetail.id}}" method="post">
           <p class="detail-text">Quantity</p>
 
@@ -39,6 +40,7 @@
             value="1"
           />
           <button type="submit" class="detail-button mt-2 mb-3">Add to cart</button>
+        {{/if}}
         </form>
       </div>
 

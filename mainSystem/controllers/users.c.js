@@ -19,7 +19,7 @@ module.exports = {
 
         // Use Fetch API to send a POST request
         try {
-
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             let response = await fetch(serverUrl, {
                 method: 'POST',
                 headers: {
@@ -79,7 +79,7 @@ module.exports = {
             console.log("id: ", user_id);
             // Xử lý lỗi self signed certificate in certificate chain
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            const result = await fetch(`${rechargeLink}/payment/recharge`, {
+            const result = await fetch(`https://localhost:8888/payment/recharge`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,5 +92,57 @@ module.exports = {
         catch (e) {
             console.log(e);
         }
-    }
+    },
+    rechargeBalanceVNPay: async (req, res, next) => {
+        try {
+            const rechargeAmount = parseInt(req.body.rechargeAmount);
+            const user = await userModel.getUserByEmail(req.session.passport.user);
+            const user_id = user[0].id;
+            console.log("amount: ", rechargeAmount);
+            console.log("id: ", user_id);
+            // Xử lý lỗi self signed certificate in certificate chain
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            const result = await fetch(`https://localhost:8888/order/create_payment_url`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
+            });
+            console.log(result.json());
+            res.redirect(result)
+        }
+        catch (e) {
+            console.log(e);
+        }
+    },
+    loadListUser: async (req, res, next) => {
+        try {
+            const id = req.user[0].id;
+            const nav = await db.getCategories();
+            const listUser = await db.getAll('users');
+            const combinedData = [];
+        
+            for (const user of listUser) {
+                const account = await accountModel.getAccount(user.id);
+                console.log('go here',account);
+                combinedData.push({
+                    user: user,
+                    balance: account.length > 0 ? account[0].balance : 0
+                });
+            }
+        
+            // console.log(combinedData);
+        
+            res.render('manageUser', { 
+                user: req.user[0], 
+                pageTitle: "Manage User", 
+                cateListNav: nav,
+                users: combinedData,
+            });
+        }
+        catch (e) {
+            console.log(e);
+        }
+    },
 }

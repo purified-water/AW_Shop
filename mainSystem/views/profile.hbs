@@ -222,7 +222,7 @@
 
           {{!-- modal body --}}
           <div class="modal-body">
-            <form id="rechargeForm" action="https://localhost:8888/order/create_payment_url" method="post">
+            <form id="rechargeForm" action="/user/profile/recharge" method="post">
               <div class="form-group">
                 <label for="rechargeAmount">Enter recharge amount:</label>
                 <input type="number" name="rechargeAmount" class="form-control" id="rechargeAmount" placeholder="Enter amount" required>
@@ -238,12 +238,13 @@
 
           <script>
             $("#rechargeButton").click(function() {
+              // $("#rechargeForm").attr("action", "/user/profile/rechargeVNPay");
               $("#rechargeForm").attr("action", "https://localhost:8888/order/create_payment_url");
               $("#hiddenSubmitButton").click();
             });
 
             $("#otherActionButton").click(function() {
-              $("#rechargeForm").attr("action", "https://localhost:8888/payment/recharge");
+              $("#rechargeForm").attr("action", "/user/profile/recharge");
               $("#hiddenSubmitButton").click();
             });
           </script>
