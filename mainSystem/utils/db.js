@@ -276,6 +276,31 @@ module.exports = {
             }
         }
     },
+    updateMultiConditions: async (tbName, entity, pairs) => {
+        let dbcn = null;
+        try {
+            let query = pgp.helpers.update(entity, null, tbName);
+            query += ' WHERE ';
+            for (let i = 0; i < pairs.length; i++) {
+                query += `${pairs[i].tbColumn}='${pairs[i].value}'`;
+                if (i < pairs.length - 1) {
+                    query += ' AND ';
+                }
+            }
+            // console.log(query);
+            dbcn = await db.connect();
+            const data = await dbcn.oneOrNone(query);
+            return data
+        }
+        catch (error) {
+            console.log(error);
+        }
+        finally {
+            if (dbcn != null) {
+                dbcn.done();
+            }
+        }
+    },
     getTop: async (tbName, tbColumn, limit) => {
         let dbcn = null;
         try {

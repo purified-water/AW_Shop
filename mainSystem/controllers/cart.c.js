@@ -8,7 +8,7 @@ const db = require('../utils/db');
 
 async function getCartTotal(user_id, cartID) {
     console.log('Tính cartID', cartID);
-    const cartItems = await cartModel.getItemInCart(parseInt(user_id));    
+    const cartItems = await cartModel.getItemInCart(parseInt(user_id));
     let total = 0;
     console.log('Total calculating', cartItems);
     if (!cartItems) {
@@ -18,13 +18,13 @@ async function getCartTotal(user_id, cartID) {
         let product = await cartModel.getProductByID(cartItems[i].product_id);
         total += product[0].price * cartItems[i].quantity;
         console.log('item', total);
-    } 
-    
+    }
+
     return total;
 }
 
 module.exports = {
-    renderCart: async (req,res,next) => {
+    renderCart: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -40,10 +40,10 @@ module.exports = {
 
             if (cartItems.length == 0) {
                 return res.render('cart', {
-                    user: req.user[0], 
-                    cartItems: [], 
-                    cartID: cartID, 
-                    pageTitle: "Cart", 
+                    user: req.user[0],
+                    cartItems: [],
+                    cartID: cartID,
+                    pageTitle: "Cart",
                     total: 0,
                     cateListNav: nav,
                 });
@@ -56,16 +56,16 @@ module.exports = {
                 product[0].quantity = cartItems[i].quantity; // Add quantity attribute
                 products.push(product[0]);
             }
-            
-            
+
+
             // console.log('products', products);
 
 
             res.render('cart', {
-                user: req.user[0], 
-                cartItems: products, 
-                cartID: cartID, 
-                pageTitle: "Cart", 
+                user: req.user[0],
+                cartItems: products,
+                cartID: cartID,
+                pageTitle: "Cart",
                 total: total,
                 cateListNav: nav,
             });
@@ -74,16 +74,16 @@ module.exports = {
         }
     },
 
-    loadFormInfo: async(req,res,next) => {
+    loadFormInfo: async (req, res, next) => {
         try {
             res.render("formInfo");
         }
-        catch(e){
+        catch (e) {
             console.log(e);
         }
     },
 
-    addItemToCartByID: async (req,res,next) => {
+    addItemToCartByID: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -100,7 +100,7 @@ module.exports = {
         }
     },
 
-    reduceItemFromCartByID: async (req,res,next) => {
+    reduceItemFromCartByID: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -115,7 +115,7 @@ module.exports = {
             next(error);
         }
     },
-    increaseItemFromCartByID: async (req,res,next) => {
+    increaseItemFromCartByID: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -130,7 +130,7 @@ module.exports = {
             next(error);
         }
     },
-    removeItemFromCartByID: async (req,res,next) => {
+    removeItemFromCartByID: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -146,7 +146,7 @@ module.exports = {
         }
     },
 
-    removeAllCartItem: async (req,res,next) => {
+    removeAllCartItem: async (req, res, next) => {
         try {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
@@ -159,22 +159,69 @@ module.exports = {
         }
     },
 
-    
 
-    payWithWallet: async (req,res,next) => {
+
+    payWithWallet: async (req, res, next) => {
         const cartID = parseInt(req.query.cart_id);
+        // Lấy ngày hiện tại để làm orderID và date
         let date = new Date();
-        //TO DO COI THỬ NGÀY ĐÚNG CHƯA
         let createDate = moment(date);
-        
-        console.log('Create date', createDate);
         let orderId = moment(date).format('DDHHmmss');
+        // Lấy user để query cart theo user_id
         const user = await userModel.getUserByEmail(req.session.passport.user);
         const user_id = user[0].id;
         const total = await getCartTotal(user_id, cartID);
-        const shopOrder = await shopOrderModel.createOrder(parseInt(orderId), user_id, cartID, total, createDate, '' ,'Wallet');
 
-        console.log(`Payment link is ${paymentLink}/payment/payWithWallet`);
+        const shopOrderConditions = [
+            {
+                tbColumn: 'cart_id',
+                value: cartID
+            },
+            {
+                tbColumn: 'user_id',
+                value: user_id
+            },
+            {
+                tbColumn: 'status',
+                value: 'Processing'
+            }
+        ];
+        const shopOrderConditionsFailed = [
+            {
+                tbColumn: 'cart_id',
+                value: cartID
+            },
+            {
+                tbColumn: 'user_id',
+                value: user_id
+            },
+            {
+                tbColumn: 'status',
+                value: 'Failed'
+            }
+        ];
+        let shopOrder = {};
+        let editingExistingOrder = false;
+        // Query thử đã có order trong shop_order chưa
+        let orderQuery = await db.getMultiConditions('shop_order', shopOrderConditions);
+        // let failedOrderQuery = await db.getMultiConditions('shop_order', shopOrderConditionsFailed);
+        if (orderQuery.length > 0) {
+            // Nếu có order đang processing thì update lại order đó
+            shopOrder = orderQuery[0];
+            editingExistingOrder = true;
+        } else {
+            // // Nếu đang fail thì thêm dòng mới với id như đã có
+            // if (failedOrderQuery.length > 0) {
+            //     shopOrder = failedOrderQuery[0];
+            //     // Gán giá trị id của đơn hàng mới là id của đơn hàng fail
+            //     orderId = shopOrder.id;
+            // }
+            // Còn không thì gán để thêm mới
+            shopOrder = await shopOrderModel.createOrder(parseInt(orderId), user_id, cartID, total, createDate, '', 'Wallet');
+            editingExistingOrder = false;
+        }
+
+        // console.log(`Payment link is ${paymentLink}/payment/payWithWallet`);
         // Xử lý lỗi self signed certificate in certificate chain
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -182,26 +229,40 @@ module.exports = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                
+
             },
             //CHƯA CÓ TOKEN
             // 'Authorization': `Bearer ${token}`,
             body: JSON.stringify({ shopOrder: shopOrder, user_id: user_id }),
         });
         const jsonRes = await result.json();
+
+        
+        // Nếu đang chỉnh sửa order
+        if (editingExistingOrder) {
+            // Cập nhật orderID
+            orderId = shopOrder.id;
+        }
+
+        // thay đổi status của order
         if (result.status !== 200) {
-            console.log('Error in payment with wallet'); 
+            console.log('Error in payment with wallet');
+            // Nếu trong shop_order có order đó và đang là processing thì update thành failed
+            const updateOrder = await shopOrderModel.updateOrderStatus(parseInt(orderId), 'Failed');
             // Nếu mà lỗi thì 
-            res.render('payFailed', {user: req.user[0]});
+            res.render('payFailed', { user: req.user[0] });
         }
         else {
             // res.render('paymentSuccess');
             console.log('Payment with wallet success');
-             // Xóa items khỏi cart
+            // Xóa items khỏi cart
             const remove = await cartModel.removeAllCartItem(user_id);
-            res.render('paySuccess', {user: req.user[0]});
+            // Nếu trong shop_order có order đó và đang là processing thì update thành success
+            const updateOrder = await shopOrderModel.updateOrderStatus(parseInt(orderId), 'Success');
+            // Thêm item vào bảng order_detail
+            res.render('paySuccess', { user: req.user[0] });
         }
 
-       
-    }   
+
+    }
 }
