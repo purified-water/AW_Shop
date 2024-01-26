@@ -253,7 +253,7 @@ module.exports = {
             // Nếu trong shop_order có order đó và đang là processing thì update thành failed
             const updateOrder = await shopOrderModel.updateOrderStatus(parseInt(orderId), 'Failed');
             // Nếu mà lỗi thì 
-            res.render('payFailed', { user: req.user[0] });
+            res.render('payFailed', { user: req.user[0], message: jsonRes.message});
         }
         else {
             // res.render('paymentSuccess');
