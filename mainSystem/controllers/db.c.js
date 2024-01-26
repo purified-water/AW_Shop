@@ -149,7 +149,7 @@ module.exports = {
                 if (product.price <= 0) {
                     continue;
                 }
-                product.price_sign = 'đ';
+                product.price_sign = '₫';
                 product.currency = 'VND';
 
                 await db.importData(product);
