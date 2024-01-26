@@ -122,21 +122,22 @@ module.exports = {
             const nav = await db.getCategories();
             const listUser = await db.getAll('users');
             const combinedData = [];
-        
+
             for (const user of listUser) {
                 const account = await accountModel.getAccount(user.id);
-                console.log('go here',account);
+                console.log('go here', account);
                 combinedData.push({
                     user: user,
                     balance: account.length > 0 ? account[0].balance : 0
                 });
             }
-        
-            // console.log(combinedData);
-        
-            res.render('manageUser', { 
-                user: req.user[0], 
-                pageTitle: "Manage User", 
+
+            // Remove the first user from the list
+            combinedData.shift();
+
+            res.render('manageUser', {
+                user: req.user[0],
+                pageTitle: "Manage User",
                 cateListNav: nav,
                 users: combinedData,
             });
