@@ -1,6 +1,11 @@
 const LocalStrategy = require('passport-local').Strategy
+const { default: axios } = require('axios')
 const Users = require('../models/users.m')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+
+// Disable SSL certificate validation for development/testing purposes
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 function initialize(passport) {
     const authenticate = async (username, password, done) => {
@@ -13,7 +18,7 @@ function initialize(passport) {
         }
         try {
             if (await bcrypt.compare(password, user.password)) {
-                return done(null, user);
+                return done(null, user);    
             }
             else {
                 return done(null, false, { message: 'Password incorrect'})

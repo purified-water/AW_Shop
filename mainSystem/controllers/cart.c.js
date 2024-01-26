@@ -172,6 +172,8 @@ module.exports = {
         const user = await userModel.getUserByEmail(req.session.passport.user);
         const user_id = user[0].id;
         const total = await getCartTotal(user_id, cartID);
+        const token = req.cookies.jwt;
+
 
 
         const shopOrderConditions = [
@@ -232,10 +234,10 @@ module.exports = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-
+                'Authorization': `Bearer ${token}`,
+                
             },
             //CHƯA CÓ TOKEN
-            // 'Authorization': `Bearer ${token}`,
             body: JSON.stringify({ shopOrder: shopOrder, user_id: user_id }),
         });
         const jsonRes = await result.json();
@@ -247,7 +249,10 @@ module.exports = {
             orderId = shopOrder.id;
         }
 
+        console.log('shopOrder', shopOrder);
+        console.log('user_id', user_id);
         // thay đổi status của order
+
         if (result.status !== 200) {
             console.log('Error in payment with wallet');
             // Nếu trong shop_order có order đó và đang là processing thì update thành failed
