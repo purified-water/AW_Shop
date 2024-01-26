@@ -1,6 +1,6 @@
 <div class="container">
     
-    <h2 class="mt-3 mb-3">Danh sách nhân viên</h2>
+    <h2 class="mt-3 mb-3">List Users</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -10,7 +10,7 @@
                 <th>Email</th>
                 <th>Username</th>
                 <th>Phone</th>
-                <th>Balance</th>
+                {{!-- <th>Balance</th> --}}
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                     <td>{{this.user.email}}</td>
                     <td>{{this.user.username}}</td>
                     <td>{{this.user.phone}}</td>
-                    <td>{{this.balance}}</td>
+                    {{!-- <td>{{this.balance}}</td> --}}
                 </tr>
             {{/each}}
         </tbody>
