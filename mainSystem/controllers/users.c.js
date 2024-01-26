@@ -53,14 +53,13 @@ module.exports = {
     loadProfile: async (req, res, next) => {
         try {
             const id = req.user[0].id;
-            const account = await accountModel.getAccount(id);
             const nav = await db.getCategories();
             // console.log(account);
             res.render('profile', { 
                 user: req.user[0], 
-                pageTitle: "Profile", 
-                account: account[0], 
+                pageTitle: "Manage User", 
                 cateListNav: nav,
+                users: combinedData,
             });
         }
         catch (e) {
@@ -108,6 +107,35 @@ module.exports = {
             });
             console.log(result.json());
             res.redirect(result)
+        }
+        catch (e) {
+            console.log(e);
+        }
+    },
+    loadListUser: async (req, res, next) => {
+        try {
+            const id = req.user[0].id;
+            const nav = await db.getCategories();
+            const listUser = await db.getAll('users');
+            const combinedData = [];
+        
+            for (const user of listUser) {
+                const account = await accountModel.getAccount(user.id);
+                console.log('go here',account);
+                combinedData.push({
+                    user: user,
+                    balance: account.length > 0 ? account[0].balance : 0
+                });
+            }
+        
+            // console.log(combinedData);
+        
+            res.render('manageUser', { 
+                user: req.user[0], 
+                pageTitle: "Manage User", 
+                cateListNav: nav,
+                users: combinedData,
+            });
         }
         catch (e) {
             console.log(e);
