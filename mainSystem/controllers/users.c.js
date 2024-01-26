@@ -106,6 +106,7 @@ module.exports = {
                 },
                 body: JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
             });
+            console.log(result.json());
             res.redirect(result)
         }
         catch (e) {

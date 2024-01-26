@@ -93,8 +93,7 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_SecureHash'] = signed;
     vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
 
-    console.log(vnpUrl);
-    return vnpUrl;
+    // return vnpUrl;
     res.redirect(vnpUrl)
 });
 
@@ -143,7 +142,8 @@ router.get('/vnpay_return', async function (req, res, next) {
                 body : JSON.stringify({ rechargeAmount: parseInt(rechargeAmount)/100, user_id: user_id }),
             })
 
-            res.status(200).json({ RspCode: '02', Message: 'This order has been updated to the payment status' })
+            // res.status(200).json({ RspCode: '02', Message: 'This order has been updated to the payment status' })
+            res.redirect('https://localhost:3000/user/profile/')
             
         } catch (e) {
             console.log(e)
