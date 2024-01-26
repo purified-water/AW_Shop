@@ -42,10 +42,12 @@ module.exports = {
             }
             const rechargeAmount = req.body.rechargeAmount;
 
-            const newBalance = parseInt(account[0].balance) + parseInt(rechargeAmount) / 100;
 
-            await paymentModel.updateAccount(userID, newBalance);
-            res.status(200).json({ message: 'Recharge success' });
+            const newBalance = parseInt(account[0].balance) + parseInt(rechargeAmount);
+            
+            await paymentModel.updateAccount(userID,newBalance);
+            res.redirect('https://localhost:3000/user/profile/')
+
         }
         catch (e) {
             console.log(e);

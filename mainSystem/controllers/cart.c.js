@@ -1,5 +1,6 @@
 const cartModel = require('../models/cart.m');
 const userModel = require('../models/users.m');
+const detailModel = require('../models/detail_order.m');
 require('dotenv').config();
 const paymentLink = 'https://localhost:8888'
 const shopOrderModel = require('../models/shop_order.m');
@@ -172,6 +173,7 @@ module.exports = {
         const user_id = user[0].id;
         const total = await getCartTotal(user_id, cartID);
 
+
         const shopOrderConditions = [
             {
                 tbColumn: 'cart_id',
@@ -222,6 +224,7 @@ module.exports = {
         }
 
         // console.log(`Payment link is ${paymentLink}/payment/payWithWallet`);
+
         // Xử lý lỗi self signed certificate in certificate chain
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -255,6 +258,14 @@ module.exports = {
         else {
             // res.render('paymentSuccess');
             console.log('Payment with wallet success');
+             
+            const itemCart = await cartModel.getItemInCart(user_id);
+            console.log(itemCart);
+            if (itemCart.length > 0) {
+                for (const cartItem of itemCart) {
+                    const detailOrder = await detailModel.createDetail(parseInt(orderId), parseInt(cartItem.product_id), createDate, cartItem.quantity);
+                }
+            }
             // Xóa items khỏi cart
             const remove = await cartModel.removeAllCartItem(user_id);
             // Nếu trong shop_order có order đó và đang là processing thì update thành success
