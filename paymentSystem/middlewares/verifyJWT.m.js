@@ -8,8 +8,14 @@ module.exports = {
         if (!token) {
             return res.sendStatus(401);
         }
-        const decodedToken = await jwt.verify(token, 'mySecretKey');
-        console.log(decodedToken);
-        next()
+        try {
+            const decodedToken = await jwt.verify(token, 'mySecretKey');
+            console.log(decodedToken);
+            next();
+        } catch (error) {
+            // Handle the error when JWT verification fails
+            console.error('JWT verification failed:', error);
+            return res.sendStatus(401);
+        }
     }
 }

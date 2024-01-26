@@ -30,9 +30,10 @@ const accountRoute = require('./routes/account.r');
 app.use('/account', accountRoute);
 
 
+
 app.use('/order', order);
 const paymentRoute = require('./routes/wallet.r');
-app.use('/payment', paymentRoute);
+app.use('/payment', verifyJWT, paymentRoute);
 
 
 

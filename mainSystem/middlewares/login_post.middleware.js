@@ -11,8 +11,9 @@ module.exports = {
             headers: { 'Content-Type' : 'application/json'},
             body: JSON.stringify({user_id: req.user.id})
         })
-        console.log('fetch success')
+        // console.log('fetch success')
         const token = await response.json();
+        console.log(token);
         res.cookie('jwt', token, {maxAge: maxAge });
         res.redirect('/');
     }
