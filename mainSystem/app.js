@@ -10,30 +10,16 @@ const { isAuthenticated, isNotAuthenticated } = require('./middlewares/auth.midd
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
-const { createCA, createCert } = require('mkcert')
+const cookieParser = require('cookie-parser')
+
 
 startServer();
 async function startServer() {
-    const ca = await createCA({
-        organization: "AW_Shop",
-        countryCode: "+84",
-        state: "Ho Chi Minh",
-        locality: "Ho Chi Minh",
-        validity: 365
-    });
-    const cert = await createCert({
-        ca: { key: ca.key, cert: ca.cert },
-        domains: ["127.0.0.1", "localhost"],
-        validity: 365
-    });
-
-
-    // console.log(ca, cert)
-
     const db = require('./utils/db');
 
 
     app.use(flash());
+    app.use(cookieParser());
 
     const maxAge = 60 * 60 * 1000;
     app.use(methodOverride('_method'));
@@ -86,14 +72,14 @@ async function startServer() {
     //Register
     const registerRoute = require('./routes/register.r');
     app.use('/register', isNotAuthenticated, registerRoute);
-    app.delete('/logout', (req, res) => {
-        req.logOut(function (err) {
-            if (err) {
-                return res.status(500).json({ error: 'Error during logout' })
-            }
-            res.redirect('/login')
-        })
-    })
+    // app.delete('/logout', (req, res) => {
+    //     req.logOut(function (err) {
+    //         if (err) {
+    //             return res.status(500).json({ error: 'Error during logout' })
+    //         }
+    //         res.redirect('/login')
+    //     })
+    // })
 
 
     // app.get('/', isAuthenticated, (req, res) => {
