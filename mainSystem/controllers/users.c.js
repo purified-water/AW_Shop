@@ -19,7 +19,7 @@ module.exports = {
 
         // Use Fetch API to send a POST request
         try {
-
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             let response = await fetch(serverUrl, {
                 method: 'POST',
                 headers: {
@@ -76,7 +76,7 @@ module.exports = {
             console.log("id: ", user_id);
             // Xử lý lỗi self signed certificate in certificate chain
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            const result = await fetch(`${rechargeLink}/payment/recharge`, {
+            const result = await fetch(`https://localhost:8888/payment/recharge`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -89,5 +89,27 @@ module.exports = {
         catch (e) {
             console.log(e);
         }
-    }
+    },
+    rechargeBalanceVNPay: async (req, res, next) => {
+        try {
+            const rechargeAmount = parseInt(req.body.rechargeAmount);
+            const user = await userModel.getUserByEmail(req.session.passport.user);
+            const user_id = user[0].id;
+            console.log("amount: ", rechargeAmount);
+            console.log("id: ", user_id);
+            // Xử lý lỗi self signed certificate in certificate chain
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            const result = await fetch(`https://localhost:8888/order/create_payment_url`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
+            });
+            res.redirect(result)
+        }
+        catch (e) {
+            console.log(e);
+        }
+    },
 }
