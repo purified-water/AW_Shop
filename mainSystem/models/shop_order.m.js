@@ -70,5 +70,28 @@ module.exports = {
             console.log(error);
         }
     },
+
+    updateOrderStatus: async (order_id, status) => {
+        try {
+            const entity = {
+                status: status
+            }
+            const pairs = [
+                {
+                    tbColumn: 'id',
+                    value: order_id
+                },
+                
+                {
+                    tbColumn: 'status',
+                    value: 'Processing'
+                }
+            ]
+            await db.updateMultiConditions('shop_order', entity, pairs);
+            return entity;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     
 }
