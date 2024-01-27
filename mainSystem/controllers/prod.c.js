@@ -58,12 +58,7 @@ module.exports = {
             const offset = 9*(page-1);
             const itemsPerPage = 9;
             const total = await product.countProductsWithTcate(product_type);
-
-            // product_type = standardlizedName(product_type);
-            // console.log(total);
-            // console.log('product_type: ', product_type);
-            // const prodList = await product.getProductsWithCate(product_type);
-            let prodList = await product.getProductsWithCatePerPage(product_type, offset, itemsPerPage);
+            let prodList = await product.filterWithOffset(product_type, filter, offset, itemsPerPage);
             prodList = sortByFilter(prodList, filter)
             const nav = await db.getCategories()
             const standardlized_prod_name = standardlizedName(product_type);
