@@ -248,9 +248,6 @@ module.exports = {
             // Cập nhật orderID
             orderId = shopOrder.id;
         }
-
-        console.log('shopOrder', shopOrder);
-        console.log('user_id', user_id);
         // thay đổi status của order
 
         if (result.status !== 200) {

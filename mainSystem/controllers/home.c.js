@@ -38,47 +38,47 @@ async function getCustomersSortedByTotalAmount(orders, customers) {
 }
 
 async function getUsersSortedByOrderCount(orders, users) {
-    const orderCountByUser = {};
-  
-    // Đếm số đơn đặt hàng của mỗi người dùng
-    orders.forEach((order) => {
-      const userId = order.user_id;
-      
-      if (orderCountByUser[userId]) {
-        orderCountByUser[userId]++;
-      } else {
-        orderCountByUser[userId] = 1;
-      }
-    });
-  
-    // Sắp xếp danh sách người dùng giảm dần theo số đơn đặt hàng
-    const sortedUsers = users.sort((a, b) => {
-      const orderCountA = orderCountByUser[a.id] || 0;
-      const orderCountB = orderCountByUser[b.id] || 0;
-      return orderCountB - orderCountA;
-    });
-  
-    const result = sortedUsers.map((user) => {
-      const orderCount = orderCountByUser[user.id] || 0;
-      return {
-        username: user.firstname + user.lastname,
-        orderCount: orderCount,
-      };
-    });
-  
-    return result;
+  const orderCountByUser = {};
+
+  // Đếm số đơn đặt hàng của mỗi người dùng
+  orders.forEach((order) => {
+    const userId = order.user_id;
+
+    if (orderCountByUser[userId]) {
+      orderCountByUser[userId]++;
+    } else {
+      orderCountByUser[userId] = 1;
+    }
+  });
+
+  // Sắp xếp danh sách người dùng giảm dần theo số đơn đặt hàng
+  const sortedUsers = users.sort((a, b) => {
+    const orderCountA = orderCountByUser[a.id] || 0;
+    const orderCountB = orderCountByUser[b.id] || 0;
+    return orderCountB - orderCountA;
+  });
+
+  const result = sortedUsers.map((user) => {
+    const orderCount = orderCountByUser[user.id] || 0;
+    return {
+      username: user.firstname + user.lastname,
+      orderCount: orderCount,
+    };
+  });
+
+  return result;
 }
 
 async function getProductSortredByCount(details) {
   const productCounts = {};
 
   for (const detail of details) {
-      const { product_id, quantity } = detail;
+    const { product_id, quantity } = detail;
 
-      if (productCounts[product_id] === undefined) {
-          productCounts[product_id] = 0;
-      }
-      productCounts[product_id] += quantity;
+    if (productCounts[product_id] === undefined) {
+      productCounts[product_id] = 0;
+    }
+    productCounts[product_id] += quantity;
   }
 
   const productCountsArray = Object.entries(productCounts);
@@ -89,25 +89,45 @@ async function getProductSortredByCount(details) {
     const product = await products.getProductDetail(product_id);
     // console.log(product);
     return {
-        product_id: parseInt(product_id),
-        quantity: quantity,
-        name: product[0].name,
+      product_id: parseInt(product_id),
+      quantity: quantity,
+      name: product[0].name,
     };
   }));
 
-  return sortedProducts.slice(0,5);
+  return sortedProducts.slice(0, 5);
 }
+function standardlizedNameForList(list) {
+  return list.map(item => {
+    const productType = item.product_type.replace(/_/g, ' ');
+    const partNames = productType.split(' ');
 
+    // for (let i = 0; i < partNames.length; i++) {
+    //   partNames[i] = partNames[i].charAt(0).toUpperCase() + partNames[i].slice(1);
+    // }
+    const updatedPartNames = [];
+    for (let partName of partNames) {
+      updatedPartNames.push(partName.charAt(0).toUpperCase() + partName.slice(1));
+    }
+    const standardlizedName = updatedPartNames.join(' ');
+
+    return {...item, standardlized_name: standardlizedName };
+  })
+}
 module.exports = {
   loadHome: async (req, res) => {
     // console.log('Req user: ', req);
     const user = req.user[0];
     const cateList = await categories.getCates();
     if (user.role == "client") {
-      const top5Products = await products.getTop5Products();
-      const top5Categories = await categories.getTop5Categories();
+      let top5Products = await products.getTop5Products();
+      let top5Categories = await categories.getTop5Categories();
       const deal = await products.getDeal();
-      const cateList = await categories.getCates();
+      let cateList = await categories.getCates();
+      
+      top5Categories = standardlizedNameForList(top5Categories);
+      cateList = standardlizedNameForList(cateList);
+      // console.log(updatedCateList);
       res.render("home", {
         user: user,
         top5Products: top5Products,
@@ -124,7 +144,7 @@ module.exports = {
       const detail = await detail_order.getAllDetailOrder();
       // Gọi hàm tìm user mua nhiều nhất
       const sortCustomerByAmount = await getCustomersSortedByTotalAmount(order, customer);
-      const sortCustomerByOrder = await getUsersSortedByOrderCount(order,customer);
+      const sortCustomerByOrder = await getUsersSortedByOrderCount(order, customer);
       const sortProduct = await getProductSortredByCount(detail);
 
       // // Hiển thị kết quả
@@ -133,12 +153,12 @@ module.exports = {
 
       // console.log("User mua nhiều order nhất:");
       // console.log(sortCustomerByOrder);
-    
+
       // console.log("Doanh thu ngày: ", orderDay);
       // console.log("Doanh thu tháng: ", orderMonth);
 
       console.log("Sản phẩm top: ", sortProduct);
-        
+
       res.render("dashboard", {
         user: user,
         customerCount: sortCustomerByAmount.length,
