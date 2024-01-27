@@ -48,8 +48,24 @@ async function startServer() {
             indexInc: function(index) {
                 return index + 1;
             },
+            formatPrice: function(price) {
+                const formattedPrice = new Intl.NumberFormat('vi-VN', {
+                  style: 'currency',
+                  currency: 'VND',
+                }).format(price);
+              
+                // If the above doesn't work, try formatting without the currency symbol
+                // const formattedPrice = new Intl.NumberFormat('it-IT').format(price);
+              
+                return formattedPrice;
+            }
         },
     }));
+
+    function formatPrice(price) {
+        return price.toLocaleString('it-IT', {style: 'currency', currency : 'VND'})
+    }
+    console.log(formatPrice(5000));
 
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.urlencoded({ extended: true }));
