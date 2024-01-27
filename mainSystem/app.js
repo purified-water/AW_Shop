@@ -108,6 +108,9 @@ async function startServer() {
     const usersRoute = require('./routes/users.r');
     app.use('/user', usersRoute)
 
+    const orderRoute = require('./routes/order.r');
+    app.use('/order', orderRoute);
+
     app.get('/about', (req, res) => {
         res.render("about", { user: req.user[0], pageTitle: "About" })
     });

@@ -5,5 +5,6 @@ const orderController = require('../controllers/order.c');
 
 
 router.get('/', orderController.loadOrder);
+router.get('/detail/:order_id', orderController.loadOrderDetail);
 
 module.exports = router;

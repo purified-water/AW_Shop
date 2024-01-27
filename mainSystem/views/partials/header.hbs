@@ -64,7 +64,8 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="/cate" id="dropdownCategories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
           <div class="dropdown-menu" aria-labelledby="dropdownCategories">
-              <a class="dropdown-item" href="/cate">List category</a>
+
+              <a class="dropdown-item" href="/cate">All categories</a>
             {{#each cateListNav}}
               <a class="dropdown-item" href="/product?cate={{this.product_type}}">{{this.standardlized_name}}</a>
             {{/each}}
@@ -83,11 +84,11 @@
             class="nav-link">Analyze</a></li>
         
         <li class="nav-item"><a
-            href="/analyze"
+            href="/order"
             class="nav-link">Order</a></li>
 
         <li class="nav-item"><a
-            href="/analyze"
+            href="/user/manageuser"
             class="nav-link">User</a></li>
         {{/if}}
 
@@ -109,11 +110,12 @@
             {{/if}}
           </div>
         </li>
+        {{#if (eq user/role "client")}}
         <li class="nav-item cta cta-colored"><a
             href="/cart"
-            class="nav-link"><span
-              class="icon-shopping_cart"></span>[{{this.session.cart.totalQty}}]</a></li>
-
+            class="nav-link"><span class="icon-shopping_cart"></span>[{{this.session.cart.totalQty}}]</a>
+              </li>
+        {{/if}}
       </ul>
     </div>
   </div>

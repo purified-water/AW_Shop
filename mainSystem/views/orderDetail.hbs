@@ -1,0 +1,81 @@
+<div class="container mb-4">
+  <h3 class="m-4">Order #{{order_id}}</h3>
+</div>
+<div class="container mb-4" style="max-height: 800px; overflow-y:scroll">
+  <div class="row mb-5">
+    <form class="col-md-12" method="post">
+      <div class="site-blocks-table">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="product-thumbnail">Image</th>
+              <th class="product-name">Name</th>
+              <th class="product-date">Date</th>
+              <th class="product-quantity">Quantity</th>
+              <th class="product-price">Price</th>
+
+            </tr>
+          </thead>
+          {{#each detail}}
+            <tbody>
+              <tr>
+                <td class="product-thumbnail" style="height: 60px; width: 60px">
+                  <img
+                    src="{{this.product.image_link}}"
+                    alt="Image"
+                    class="img-fluid"
+                  />
+                </td>
+
+                <td class="product-name">
+                  {{this.product.name}}
+                </td>
+                <td class="product-date">
+                  {{this.date}}
+                </td>
+                <td class="product-quantity">
+                  {{this.quantity}}
+                </td>
+
+                <td class="product-price">
+                  {{this.product.price}}
+                </td>
+
+              </tr>
+
+            </tbody>
+          {{/each}}
+
+        </table>
+      </div>
+    </form>
+  </div>
+  <div class="container">
+
+
+      <div class="row justify-content-end">
+        <div class="col-md-3">
+          <div class="row">
+            <div class="col-md-12 text-right border-bottom mb-5">
+              <h3 class="text-black h4 text-uppercase">ORDER TOTAL</h3>
+            </div>
+          </div>
+
+          <div class="row mb-5">
+            <div class="col-md-6">
+              <span style="color: black">TOTAL</span>
+            </div>
+            <div class="col-md-6 text-right">
+              <strong
+                class="text-black"
+                style="font-size:20px; text-align:center"
+              >{{total}}₫</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+
+</div>
