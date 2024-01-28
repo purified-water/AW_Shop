@@ -57,13 +57,24 @@ router.post('/create_payment_url', function (req, res, next) {
     // Lấy order type
     // Nếu là nạp tiền thì other, thanh toán thì payment
     let orderType = req.body.orderType;
+    let orderCodeType;
+    if (orderType == 'payment')  {
+        orderCodeType = 1;
+    }
+    else 
+        orderCodeType = 2;
+
+
+    
+    console.log('user id: ', user_id)
+    console.log('order code type: ', orderCodeType)
     console.log('ordertype from createpayment',orderType);
-    let info = orderId + user_id
+    
+    let info = orderId.toString() + user_id.toString() + orderCodeType.toString();
+    console.log('Order Info', info);
     let amount = parseInt(req.body.rechargeAmount);
     let bankCode = '';
-    let orderCodeType
-    if (orderType == 'other') orderCodeType = 1;
-    else orderCodeType = 2;
+   
     // let amount = 300000
     // let bankCode = ''
 
@@ -121,11 +132,14 @@ router.get('/vnpay_return', async function (req, res, next) {
     console.log('Params', vnp_Params);
     let info = vnp_Params['vnp_TxnRef'];
     let order_id = info.slice(0,8);
-    let user_id = info.slice(8, info.length);
+    let user_id = info.slice(8, info.length - 1);
     let orderCodeType = info.slice(-1);
     let rechargeAmount = vnp_Params['vnp_Amount'];
 
+    console.log('order id: ', order_id);
+    
     console.log('user id: ', user_id)
+    console.log('order code type: ', orderCodeType)
     console.log('recharge amount: ', rechargeAmount)
 
     let config = require('config');
@@ -139,17 +153,24 @@ router.get('/vnpay_return', async function (req, res, next) {
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
     let orderType = vnp_Params['vnp_OrderType'];
     if (secureHash === signed) {
-        console.log('Hash check success, with order type', orderType);
+        console.log('Hash check success, with order type', orderCodeType);
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
         try {
             if (orderCodeType == '1') {
-                console.log('Dang thanh toan ne');
+                console.log('Paying with vnpay');
+                //Thanh toan
+                const paid = await payment.payWithVNPay(user_id, parseInt(rechargeAmount)/100); 
+                if (paid == 1) {
+                    res.redirect(`https://localhost:3000/cart/payWithVNPay?order_id=${order_id}&user_id=${user_id}&order_type=${orderType}&success=true&amount=${rechargeAmount}`)
+
+                } else {
+                    res.redirect(`https://localhost:3000/cart/payWithVNPay?order_id=${order_id}&user_id=${user_id}&order_type=${orderType}&success=false&amount=${rechargeAmount}`)                }
             } else if (orderCodeType == '2'){
                 //Nạp tiền
-                console.log('Nap tien ne');
+                console.log('Depositing money');
                 const recharge = await payment.rechargeAccount(user_id, parseInt(rechargeAmount)/100);
             } else {
-                console.log('Thanh toán với strigify ne', querystring.stringify(vnp_Params, { encode: false }));
+                console.log('Invalid order type code ', orderCodeType);
             }
            
 

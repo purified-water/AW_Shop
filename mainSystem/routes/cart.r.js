@@ -10,6 +10,7 @@ router.get('/remove/:id', cartController.removeItemFromCartByID);
 router.get('/info',cartController.loadFormInfo);
 router.get('/payWithWallet',cartController.payWithWallet);
 router.post('https://localhost:8888/order/create_payment_url', cartController.redirectVnPay);
+router.get('/payWithVNPay',cartController.payWithVNPay);
 
 
 module.exports = router;
