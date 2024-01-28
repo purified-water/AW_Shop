@@ -1,6 +1,7 @@
 const cartModel = require('../models/cart.m');
 const userModel = require('../models/users.m');
 const detailModel = require('../models/detail_order.m');
+const accountModel = require('../models/account.m');
 require('dotenv').config();
 const paymentLink = 'https://localhost:8888'
 const shopOrderModel = require('../models/shop_order.m');
@@ -32,6 +33,8 @@ module.exports = {
             const user = await userModel.getUserByEmail(req.session.passport.user);
             console.log('User when render cart', user);
             const user_id = user[0].id
+            const account = await accountModel.getAccount(user_id);
+
 
             const nav = await db.getCategories()
             const cartItems = await cartModel.getItemInCart(parseInt(user_id));
@@ -44,6 +47,7 @@ module.exports = {
                     user: req.user[0],
                     cartItems: [],
                     cartID: cartID,
+                    account: account[0],
                     pageTitle: "Cart",
                     total: 0,
                     cateListNav: nav,
@@ -160,6 +164,37 @@ module.exports = {
         }
     },
 
+    redirectVnPay: async (req, res, next) => {
+        console.log('redirect VNPAY')
+        const rechargeAmount = parseInt(req.body.rechargeAmount);
+
+
+        const params = {
+            amount: rechargeAmount,
+            bankCode: ''
+            // Add more parameters as needed
+        };
+
+        // Replace with your server URL
+        const serverUrl = 'https://localhost:8888/order/create_payment_url';
+
+        // Use Fetch API to send a POST request
+        try {
+            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+            let response = await fetch(serverUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+
+                },
+                body: JSON.stringify(params),
+            })
+            const data = await response.json()
+            console.log(data)
+        } catch (e) {
+            console.log(e)
+        }
+    },
 
 
     payWithWallet: async (req, res, next) => {
@@ -281,4 +316,5 @@ module.exports = {
 
 
     }
+
 }

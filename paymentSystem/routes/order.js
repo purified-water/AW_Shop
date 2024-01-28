@@ -10,6 +10,7 @@ let $ = require('jquery');
 const request = require('request');
 const moment = require('moment');
 const payment = require('../models/payment.m');
+const paymentController = require('../controllers/payment.c');
 
 
 router.get('/', function (req, res, next) {
@@ -53,6 +54,9 @@ router.post('/create_payment_url', function (req, res, next) {
     let returnUrl = config.get('vnp_ReturnUrl');
     let orderId = moment(date).format('DDHHmmss');
     let user_id = req.body.user_id;
+    // Lấy order type
+    // Nếu là nạp tiền thì other, thanh toán thì payment
+    let orderType = req.body.orderType;
 
     let info = orderId + user_id
     let amount = parseInt(req.body.rechargeAmount);
@@ -74,7 +78,7 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_CurrCode'] = currCode;
     vnp_Params['vnp_TxnRef'] = info;
     vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + info;
-    vnp_Params['vnp_OrderType'] = 'other';
+    vnp_Params['vnp_OrderType'] = orderType;
     vnp_Params['vnp_Amount'] = amount * 100;
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
     vnp_Params['vnp_IpAddr'] = ipAddr;
@@ -84,7 +88,7 @@ router.post('/create_payment_url', function (req, res, next) {
     }
 
     vnp_Params = sortObject(vnp_Params);
-    console.log(vnp_Params)
+    // console.log('Param vnpay là:', vnp_Params)
     let querystring = require('qs');
     let signData = querystring.stringify(vnp_Params, { encode: false });
     let crypto = require("crypto");
@@ -92,13 +96,16 @@ router.post('/create_payment_url', function (req, res, next) {
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
     vnp_Params['vnp_SecureHash'] = signed;
     vnpUrl += '?' + querystring.stringify(vnp_Params, { encode: false });
-
+    // console.log('Stringify vnpurl là:', vnpUrl);
+    // console.log('Stringify query là:', querystring.stringify(vnp_Params, { encode: false }));
     // return vnpUrl;
     res.redirect(vnpUrl)
 });
 
+
+
 router.get('/vnpay_return', async function (req, res, next) {
-    console.log('vào vnpay return', req.body)
+    console.log('vào vnpay return', req.query)
     let vnp_Params = req.query;
 
     let secureHash = vnp_Params['vnp_SecureHash'];
@@ -108,7 +115,7 @@ router.get('/vnpay_return', async function (req, res, next) {
 
     vnp_Params = sortObject(vnp_Params);
 
-    // console.log(vnp_Params);
+    console.log('Params', vnp_Params);
     let info = vnp_Params['vnp_TxnRef'];
     let order_id = info.slice(0,8);
     let user_id = info.slice(8);
@@ -126,21 +133,22 @@ router.get('/vnpay_return', async function (req, res, next) {
     let crypto = require("crypto");
     let hmac = crypto.createHmac("sha512", secretKey);
     let signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");
-
+    let orderType = vnp_Params['vnp_OrderType'];
     if (secureHash === signed) {
+        console.log('Hash check success, with order type', orderType);
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
         try {
-            user_id = String(user_id);
-            rechargeAmount = String(rechargeAmount);
-            process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-            // Buffer.from(arg);
-            let response = await fetch('https://localhost:8888/payment/recharge', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body : JSON.stringify({ rechargeAmount: parseInt(rechargeAmount)/100, user_id: user_id }),
-            })
+            if (orderType == 'payment') {
+                console.log('Dang thanh toan ne');
+            } else if (orderType == 'other'){
+                //Nạp tiền
+                console.log('Nap tien ne');
+                const recharge = await payment.rechargeAccount(user_id, parseInt(rechargeAmount)/100);
+            } else {
+                console.log('Thanh toán với strigify ne', querystring.stringify(vnp_Params, { encode: false }));
+            }
+           
+
 
             // res.status(200).json({ RspCode: '02', Message: 'This order has been updated to the payment status' })
             res.redirect('https://localhost:3000/user/profile/')
@@ -157,6 +165,7 @@ router.get('/vnpay_return', async function (req, res, next) {
 
 router.get('/vnpay_ipn', function (req, res, next) {
     let vnp_Params = req.query;
+    console.log('Vào ipn với params', vnp_Params);
     let secureHash = vnp_Params['vnp_SecureHash'];
 
     let orderId = vnp_Params['vnp_TxnRef'];
@@ -215,6 +224,7 @@ router.get('/vnpay_ipn', function (req, res, next) {
 });
 
 router.post('/querydr', function (req, res, next) {
+    console.log('++ Vào querydr');
 
     process.env.TZ = 'Asia/Ho_Chi_Minh';
     let date = new Date();
@@ -272,7 +282,7 @@ router.post('/querydr', function (req, res, next) {
 });
 
 router.post('/refund', function (req, res, next) {
-
+    console.log('++ Vào refund');
     process.env.TZ = 'Asia/Ho_Chi_Minh';
     let date = new Date();
 
