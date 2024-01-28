@@ -76,7 +76,8 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -102,7 +103,8 @@ module.exports = {
             // console.log('New item added to cart', newItem);
             res.redirect('back');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -118,7 +120,8 @@ module.exports = {
             const removeItem = await cartModel.reduceCartItemByID(user_id, product_id);
             res.redirect('back');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     increaseItemFromCartByID: async (req, res, next) => {
@@ -133,7 +136,8 @@ module.exports = {
             const increaseItem = await cartModel.increaseCartItemByID(user_id, product_id);
             res.redirect('back');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     removeItemFromCartByID: async (req, res, next) => {
@@ -148,7 +152,8 @@ module.exports = {
             const removeItem = await cartModel.removeCartItemByID(user_id, product_id);
             res.redirect('back');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -161,7 +166,8 @@ module.exports = {
 
             const removeAll = await cartModel.removeAllCartItem(user_id);
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 

@@ -100,58 +100,64 @@ async function getProductSortredByCount(details) {
 
 module.exports = {
   loadHome: async (req, res) => {
-    // console.log('Req user: ', req);
-    const user = req.user[0];
-    const cateList = await categories.getCates();
-    if (user.role == "client") {
-      const top5Products = await products.getTop5Products();
-      const top5Categories = await categories.getTop5Categories();
-      const deal = await products.getDeal();
+    try {
+      // console.log('Req user: ', req);
+      const user = req.user[0];
       const cateList = await categories.getCates();
-      res.render("home", {
-        user: user,
-        top5Products: top5Products,
-        top5Categories: top5Categories,
-        deal: deal[0],
-        pageTitle: "Homepage",
-        cateListNav: cateList,
-      });
-    } else {
-      const customer = await users.getTotalCustomer();
-      const order = await shop_order.getShopOrder();
-      const orderDay = await shop_order.getRevenueDay();
-      const orderMonth = await shop_order.getRevenueMonth();
-      const detail = await detail_order.getAllDetailOrder();
-      // Gọi hàm tìm user mua nhiều nhất
-      const sortCustomerByAmount = await getCustomersSortedByTotalAmount(order, customer);
-      const sortCustomerByOrder = await getUsersSortedByOrderCount(order,customer);
-      const sortProduct = await getProductSortredByCount(detail);
+      if (user.role == "client") {
+        const top5Products = await products.getTop5Products();
+        const top5Categories = await categories.getTop5Categories();
+        const deal = await products.getDeal();
+        const cateList = await categories.getCates();
+        res.render("home", {
+          user: user,
+          top5Products: top5Products,
+          top5Categories: top5Categories,
+          deal: deal[0],
+          pageTitle: "Homepage",
+          cateListNav: cateList,
+        });
+      } else {
+        const customer = await users.getTotalCustomer();
+        const order = await shop_order.getShopOrder();
+        const orderDay = await shop_order.getRevenueDay();
+        const orderMonth = await shop_order.getRevenueMonth();
+        const detail = await detail_order.getAllDetailOrder();
+        // Gọi hàm tìm user mua nhiều nhất
+        const sortCustomerByAmount = await getCustomersSortedByTotalAmount(order, customer);
+        const sortCustomerByOrder = await getUsersSortedByOrderCount(order,customer);
+        const sortProduct = await getProductSortredByCount(detail);
 
-      // // Hiển thị kết quả
-      // console.log("User mua nhiều tiền nhất:");
-      // console.log(sortCustomerByAmount);
+        // // Hiển thị kết quả
+        // console.log("User mua nhiều tiền nhất:");
+        // console.log(sortCustomerByAmount);
 
-      // console.log("User mua nhiều order nhất:");
-      // console.log(sortCustomerByOrder);
-    
-      // console.log("Doanh thu ngày: ", orderDay);
-      // console.log("Doanh thu tháng: ", orderMonth);
+        // console.log("User mua nhiều order nhất:");
+        // console.log(sortCustomerByOrder);
+      
+        // console.log("Doanh thu ngày: ", orderDay);
+        // console.log("Doanh thu tháng: ", orderMonth);
 
-      console.log("Sản phẩm top: ", sortProduct);
-        
-      res.render("dashboard", {
-        user: user,
-        customerCount: sortCustomerByAmount.length,
-        orderCount: order.length,
-        customerAmount: sortCustomerByAmount,
-        customerOrder: sortCustomerByOrder,
-        mostBuyProduct: sortProduct,
-        productCount: sortProduct.length,
-        revDay: orderDay.totalRevDay,
-        revMonth: orderMonth.totalRevMonth,
-        pageTitle: "Dashboard",
-        cateListNav: cateList,
-      });
+        console.log("Sản phẩm top: ", sortProduct);
+          
+        res.render("dashboard", {
+          user: user,
+          customerCount: sortCustomerByAmount.length,
+          orderCount: order.length,
+          customerAmount: sortCustomerByAmount,
+          customerOrder: sortCustomerByOrder,
+          mostBuyProduct: sortProduct,
+          productCount: sortProduct.length,
+          revDay: orderDay.totalRevDay,
+          revMonth: orderMonth.totalRevMonth,
+          pageTitle: "Dashboard",
+          cateListNav: cateList,
+        });
+      }
+    }
+    catch(error){
+      // next(error);
+      res.render("error",{error: error});
     }
   },
 };

@@ -58,7 +58,8 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     getRevenueInDay: async (req, res, next) => {

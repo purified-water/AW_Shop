@@ -67,8 +67,9 @@ module.exports = {
                 cateListNav: nav
             });
         }
-        catch (e) {
-            console.log(e);
+        catch (error) {
+            next(error);
+            res.render("error",{error: error});
         }
     },
     rechargeBalance: async (req, res, next) => {
@@ -91,8 +92,10 @@ module.exports = {
             });
             res.redirect('back');
         }
-        catch (e) {
-            console.log(e);
+        catch (error) {
+            next(error);
+            res.render("error",{error: error});
+
         }
     },
     rechargeBalanceVNPay: async (req, res, next) => {
@@ -114,8 +117,9 @@ module.exports = {
             console.log(result.json());
             res.redirect(result)
         }
-        catch (e) {
-            console.log(e);
+        catch (error) {
+            next(error);
+            res.render("error",{error: error});
         }
     },
     loadListUser: async (req, res, next) => {
@@ -144,8 +148,9 @@ module.exports = {
                 users: combinedData,
             });
         }
-        catch (e) {
-            console.log(e);
+        catch (error) {
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 }

@@ -45,7 +45,9 @@ module.exports = {
 
 
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
+
         }
     },
     getProductDetail: async (req, res, next) => {
@@ -73,7 +75,8 @@ module.exports = {
             await product.addProduct(brand, name, price, image_link, description, product_type);
             res.redirect('/product?cate=' + product_type);
         } catch (error) {
-            console.log(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     editProduct: async (req, res, next) => {
@@ -83,7 +86,8 @@ module.exports = {
             await product.editProduct(productID, brand, name, price, image_link, description);
             res.redirect('/product?cate=' + product_type); //TO DO: 1 là redirect lại 2 là ẩn modal
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     deleteProduct: async (req, res, next) => {
@@ -93,7 +97,8 @@ module.exports = {
             await product.deleteProduct(productID);
             res.redirect('/product?cate=' + product_type);
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -111,7 +116,8 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
     searchProduct: async (req, res, next) => {
@@ -131,7 +137,8 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     }
     
