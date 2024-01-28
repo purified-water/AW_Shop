@@ -1,10 +1,10 @@
 <div class="container">
   <div class="revenue pt-5 mb-10">
-    <div class="revenue-label text-center">Revenue in day: ${{this.totalDay}}</div>
+    <div class="revenue-label text-center">Revenue in day: {{this.totalDay}} VND</div>
     <canvas id="myChartDay"></canvas>
   </div>
     <div class="revenue">
-    <div class="revenue-label text-center">Revenue in month: ${{this.totalMonth}}</div>
+    <div class="revenue-label text-center">Revenue in month: {{this.totalMonth}} VND</div>
     <canvas id="myChartMonth"></canvas>
   </div>
 </div>
@@ -22,28 +22,16 @@
     data: {
       labels: orderListDay.map(item => item.date),
       datasets: [{
-        label: 'Pending',
-        data: orderListDay.map(item => (item.status === 'Pending' ? parseInt(item.total, 10) : 0)),
+        label: 'Success',
+        data: orderListDay.map(item => (item.status === 'Success' ? parseInt(item.total, 10) : 0)),
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1
       }, {
-        label: 'Completed',
-        data: orderListDay.map(item => (item.status === 'Completed' ? parseInt(item.total, 10) : 0)),
+        label: 'Failed',
+        data: orderListDay.map(item => (item.status === 'Failed' ? parseInt(item.total, 10) : 0)),
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      }, {
-        label: 'Processing',
-        data: orderListDay.map(item => (item.status === 'Processing' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        borderColor: 'rgba(255, 206, 86, 1)',
-        borderWidth: 1
-      }, {
-        label: 'Shipped',
-        data: orderListDay.map(item => (item.status === 'Shipped' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1
       }]
     },
@@ -62,28 +50,10 @@
     data: {
       labels: orderListMonth.map(item => item.date),
       datasets: [{
-        label: 'Pending',
-        data: orderListMonth.map(item => (item.status === 'Pending' ? parseInt(item.total, 10) : 0)),
+        label: 'Success',
+        data: orderListMonth.map(item => (parseInt(item.total, 10))),
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1
-      }, {
-        label: 'Completed',
-        data: orderListMonth.map(item => (item.status === 'Completed' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1
-      }, {
-        label: 'Processing',
-        data: orderListMonth.map(item => (item.status === 'Processing' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-        borderColor: 'rgba(255, 206, 86, 1)',
-        borderWidth: 1
-      }, {
-        label: 'Shipped',
-        data: orderListMonth.map(item => (item.status === 'Shipped' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
         borderWidth: 1
       }]
     },

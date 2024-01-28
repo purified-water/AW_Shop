@@ -1,0 +1,56 @@
+<div class="container mb-4">
+    <h3 class="m-4">Orders</h3>
+</div>
+<div class="container mb-4" style="max-height: 800px; overflow-y:scroll">
+    <div class="row mb-5">
+        <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="product-orderID">ID</th>
+                            <th class="product-userID">User ID</th>
+                            <th class="product-date">Date</th>
+                            <th class="product-method">Method</th>
+                            <th class="product-total">Total</th>
+                            <th class="product-status">Status</th>
+                            
+                        </tr>
+                    </thead>
+                    {{#each orders}}
+                    <tbody>
+                            <tr>
+                                <td class="product-orderID">
+                                    <a href="/order/detail/{{this.id}}" style="text-decoration: underline">
+                                        {{this.id}}
+
+                                    </a>
+                                </td>
+                                <td class="product-userID">
+                                    {{this.user_id}}
+                                </td>
+                                <td class="product-date">
+                                        {{this.date}}
+                                </td>
+                                <td class="product-method">
+                                        {{this.method}}
+                                </td>
+
+                                <td class="product-total">
+                                        {{this.total}}
+                                </td>
+                                <td class="product-status {{#if (eq this.status 'Success')}}text-success{{else}}text-danger{{/if}}">
+                                        {{this.status}}
+                                </td>
+
+                            </tr>
+
+
+                    </tbody>
+                {{/each}}
+
+                </table>
+            </div>
+        </form>
+    </div>
+</div>

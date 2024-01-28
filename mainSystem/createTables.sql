@@ -13,7 +13,7 @@
 --     TABLESPACE = pg_default
 --     CONNECTION LIMIT = -1
 --     IS_TEMPLATE = False;
-
+drop table if exists order_detail;
 drop table if exists shop_order;
 drop table if exists cart_items;
 drop table if exists cart;
@@ -122,12 +122,32 @@ alter table cart_items add constraint FK_productid foreign key (product_id) refe
 create table shop_order (
     id SERIAL,
     cart_id INT NOT NULL,
+    user_id INT NOT NULL,
+    note varchar(255),
     date TIMESTAMPTZ,
+    method VARCHAR(255),
     total NUMERIC(10, 0) NOT NULL,
     status VARCHAR(255) NOT NULL
 );
 
 -- Add PK
-alter table shop_order add constraint PK_orderid primary key (id) with (fillfactor=80);
+alter table shop_order add constraint PK_orderid primary key (id, date) with (fillfactor=80);
 -- Add FK
 alter table shop_order add constraint FK_cartid foreign key (cart_id) references cart(id);
+alter table shop_order add constraint FK_userid foreign key (user_id) references users(id);
+
+
+-- Table order_detail
+-- drop table if exists order_detail;
+create table order_detail (
+    order_id INT NOT NULL,
+	date TIMESTAMPTZ NOT NULL,  -- Add this line
+    product_id INT NOT NULL,
+    quantity INT NOT NULL
+);
+
+-- Add PK
+alter table order_detail add constraint PK_orderdetailid primary key (order_id, date, product_id) with (fillfactor=80);
+-- Add FK
+alter table order_detail add constraint FK_orderid foreign key (order_id, date) references shop_order(id, date);
+alter table order_detail add constraint FK_productid foreign key (product_id) references products(id);

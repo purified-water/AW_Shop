@@ -47,20 +47,21 @@ module.exports = {
         const offset = (page - 1) * itemsPerPage;
 
         try {
-            const result = await db.getCategories()
+            const nav = await db.getCategories()
             const total_cate = await category.countCate();
             const cates = await db.getCategoriesByPage(offset, itemsPerPage);
             res.render("cate",{
+                user: req.user[0],
                 cateList: cates, 
                 page, 
                 total_cate, 
                 pageTitle: "Category List",
-                cateListNav: result,
+                cateListNav: nav,
             });
 
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
+        } catch (error) {
+            // next(error);
+            res.render("error", {error: error})
         }
     },
 
@@ -69,26 +70,27 @@ module.exports = {
         try {
             const result = await db.getAllCategories()
             const totalItems = result.count;
-            console.log(result);
+            // console.log(result);
             res.json({ totalItems });
             // res.render("cate",result);
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
+        } catch (error) {
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
     addCate: async (req, res, next) => {
         try {
             const image_link = req.body.image_link;
-            console.log(image_link);
+            // console.log(image_link);
             const product_type = req.body.product_type;
-            console.log(image_link);
-            console.log(product_type);
+            // console.log(image_link);
+            // console.log(product_type);
             await category.addCate(product_type, image_link);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -98,12 +100,13 @@ module.exports = {
             const oldCateName = req.body.product_type;
             const newCateName = req.body.new_product_type;
             const imageLink = req.body.image_link;
-            console.log(imageLink)
+            // console.log(imageLink)
 
             await category.editCate(oldCateName, newCateName, imageLink);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -113,7 +116,8 @@ module.exports = {
             await category.deleteCate(cateName);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     }
 }

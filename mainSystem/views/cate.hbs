@@ -2,6 +2,7 @@
   <h1 class="mt-5">Categories</h1>
   <div class="site-section mt-4">
     <div class="container">
+      {{#if (eq user/role "admin")}}
       <div class="row">
         <a
           data-mdb-ripple-init
@@ -9,6 +10,7 @@
           href="#addCate"
           class="mb-4 fs-40"
         ><i class="icon ion-md-create">Add new cate</i></a>
+        {{/if}}
       </div>
       <div
           class="modal fade"
@@ -58,7 +60,7 @@
           {{!-- <div id="pagination-container"> --}}
             <div class="wine_v_1 text-center pb-4">
             <a href="/product?cate={{this.product_type}}" id="show-detail" class="thumbnail d-block mb-4">
-              <img src="{{this.image_link}}" alt="{{this.product_type}}" class="img-fluid">
+              <img src="{{this.image_link}}" alt="{{this.product_type}}" class="img-fluid-card">
             </a>
             <div class="wine-actions">
               <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
@@ -69,6 +71,7 @@
               .edit-button i, .delete-button i { font-size: 20px; /* Điều chỉnh
               kích thước biểu tượng theo mong muốn */ }
             </style>
+            {{#if (eq ../user/role "admin")}}
             <div class="text-center">
               <a
                 data-mdb-ripple-init
@@ -81,6 +84,7 @@
                 class="ml-3 delete-button"
               ><i class="icon ion-md-trash"></i></a>
             </div>
+            {{/if}}
       </div>
 
       {{!-- <img src="/images2/1705828397269.png" alt="{{this.product_type}}" class="img-fluid"> --}}
@@ -105,7 +109,7 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <form class="ml-3" action="/cate/edit" method="post">
+                <form class="ml-3" action="/cate/edit" enctype="multipart/form-data" method="post">
                 {{!-- asdasds --}}
                 <div class="fw-bold mb-2" class="input-group">
                     <input
@@ -150,9 +154,6 @@
     <nav aria-label="Page navigation example">
       <ul id="cate-pagination" class="pagination flex-wrap d-flex justify-content-center">
         <li class="page-item"><a class="page-link page-previous mx-1" href="">Previous</a></li>
-        {{!-- <li class="page-item"><a class="page-link" href="/cate?page=1">1</a></li>
-        <li class="page-item"><a class="page-link" href="/cate?page=2">2</a></li>
-        <li class="page-item"><a class="page-link" href="/cate?page=3">3</a></li> --}}
         <li class="page-item"><a class="page-link page-next mx-1" href="">Next</a></li>
       </ul>
     </nav>
@@ -171,18 +172,12 @@
  
   function getImageReview(event, action) {
     const parentNode = event.target.parentNode;
-    console.log(parentNode)
-
     const imageInput = parentNode.querySelector(`#image-${action}-input`);
     const imageLink = parentNode.querySelector(`#image-${action}-link`);
     let fileName = event.target.files[0].name;
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
     let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
-    console.log('fileName',fileName)
-    console.log('imageDiv',imageDiv);
-    console.log('imageLink',imageLink);
-    console.log(`${action}`);
     imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
     imageLink.value = '/images2/' + fileName;
   }

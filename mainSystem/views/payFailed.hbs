@@ -23,28 +23,12 @@ body {
 </style>
 <body>
 
-<div class="container failed-container animate__animated animate__fadeIn p-5 mt-5">
+<div class="container failed-container p-5 mt-5">
     <div class="cross-icon">&#10006;</div>
-    <h2 class="mb-4">Thanh toán thất bại</h2>
-    <p>Xin lỗi vì sự bất tiện này. Vui lòng thử lại hoặc liên hệ hỗ trợ.</p>
+    <h2 class="mb-4">Payment Failed</h2>
+    <p>{{message}}</p>
+    <p>We apologize for this inconvenience. Please try again or contact support.</p>
     <form>
-        <!-- Include any additional form elements or customization as needed -->
-        <button type="button" class="btn btn-danger">Quay lại trang chủ</button>
+        <a href="/cart" class="btn btn-danger">Back to Homepage</a>
     </form>
 </div>
-
-<script src="https://unpkg.com/ionicons@5.6.3/dist/ionicons.js"></script>
-<script src="/js/jquery.magnific-popup.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
-
-<script>
-    // Example: Initialize Magnific Popup for a button
-    $(document).ready(function() {
-        $('.btn-danger').magnificPopup({
-            type: 'block',
-            preloader: false,
-            focus: '#username',
-            modal: true
-        });
-    });
-</script>

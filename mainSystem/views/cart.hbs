@@ -43,7 +43,7 @@
                                 <h3 class="h5 cart-product-title text-black">{{this.name}}</h3>
                             </td>
                             <td>
-                                <h5>{{this.price}}</h5>
+                                <h5>{{formatPrice this.price}}</h5>
                             </td>
 
 
@@ -78,10 +78,6 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="row mb-5">
-
-                    <div class="col-md-6">
-                        <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/menu">Continue Shopping</a></button>
-                    </div>
                 </div>
             </div>
             <div class="col-md-6 pl-5">
@@ -99,14 +95,28 @@
                                 <span style="color: black">TOTAL</span>
                             </div>
                             <div class="col-md-6 text-right">
-                                <strong class="text-black" style="font-size:20px; text-align:center">₫{{ totalPrice }}</strong>
+                                <strong class="text-black" style="font-size:20px; text-align:center">{{ total }}₫</strong>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/checkout">Proceed to checkout</a></button>
+                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/cart/payWithWallet?cart_id={{cartID}}">Pay with wallet</a></button>
                             </div>
+                        </div>
+                        <div class="row mt-2">
+                            <form action="https://localhost:8888/order/create_payment_url" method="post">
+                                <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                                <input type="hidden" name="user_id" value="{{user_id}}"/>
+                                <input type="hidden" name="rechargeAmount" value="{{total}}"/>
+                                <input type="hidden" name="orderType" value="payment"/>
+                                <input type="hidden" name="cart_id" value="{{cartID}}"/>
+
+                                <div class="col-md-12">
+                                    <button class="btn btn-outline-primary btn-md btn-block">Pay with VNPay</button>
+                                </div>
+                            </form>
+                           
                         </div>
                     </div>
                 </div>
