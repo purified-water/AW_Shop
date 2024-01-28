@@ -13,7 +13,7 @@ module.exports = {
         })
         // console.log('fetch success')
         const token = await response.json();
-        console.log(token);
+        // console.log(token);
         res.cookie('jwt', token, {maxAge: maxAge });
         res.redirect('/');
     }

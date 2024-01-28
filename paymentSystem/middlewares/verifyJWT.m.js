@@ -10,7 +10,7 @@ module.exports = {
         }
         try {
             const decodedToken = await jwt.verify(token, 'mySecretKey');
-            console.log(decodedToken);
+            // console.log('decodedToken', decodedToken);
             next();
         } catch (error) {
             // Handle the error when JWT verification fails

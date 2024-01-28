@@ -60,7 +60,7 @@ module.exports = {
                 brand: brand,
                 name: name,
                 price: price,
-                price_sign: 'đ',
+                price_sign: '₫',
                 currency: 'VND',
                 image_link: imageLink || '/images2/default.jpg',
                 description: description,
@@ -134,14 +134,6 @@ module.exports = {
         let query;
         try {
             switch (filter) {
-                case 'A_Z':
-                    query = `
-                    SELECT *
-                    FROM products
-                    WHERE product_type = '${product_type}'
-                    ORDER BY name ASC
-                    `
-                    break;
                 case 'Z_A':
                     query = `
                     SELECT *
@@ -165,6 +157,57 @@ module.exports = {
                     WHERE product_type = '${product_type}'
                     ORDER BY price DESC
                     `
+                    break;
+                default:
+                    query = `
+                        SELECT *
+                        FROM products
+                        WHERE product_type = '${product_type}'
+                        ORDER BY name ASC
+                        `
+                    break;
+            }
+            const data = await db.getWithQuery(query);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    filterWithOffset: async (product_type, filter, offset, limit) => {
+        let query;
+        try {
+            switch (filter) {
+                case 'Z_A':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY name DESC OFFSET ${offset} LIMIT ${limit}
+                    `
+                    break;
+                case 'Price_low_to_high':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY price ASC OFFSET ${offset} LIMIT ${limit}
+                    `
+                    break;
+                case 'Price_high_to_low':
+                    query = `
+                    SELECT *
+                    FROM products
+                    WHERE product_type = '${product_type}'
+                    ORDER BY price DESC OFFSET ${offset} LIMIT ${limit}
+                    `
+                    break;
+                default:
+                    query = `
+                        SELECT *
+                        FROM products
+                        WHERE product_type = '${product_type}'
+                        ORDER BY name ASC OFFSET ${offset} LIMIT ${limit}
+                        `
                     break;
             }
             const data = await db.getWithQuery(query);

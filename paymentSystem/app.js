@@ -5,7 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var order = require('./routes/order');
-const {verifyJWT} = require('./middlewares/verifyJWT.m')
 
 var app = express();
 
@@ -33,7 +32,7 @@ app.use('/account', accountRoute);
 
 app.use('/order', order);
 const paymentRoute = require('./routes/wallet.r');
-app.use('/payment', verifyJWT, paymentRoute);
+app.use('/payment', paymentRoute);
 
 
 
