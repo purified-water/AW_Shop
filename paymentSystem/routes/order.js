@@ -57,10 +57,13 @@ router.post('/create_payment_url', function (req, res, next) {
     // Lấy order type
     // Nếu là nạp tiền thì other, thanh toán thì payment
     let orderType = req.body.orderType;
-
+    console.log('ordertype from createpayment',orderType);
     let info = orderId + user_id
     let amount = parseInt(req.body.rechargeAmount);
     let bankCode = '';
+    let orderCodeType
+    if (orderType == 'other') orderCodeType = 1;
+    else orderCodeType = 2;
     // let amount = 300000
     // let bankCode = ''
 
@@ -77,7 +80,7 @@ router.post('/create_payment_url', function (req, res, next) {
     vnp_Params['vnp_Locale'] = locale;
     vnp_Params['vnp_CurrCode'] = currCode;
     vnp_Params['vnp_TxnRef'] = info;
-    vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + info;
+    vnp_Params['vnp_OrderInfo'] = 'Thanh toan cho ma GD:' + info + orderCodeType;
     vnp_Params['vnp_OrderType'] = orderType;
     vnp_Params['vnp_Amount'] = amount * 100;
     vnp_Params['vnp_ReturnUrl'] = returnUrl;
@@ -118,7 +121,8 @@ router.get('/vnpay_return', async function (req, res, next) {
     console.log('Params', vnp_Params);
     let info = vnp_Params['vnp_TxnRef'];
     let order_id = info.slice(0,8);
-    let user_id = info.slice(8);
+    let user_id = info.slice(8, info.length);
+    let orderCodeType = info.slice(-1);
     let rechargeAmount = vnp_Params['vnp_Amount'];
 
     console.log('user id: ', user_id)
@@ -138,9 +142,9 @@ router.get('/vnpay_return', async function (req, res, next) {
         console.log('Hash check success, with order type', orderType);
         //Kiem tra xem du lieu trong db co hop le hay khong va thong bao ket qua
         try {
-            if (orderType == 'payment') {
+            if (orderCodeType == '1') {
                 console.log('Dang thanh toan ne');
-            } else if (orderType == 'other'){
+            } else if (orderCodeType == '2'){
                 //Nạp tiền
                 console.log('Nap tien ne');
                 const recharge = await payment.rechargeAccount(user_id, parseInt(rechargeAmount)/100);
