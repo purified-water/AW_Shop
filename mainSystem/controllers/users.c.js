@@ -24,6 +24,7 @@ module.exports = {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+
                 },
                 body: JSON.stringify(params),
             })
@@ -78,13 +79,14 @@ module.exports = {
             const user_id = user[0].id;
             console.log("amount: ", rechargeAmount);
             console.log("id: ", user_id);
+            const token = req.cookies.jwt;
             // Xử lý lỗi self signed certificate in certificate chain
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             const result = await fetch(`https://localhost:8888/payment/recharge`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-
+                    'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({ rechargeAmount: rechargeAmount, user_id: user_id }),
             });
