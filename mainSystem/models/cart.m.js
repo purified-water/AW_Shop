@@ -9,6 +9,17 @@ module.exports = {
             console.log(error);
         }
     },
+    itemQuantity: async(cart_id) => {
+        try {
+            // console.log('go here itemquantity',cart_id);
+            const count = await db.getCondition('cart_items', 'cart_id',cart_id);
+            // console.log(count);
+            return count;
+        }
+        catch (e){
+            console.log(e);
+        }
+    },
     addItemToCartByID: async (user_id, product_id, quantity) => {
         try {
             // Lấy cart_id từ user_id
