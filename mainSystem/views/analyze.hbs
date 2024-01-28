@@ -24,14 +24,15 @@
       datasets: [{
         label: 'Success',
         data: orderListDay.map(item => (item.status === 'Success' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        
         borderWidth: 1
       }, {
         label: 'Failed',
         data: orderListDay.map(item => (item.status === 'Failed' ? parseInt(item.total, 10) : 0)),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+        borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 1
       }]
     },
@@ -52,8 +53,8 @@
       datasets: [{
         label: 'Success',
         data: orderListMonth.map(item => (parseInt(item.total, 10))),
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1
       }]
     },

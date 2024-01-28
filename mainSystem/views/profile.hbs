@@ -9,7 +9,7 @@
         kích thước biểu tượng theo mong muốn */ }
     </style>
     <div class="container mt-5 mb-3 d-flex flex-row p-0">
-        <h3 class="me-3">Profile</h3>
+        <h2 class="me-3">Profile</h2>
         <a class="edit-button" 
             data-mdb-ripple-init
             data-mdb-modal-init
@@ -127,8 +127,9 @@
         </ul>
         </div>
     </div>
-
-    <h3 class="my-3">Your Past Orders</h3>
+    {{#if (eq user/role "admin")}}
+    {{else}}
+    <h2 class="my-3">Your Past Orders</h2>
 
     {{#if orders}}
         
@@ -193,14 +194,15 @@
             </div>
         </div>
     {{/if}}
-     
+    {{/if}}
+    
     <div class="container mt-5 mb-3 d-flex flex-row p-0">
-      <h3 class="me-3">Account</h3>
-        <a class="recharge-button" 
+      <h2 class="me-3">Account</h2>
+        <a class="recharge-button align-self-center" 
           data-mdb-ripple-init
           data-mdb-modal-init
           href="#rechargeModal">
-          <i class="icon ion-md-refresh"></i>
+          <i class="icon ion-md-add-circle"></i>
         </a>
     </div>
 
@@ -271,12 +273,12 @@
         var balanceElement = document.getElementById('actual-balance');
         var toggleButton = document.getElementById('toggleBalance');
 
-        if (balanceElement.style.visibility === 'hidden') {
-          balanceElement.style.visibility = 'visible';
+        if (balanceElement.style.display === 'none') {
+          balanceElement.style.display = 'inline';
           balanceElement.classList.remove('hidden-balance');
           toggleButton.innerHTML = '<i class="icon ion-md-eye ml-3"></i>';
         } else {
-          balanceElement.style.visibility = 'hidden';
+          balanceElement.style.display = 'none';
           balanceElement.classList.add('hidden-balance');
           toggleButton.innerHTML = '<i class="icon ion-md-eye-off ml-3"></i>';
         }
