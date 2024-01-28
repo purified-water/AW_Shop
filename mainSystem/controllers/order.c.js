@@ -27,7 +27,9 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
+
         }
     },
     loadOrderDetail: async (req, res, next) => {
@@ -55,7 +57,9 @@ module.exports = {
                 cateListNav: nav,
             });
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
+
         }
     }
     
