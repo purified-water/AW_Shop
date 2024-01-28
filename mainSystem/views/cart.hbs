@@ -100,9 +100,12 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-12">
-                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/cart/payWithWallet?cart_id={{cartID}}">Pay with wallet</a></button>
-                            </div>
+                            <form action="/cart/payWithWallet" method="GET">
+                            <input type="hidden" name="cart_id" value="{{cartID}}">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-outline-primary btn-md btn-block"><p style="color: #f1b8c4">Pay with Wallet</p></button>
+                                </div>
+                            </form>
                         </div>
                         <div class="row mt-2">
                             <form action="https://localhost:8888/order/create_payment_url" method="post">
