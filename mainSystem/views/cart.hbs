@@ -105,9 +105,18 @@
                             </div>
                         </div>
                         <div class="row mt-2">
-                            <div class="col-md-12">
-                                <button class="btn btn-outline-primary btn-md btn-block"><a href="/shop/checkout">Pay with VNPay</a></button>
-                            </div>
+                            <form action="https://localhost:8888/order/create_payment_url" method="post">
+                                <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
+                                <input type="hidden" name="user_id" value="{{user_id}}"/>
+                                <input type="hidden" name="rechargeAmount" value="{{total}}"/>
+                                <input type="hidden" name="orderType" value="payment"/>
+                                <input type="hidden" name="cart_id" value="{{cartID}}"/>
+
+                                <div class="col-md-12">
+                                    <button class="btn btn-outline-primary btn-md btn-block">Pay with VNPay</button>
+                                </div>
+                            </form>
+                           
                         </div>
                     </div>
                 </div>

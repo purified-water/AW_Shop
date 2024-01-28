@@ -59,9 +59,9 @@ module.exports = {
                 cateListNav: nav,
             });
 
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
+        } catch (error) {
+            // next(error);
+            res.render("error", {error: error})
         }
     },
 
@@ -73,9 +73,9 @@ module.exports = {
             // console.log(result);
             res.json({ totalItems });
             // res.render("cate",result);
-        } catch (err) {
-            console.error(err);
-            res.status(500).send('Internal Server Error');
+        } catch (error) {
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -89,7 +89,8 @@ module.exports = {
             await category.addCate(product_type, image_link);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -104,7 +105,8 @@ module.exports = {
             await category.editCate(oldCateName, newCateName, imageLink);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     },
 
@@ -114,7 +116,8 @@ module.exports = {
             await category.deleteCate(cateName);
             res.redirect('/cate');
         } catch (error) {
-            next(error);
+            // next(error);
+            res.render("error",{error: error});
         }
     }
 }

@@ -172,6 +172,7 @@ module.exports = {
         pageTitle: "Dashboard",
         cateListNav: cateList,
       });
+
     }
   },
 };

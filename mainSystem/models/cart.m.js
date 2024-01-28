@@ -69,7 +69,6 @@ module.exports = {
             // Lấy cart_id từ user_id
             console.log('User id để lấy cart', user_id);
             const cartQuery = await db.getCondition('cart', 'user_id', user_id);
-            console.log('User cart', cartQuery);
             let cartID;
            
             if (cartQuery) {
@@ -84,6 +83,8 @@ module.exports = {
                     cartID = cartQuery[0].id;
                 }
             }
+            console.log('User cart', cartID);
+
 
 
             // Lấy items trong cart

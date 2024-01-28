@@ -1,5 +1,6 @@
 const paymentModel = require('../models/payment.m')
 const db = require('../utils/db');
+
 module.exports = {
     payWithWallet: async (req, res, next) => {
         try {
@@ -45,7 +46,7 @@ module.exports = {
 
 
     },
-    rechargeBalance: async (req, res, next) => {
+        rechargeBalance: async (req, res, next) => {
         try {
             const userID = req.body.user_id;
             const account = await paymentModel.getAccount(userID);
@@ -55,11 +56,10 @@ module.exports = {
                 })
             }
             const rechargeAmount = req.body.rechargeAmount;
+            const recharge = await paymentModel.rechargeAccount(userID, rechargeAmount);
 
 
-            const newBalance = parseInt(account[0].balance) + parseInt(rechargeAmount);
-            
-            await paymentModel.updateAccount(userID,newBalance);
+            // await paymentModel.updateAccount(userID,newBalance);
             res.redirect('https://localhost:3000/user/profile/')
 
         }
@@ -67,4 +67,5 @@ module.exports = {
             console.log(e);
         }
     },
+    
 }
