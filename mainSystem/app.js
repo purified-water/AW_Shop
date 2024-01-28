@@ -127,8 +127,10 @@ async function startServer() {
     const orderRoute = require('./routes/order.r');
     app.use('/order', orderRoute);
 
-    app.get('/about', (req, res) => {
-        res.render("about", { user: req.user[0], pageTitle: "About" })
+    app.get('/about', async (req, res) => {
+        let nav = await db.getCategories()
+
+        res.render("about", { user: req.user[0], pageTitle: "About", cateListNav: nav });
     });
 
     const server = https.createServer({
