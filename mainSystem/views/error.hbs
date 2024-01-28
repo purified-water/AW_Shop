@@ -1,0 +1,46 @@
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .error-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .error-box {
+        text-align: center;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .error-icon {
+        font-size: 100px;
+        color: #dc3545;
+    }
+
+    .error-message {
+        font-size: 24px;
+        margin-top: 20px;
+    }
+
+    .back-home {
+        margin-top: 20px;
+    }
+</style>
+<div class="container">
+    <div class="error-container">
+        <div class="error-box">
+            <span class="ion-ios-close-circle-outline error-icon"></span>
+            <div class="error-message">
+                <p>{{error}}</p>
+                <p>Please try again later.</p>
+            </div>
+            <a href="/" class="btn btn-primary back-home">Back to Home</a>
+        </div>
+    </div>
+</div>g
