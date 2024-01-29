@@ -185,7 +185,8 @@ router.get('/vnpay_return', async function (req, res, next) {
         // res.status(200).json({ RspCode: '02', Message: 'This order has been updated to the payment status' })
 
     } else {
-        res.status(200).json({ RspCode: '01', Message: 'Invalid payment!' })
+        // res.status(200).json({ RspCode: '01', Message: 'Invalid payment!' })
+        res.redirect('https://localhost:3000/user/profile/')
     }
 });
 
