@@ -9,7 +9,7 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 function initialize(passport) {
     const authenticate = async (username, password, done) => {
-        console.log(username, password)
+        // console.log(username, password)
         const users = await Users.getUserByUsername(username);
         const user = users[0];
         // console.log('user in passport-config', user)

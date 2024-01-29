@@ -412,7 +412,7 @@ module.exports = {
         // thay đổi status của order
 
         const itemCart = await cartModel.getItemInCart(user_id);
-        console.log(itemCart);
+        // console.log(itemCart);
         if (itemCart.length > 0) {
             for (const cartItem of itemCart) {
                 const detailOrder = await detailModel.createDetail(parseInt(orderId), parseInt(cartItem.product_id), createDate, cartItem.quantity);

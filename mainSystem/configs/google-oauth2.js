@@ -37,7 +37,7 @@ passport.use(new GoogleStrategy({
     }
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-    console.log('Google account is', account);
+    // console.log('Google account is', account);
     const jsonRes = await fetch('https://localhost:8888/account/add', {
       method: 'POST',
       headers: {

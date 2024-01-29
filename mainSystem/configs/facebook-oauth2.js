@@ -43,7 +43,7 @@ passport.use(new FacebookStrategy({
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 
-    console.log('Facebook account is', account);
+    // console.log('Facebook account is', account);
     const jsonRes = await fetch('https://localhost:8888/account/add', {
       method: 'POST',
       headers: {
