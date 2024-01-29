@@ -196,7 +196,7 @@
                     <label class="fw-bold" for="image_link">Image</label>
                       <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
                       <div id="preview-edit-image">
-                      </div>
+                      </div><br>
                       <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
                     </div>
                     <div class="input-group">
@@ -283,11 +283,11 @@
   </nav>
 </div>
 <style>
-  .preview-image {
-    max-width: 80%;
-    height: auto;
+  #preview-add-image, #preview-edit-image {
+    width: 100%;
   }
 </style>
+
 <script>
   function getImageReview(event, action) {
     const parentNode = event.target.parentNode;
@@ -297,7 +297,7 @@
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
     let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
-    imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
+    imageDiv.innerHTML = `<img class="preview-image img-fluid-card" src="${image}" alt="">`
     imageLink.value = '/images2/' + fileName;
   }
 

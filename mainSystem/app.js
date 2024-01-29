@@ -58,6 +58,16 @@ async function startServer() {
                 // const formattedPrice = new Intl.NumberFormat('it-IT').format(price);
               
                 return formattedPrice;
+            },
+            standardlizeName: function(name) {
+                name = name.replace(/_/g, ' ');
+                const partNames = name.split(' ');
+                const updatedPartNames = [];
+                for (let partName of partNames) {
+                    updatedPartNames.push(partName.charAt(0).toUpperCase() + partName.slice(1));
+                }
+                const standardlizedName = updatedPartNames.join(' ');
+                return standardlizedName
             }
         },
     }));

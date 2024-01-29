@@ -178,7 +178,7 @@
     const fileExtension = fileName.split('.').pop();
     let image = URL.createObjectURL(event.target.files[0]);
     let imageDiv = parentNode.querySelector(`#preview-${action}-image`);
-    imageDiv.innerHTML = `<img class="preview-image" src="${image}" alt="">`
+    imageDiv.innerHTML = `<img class="preview-image img-fluid-card" src="${image}" alt="">`
     imageLink.value = '/images2/' + fileName;
   }
 
