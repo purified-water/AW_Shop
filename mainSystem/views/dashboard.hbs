@@ -18,7 +18,7 @@
             <thead class="thead">
               <tr>
                 <th scope="col">Index</th>
-                <th scope="col">Username</th>
+                <th scope="col">Name</th>
                 <th scope="col">Total Amount</th>
               </tr>
             </thead>
@@ -27,7 +27,7 @@
                 <tr>
                   <th scope="row">{{indexInc @index}}</th>
                   <td>{{this.username}}</td>
-                  <td>{{this.totalAmount}}</td>
+                  <td>{{formatPrice this.totalAmount}}</td>
                 </tr>
               {{/each}}
             </tbody>
@@ -47,7 +47,7 @@
             <thead class="thead">
               <tr>
                 <th scope="col">Index</th>
-                <th scope="col">Username</th>
+                <th scope="col">Name</th>
                 <th scope="col">Total order</th>
               </tr>
             </thead>
@@ -93,7 +93,7 @@
           </table>
 
           <!-- Hiển thị thông tin về tổng số người dùng -->
-          <p class="card-text">Total users: {{productCount}}</p>
+          <p class="card-text">Total products: {{productCount}}</p>
         </div>
       </div>
     </div>
@@ -102,8 +102,8 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">Revenue</h5>
-          <p class="card-text">This day: {{revDay}}</p>
-          <p class="card-text">This month: {{revMonth}}</p>
+          <p class="card-text">This day: {{formatPrice revDay}}</p>
+          <p class="card-text">This month: {{formatPrice revMonth}}</p>
         </div>
       </div>
     </div>

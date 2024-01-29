@@ -9,13 +9,15 @@ async function getCustomersSortedByTotalAmount(orders, customers) {
 
   // Tính tổng số tiền đã mua của mỗi khách hàng
   orders.forEach((order) => {
-    const userId = order.user_id;
-    const totalAmount = parseInt(order.total);
+    if (order.status === 'Success') {
+      const userId = order.user_id;
+      const totalAmount = parseInt(order.total);
 
-    if (totalAmountByUser[userId]) {
-      totalAmountByUser[userId] += totalAmount;
-    } else {
-      totalAmountByUser[userId] = totalAmount;
+      if (totalAmountByUser[userId]) {
+        totalAmountByUser[userId] += totalAmount;
+      } else {
+        totalAmountByUser[userId] = totalAmount;
+      }
     }
   });
 
@@ -138,6 +140,7 @@ module.exports = {
       });
     } else {
       const customer = await users.getTotalCustomer();
+      // console.log('customer', customer);
       const order = await shop_order.getShopOrder();
       const orderDay = await shop_order.getRevenueDay();
       const orderMonth = await shop_order.getRevenueMonth();
