@@ -68,7 +68,7 @@ module.exports = {
             });
         }
         catch (error) {
-            next(error);
+            // next(error);
             res.render("error",{error: error});
         }
     },
@@ -93,7 +93,7 @@ module.exports = {
             res.redirect('back');
         }
         catch (error) {
-            next(error);
+            // next(error);
             res.render("error",{error: error});
 
         }
@@ -118,7 +118,7 @@ module.exports = {
             res.redirect(result)
         }
         catch (error) {
-            next(error);
+            // next(error);
             res.render("error",{error: error});
         }
     },
