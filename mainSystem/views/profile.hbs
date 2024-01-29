@@ -166,7 +166,7 @@
                               </td>
 
                               <td class="product-total">
-                                      {{this.total}}
+                                      {{formatPrice this.total}}
                               </td>
                               <td class="product-status {{#if (eq this.status 'Success')}}text-success{{else}}text-danger{{/if}}">
                                       {{this.status}}
@@ -260,7 +260,7 @@
 
     <div class="row pt-3">
       <div class="col-md-12 mb-5">
-        <p id="balance" style="font-size:18px">Balance: <span id="actual-balance">{{account.balance}}</span>
+        <p id="balance" style="font-size:18px">Balance: <span id="actual-balance">{{formatPrice account.balance}}</span>
         <button id="toggleBalance" onclick="toggleBalance()">
             <i class="icon ion-md-eye ml-3"></i>
         </button>
