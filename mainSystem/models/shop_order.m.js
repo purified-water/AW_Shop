@@ -63,7 +63,7 @@ module.exports = {
                 status: 'Processing'
             }
 
-            console.log('Created order', entity);
+            // console.log('Created order', entity);
             await db.insert('shop_order', entity, 'id');
             return entity;
         } catch (error) {

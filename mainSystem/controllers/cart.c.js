@@ -9,7 +9,7 @@ const moment = require('moment');
 const db = require('../utils/db');
 
 async function getCartTotal(user_id, cartID) {
-    console.log('Tính cartID', cartID);
+    // console.log('Tính cartID', cartID);
     const cartItems = await cartModel.getItemInCart(parseInt(user_id));
     let total = 0;
     // console.log('Total calculating', cartItems);
@@ -31,7 +31,7 @@ module.exports = {
             // Lấy user để query cart theo user_id
             // user lấy ở passport
             const user = await userModel.getUserByEmail(req.session.passport.user);
-            console.log('User when render cart', user);
+            // console.log('User when render cart', user);
             const user_id = user[0].id
             const account = await accountModel.getAccount(user_id);
 
@@ -180,6 +180,8 @@ module.exports = {
         // Lấy user để query cart theo user_id
         const user = await userModel.getUserByEmail(req.session.passport.user);
         const user_id = user[0].id;
+        orderId = orderId.toString() + user_id.toString();
+        console.log('order id thanh toán vnpay', orderId);
         // const total = await getCartTotal(user_id, cartID);
 
         const shopOrderConditions = [
@@ -197,7 +199,7 @@ module.exports = {
             }
         ];
 
-        console.log('redirect VNPAY')
+        // console.log('redirect VNPAY')
         const rechargeAmount = parseInt(req.body.rechargeAmount);
 
         let shopOrder = {};
@@ -246,7 +248,7 @@ module.exports = {
             // Nếu đang chỉnh sửa order
             
 
-            console.log(data)
+            // console.log(data)
         } catch (e) {
             console.log(e)
         }
@@ -291,7 +293,7 @@ module.exports = {
         // thay đổi status của order
 
         const itemCart = await cartModel.getItemInCart(user_id);
-        console.log('Item cart', itemCart);
+        // console.log('Item cart', itemCart);
         if (itemCart.length > 0) {
             for (const cartItem of itemCart) {
                 const detailOrder = await detailModel.createDetail(parseInt(order_id), parseInt(cartItem.product_id), createDate, cartItem.quantity);
@@ -332,6 +334,7 @@ module.exports = {
         const user_id = user[0].id;
         const total = await getCartTotal(user_id, cartID);
         const token = req.cookies.jwt;
+        orderId = orderId + user_id.toString();
 
 
 

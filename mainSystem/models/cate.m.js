@@ -28,7 +28,7 @@ module.exports = {
             const entity = {
                 product_type: newCateName
             }
-            console.log('Entity to edit', entity);
+            // console.log('Entity to edit', entity);
             await db.update('categories', {product_type: newCateName, image_link: imageLink}, 'product_type', oldCateName);
             await db.update('products', entity, 'product_type', oldCateName);
         } catch (error) {

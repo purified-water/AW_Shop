@@ -75,7 +75,7 @@ async function startServer() {
     function formatPrice(price) {
         return price.toLocaleString('it-IT', {style: 'currency', currency : 'VND'})
     }
-    console.log(formatPrice(5000));
+    // console.log(formatPrice(5000));
 
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(express.urlencoded({ extended: true }));

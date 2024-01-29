@@ -157,7 +157,7 @@ module.exports = {
       // console.log("Doanh thu ngày: ", orderDay);
       // console.log("Doanh thu tháng: ", orderMonth);
 
-      console.log("Sản phẩm top: ", sortProduct);
+      // console.log("Sản phẩm top: ", sortProduct);
 
       res.render("dashboard", {
         user: user,
