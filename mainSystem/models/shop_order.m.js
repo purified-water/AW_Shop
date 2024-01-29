@@ -27,8 +27,16 @@ module.exports = {
             // Assuming db.getCondition is a function that takes a table name, column, and value
             const query = await db.getConditionInTime('public.shop_order', 'date', formattedDate, 'date');
             // console.log(query);
-            const totalRevDay = query.reduce((acc, row) => acc + parseInt(row.total, 10), 0);
+            const temp = query;
+            const totalRevDay = temp.reduce((acc, row) => {
+                // Kiểm tra nếu trạng thái là "Success" thì mới thêm vào tổng
+                if (row.status === 'Success') {
+                    return acc + parseInt(row.total, 10);
+                }
+                return acc;
+            }, 0);
 
+            console.log(query);
             return { totalRevDay, query };
         } catch (e) {
             console.log(e);

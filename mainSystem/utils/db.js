@@ -167,7 +167,7 @@ module.exports = {
             if (time === "month") {
                 query = `SELECT * FROM ${tbName} WHERE STATUS='Success' AND EXTRACT(MONTH FROM ${tbColum}::timestamp)=EXTRACT(MONTH FROM '${value}'::timestamp) AND EXTRACT(YEAR FROM ${tbColum}::timestamp)=EXTRACT(YEAR FROM '${value}'::timestamp)`;
               } else {
-                query = `SELECT * FROM ${tbName} WHERE STATUS='Success' AND ${time}(${tbColum})=${time}('${value}')`;
+                query = `SELECT * FROM ${tbName} WHERE ${time}(${tbColum})=${time}('${value}')`;
               }
           dbcn = await db.connect();
 
