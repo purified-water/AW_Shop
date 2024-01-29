@@ -47,7 +47,7 @@ module.exports = {
                 })
             }
             const total = await getCartTotal(detail);
-            console.log('detail is: ', detail);
+            // console.log('detail is: ', detail);
             res.render('orderDetail',{
                 user: req.user[0],
                 detail: detail,

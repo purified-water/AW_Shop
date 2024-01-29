@@ -58,7 +58,7 @@ module.exports = {
 
 
 
-            console.log('Admin created!');
+            // console.log('Admin created!');
     },
     importData: async (req, res) => {
         const sqlScriptPath = path.join(__dirname, '../createTables.sql');

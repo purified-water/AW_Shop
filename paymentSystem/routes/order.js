@@ -35,7 +35,7 @@ router.get('/refund', function (req, res, next) {
 
 
 router.post('/create_payment_url', function (req, res, next) {
-    console.log('vao day', req.body)
+    // console.log('vao day', req.body)
     process.env.TZ = 'Asia/Ho_Chi_Minh';
 
     let date = new Date();
@@ -54,6 +54,7 @@ router.post('/create_payment_url', function (req, res, next) {
     let returnUrl = config.get('vnp_ReturnUrl');
     let orderId = moment(date).format('DDHHmmss');
     let user_id = req.body.user_id;
+    orderId = orderId + user_id.toString();
     // Lấy order type
     // Nếu là nạp tiền thì other, thanh toán thì payment
     let orderType = req.body.orderType;
@@ -68,10 +69,10 @@ router.post('/create_payment_url', function (req, res, next) {
     
     console.log('user id: ', user_id)
     console.log('order code type: ', orderCodeType)
-    console.log('ordertype from createpayment',orderType);
+    // console.log('ordertype from createpayment',orderType);
     
-    let info = orderId.toString() + user_id.toString() + orderCodeType.toString();
-    console.log('Order Info', info);
+    let info = orderId.toString() + orderCodeType.toString();
+    // console.log('Order Info', info);
     let amount = parseInt(req.body.rechargeAmount);
     let bankCode = '';
    
@@ -119,7 +120,7 @@ router.post('/create_payment_url', function (req, res, next) {
 
 
 router.get('/vnpay_return', async function (req, res, next) {
-    console.log('vào vnpay return', req.query)
+    // console.log('vào vnpay return', req.query)
     let vnp_Params = req.query;
 
     let secureHash = vnp_Params['vnp_SecureHash'];
@@ -131,7 +132,7 @@ router.get('/vnpay_return', async function (req, res, next) {
 
     console.log('Params', vnp_Params);
     let info = vnp_Params['vnp_TxnRef'];
-    let order_id = info.slice(0,8);
+    let order_id = info.slice(0, info.length - 1);
     let user_id = info.slice(8, info.length - 1);
     let orderCodeType = info.slice(-1);
     let rechargeAmount = vnp_Params['vnp_Amount'];

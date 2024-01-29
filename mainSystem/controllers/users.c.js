@@ -5,7 +5,7 @@ require('dotenv').config();
 const rechargeLink = 'https://localhost:3000'
 module.exports = {
     redirectVnPay: async (req, res, next) => {
-        console.log('redirect VNPAY')
+        // console.log('redirect VNPAY')
         const rechargeAmount = parseInt(req.body.rechargeAmount);
 
         const params = {
@@ -29,7 +29,7 @@ module.exports = {
                 body: JSON.stringify(params),
             })
             const data = await response.json()
-            console.log(data)
+            // console.log(data)
         } catch (e) {
             console.log(e)
         }
@@ -77,8 +77,8 @@ module.exports = {
             const rechargeAmount = parseInt(req.body.rechargeAmount);
             const user = await userModel.getUserByEmail(req.session.passport.user);
             const user_id = user[0].id;
-            console.log("amount: ", rechargeAmount);
-            console.log("id: ", user_id);
+            // console.log("amount: ", rechargeAmount);
+            // console.log("id: ", user_id);
             const token = req.cookies.jwt;
             // Xử lý lỗi self signed certificate in certificate chain
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -103,8 +103,8 @@ module.exports = {
             const rechargeAmount = parseInt(req.body.rechargeAmount);
             const user = await userModel.getUserByEmail(req.session.passport.user);
             const user_id = user[0].id;
-            console.log("amount: ", rechargeAmount);
-            console.log("id: ", user_id);
+            // console.log("amount: ", rechargeAmount);
+            // console.log("id: ", user_id);
             // Xử lý lỗi self signed certificate in certificate chain
             process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
             const result = await fetch(`https://localhost:8888/order/create_payment_url`, {
@@ -131,7 +131,7 @@ module.exports = {
 
             for (const user of listUser) {
                 const account = await accountModel.getAccount(user.id);
-                console.log('go here', account);
+                // console.log('go here', account);
                 combinedData.push({
                     user: user,
                     balance: account.length > 0 ? account[0].balance : 0

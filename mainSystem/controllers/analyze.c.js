@@ -46,7 +46,7 @@ module.exports = {
             const nav = await db.getCategories()
 
             const listOrderMonth = await calculateDailyRevenue(orderMonth.query);
-            console.log(listOrderMonth);
+            // console.log(listOrderMonth);
             // console.log(orderMonth)
             res.render('analyze',{
                 user: req.user[0],

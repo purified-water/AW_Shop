@@ -11,7 +11,7 @@ module.exports = {
                 quantity: quantity,
             }
 
-            console.log('Created detail', entity);
+            // console.log('Created detail', entity);
             await db.insert('order_detail', entity, 'order_id');
             return entity;
         } catch (error) {
