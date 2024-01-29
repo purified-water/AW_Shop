@@ -194,10 +194,11 @@
                     </div>
                     <div class="input-group">
                     <label class="fw-bold" for="image_link">Image</label>
-                      <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
+                      <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="">
                       <div id="preview-edit-image">
+                        <img class="preview-image img-fluid-card" src="{{this.image_link}}" alt="">
                       </div><br>
-                      <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
+                      <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" value="{{this.image_link}}" name="image_link" placeholder="Image link" required>
                     </div>
                     <div class="input-group">
                       <label class="fw-bold" for="brand">Brand</label>
@@ -237,7 +238,7 @@
                       <input
                         class="input--style-3"
                         type="text"
-                        name="description"
+                        name="description" style="display: none;"
                         value="{{this.price_sign}}" required
                       />
                     </div>

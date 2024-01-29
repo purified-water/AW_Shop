@@ -63,7 +63,7 @@
               <img src="{{this.image_link}}" alt="{{this.product_type}}" class="img-fluid-card">
             </a>
             <div class="wine-actions">
-              <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{this.product_type}}</a></h3>
+              <h3 class="heading-2" style="font-size:18px"><a href="/product?cate={{this.product_type}}">{{standardlizeName this.product_type}}</a></h3>
             </div>
           </div>
 
@@ -99,7 +99,7 @@
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="editCate{{this.product_type}}Label">Editing {{this.product_type}}</h5>
+                <h5 class="modal-title" id="editCate{{this.product_type}}Label">Editing {{standardlizeName this.product_type}}</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -120,10 +120,11 @@
                     />
                   </div>
                   <label class="fw-bold" for="image_link">Image</label>
-                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="" required>
+                    <input type="file" id="image-edit-input" name="image" onchange="getImageReview(event, 'edit')" accept=".jpg, .png" id="">
                     <div id="preview-edit-image">
+                      <img class="preview-image img-fluid-card" src="{{this.image_link}}" alt="">
                     </div>
-                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" placeholder="Image link" required>
+                    <input class="input--style-3" id="image-edit-link" type="text" style="display: none;" name="image_link" value="{{this.image_link}}" placeholder="Image link" required>
                
                   <div class="input-group">
                     <label class="fw-bold" for="new_product_type">Category name</label>
@@ -131,7 +132,7 @@
                       class="input--style-3"
                       type="text"
                       name="new_product_type"
-                      value="{{this.product_type}}" required
+                      value="{{standardlizeName this.product_type}}" required
                     />
                   </div>
                   <input type="hidden" name="_csrf" value="{{csrfToken}}" />
