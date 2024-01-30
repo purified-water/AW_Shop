@@ -53,7 +53,7 @@ Because we implemented VNPay API in our project, you would have to go to two dif
 ## Special thanks to
 - **Trần Đình Nhật Trí** for aiding us in the development phase.
 - **makeup-api.herokuapp.com** for the valuable data.
-- **** for the beautiful CSS preset.
+- **Nandita Kadam** for the beautiful CSS preset.
 
   
 
