@@ -23,6 +23,7 @@ This application was for the final project of Web Development Course. It is a si
 - **_Wallet top-up and payment with VNPay_**
 ## Installation
 - After you have forked the project, you will need to create a database in **Postgres** with the specification in **createTable.sql** file.
+- Furthermore, you'd also need to create a **.env** file for the keys and hash secrets. You can look for it.
 - Make sure that the database's name and password are matching in the **db.js** file
 - For the package installation, at the root folder, do:
   ```
