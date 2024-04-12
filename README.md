@@ -1,15 +1,7 @@
 # AW Shop Web Application
-An online shopping web application for skincare products.
-
-## Description
-This application was for the final project of Web Development Course. It is a simple app using MVC architecture with specified functions for admin and clients.
-
-## Developers
-| Student ID | Name                   |
-|------------|------------------------|
-| 21120589   | Trương Anh Tuấn        |
-| 21120575   | Nguyễn Thành Trí       |
-| 21120588   | Nguyễn Phước Anh Tuấn  |
+An e-commerce web application for skincare products using MVC architecture, facilitating sales management and product purchases.
+## Preview
+![awshop_showcase](https://github.com/purified-water/AW_Shop/assets/115447614/e166bcb2-74ea-4b1a-83bf-dd06ab858371)
 
 ## Features
 ### Admin
